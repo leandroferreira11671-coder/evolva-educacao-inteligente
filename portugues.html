@@ -6,61 +6,156 @@
 <title>Português — EVOLVA</title>
 
 <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    margin:0;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Arial, sans-serif;
     background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    color:white;
-    text-align:center;
-    padding:50px 20px;
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
 }
 
-.card {
-    background:#1e2a38;
-    padding:30px;
-    border-radius:15px;
-    width:250px;
-    margin:20px auto;
+/* HEADER */
+.topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
 }
 
-button {
-    margin-top:15px;
-    padding:10px 20px;
-    border:none;
-    border-radius:8px;
-    background:#2ecc71;
-    color:white;
-    cursor:pointer;
+.voltar {
+    cursor: pointer;
+    color: #00e5ff;
 }
 
-.locked {
-    opacity:0.5;
+.xp {
+    font-weight: bold;
+    color: #00ff88;
+}
+
+/* BARRA PROGRESSO */
+.progresso-container {
+    width: 100%;
+    max-width: 500px;
+    height: 20px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    margin: 20px auto 40px auto;
+}
+
+.progresso {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(45deg, #00ff88, #00e5ff);
+    border-radius: 20px;
+    transition: 0.3s;
+}
+
+/* NÍVEIS */
+.niveis {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+}
+
+.nivel {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 2px solid rgba(255,255,255,0.2);
+}
+
+.nivel:hover {
+    transform: scale(1.1);
+}
+
+.bloqueado {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+footer {
+    margin-top: 50px;
+    opacity: 0.5;
 }
 </style>
 </head>
 
 <body>
 
-<h1>📘 Português</h1>
-<p>Escolha seu nível</p>
-
-<div class="card">
-    <h3>🟢 Básico</h3>
-    <p>Fundamentos da língua portuguesa</p>
-    <button>Entrar</button>
+<div class="topo">
+    <div class="voltar" onclick="window.location.href='index.html'">⬅ Voltar</div>
+    <div class="xp">XP: <span id="xp">0</span></div>
 </div>
 
-<div class="card locked">
-    <h3>🔒 Intermediário</h3>
-    <p>Em breve</p>
-    <button disabled>Bloqueado</button>
+<h1>Português</h1>
+<p>Complete os níveis para evoluir</p>
+
+<div class="progresso-container">
+    <div class="progresso" id="barra"></div>
 </div>
 
-<div class="card locked">
-    <h3>🔒 Avançado</h3>
-    <p>Em breve</p>
-    <button disabled>Bloqueado</button>
+<div class="niveis">
+    <div class="nivel" onclick="completarNivel(1)">Nível 1</div>
+    <div class="nivel bloqueado" id="nivel2">Nível 2</div>
+    <div class="nivel bloqueado" id="nivel3">Nível 3</div>
+    <div class="nivel bloqueado" id="nivel4">Nível 4</div>
+    <div class="nivel bloqueado" id="nivel5">Nível 5</div>
 </div>
+
+<footer>
+EVOLVA — Sistema de Evolução
+</footer>
+
+<script>
+let xp = localStorage.getItem("xp") ? parseInt(localStorage.getItem("xp")) : 0;
+let nivelAtual = localStorage.getItem("nivel") ? parseInt(localStorage.getItem("nivel")) : 1;
+
+document.getElementById("xp").innerText = xp;
+atualizarProgresso();
+desbloquearNiveis();
+
+function completarNivel(nivel) {
+    if (nivel === nivelAtual) {
+        xp += 20;
+        nivelAtual++;
+        localStorage.setItem("xp", xp);
+        localStorage.setItem("nivel", nivelAtual);
+        document.getElementById("xp").innerText = xp;
+        atualizarProgresso();
+        desbloquearNiveis();
+        alert("Parabéns! Você evoluiu 🚀");
+    }
+}
+
+function atualizarProgresso() {
+    let porcentagem = (nivelAtual - 1) * 20;
+    document.getElementById("barra").style.width = porcentagem + "%";
+}
+
+function desbloquearNiveis() {
+    for (let i = 2; i <= 5; i++) {
+        if (nivelAtual >= i) {
+            let el = document.getElementById("nivel" + i);
+            el.classList.remove("bloqueado");
+            el.setAttribute("onclick", "completarNivel(" + i + ")");
+        }
+    }
+}
+</script>
 
 </body>
 </html>

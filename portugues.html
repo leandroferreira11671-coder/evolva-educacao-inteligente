@@ -16,12 +16,18 @@ padding:30px;
 text-align:center;
 }
 
+.logo{
+width:140px;
+margin-bottom:15px;
+filter:drop-shadow(0 0 15px #00e5ff);
+}
+
 .topo{
 display:flex;
 justify-content:space-between;
 align-items:center;
 flex-wrap:wrap;
-margin-bottom:30px;
+margin-bottom:20px;
 }
 
 .usuario{color:#00e5ff;font-weight:bold;}
@@ -98,6 +104,8 @@ transition:0.3s;
 <button onclick="window.location.href='dashboard.html'">Voltar</button>
 </div>
 
+<img src="logo.jpeg" alt="Logo EVOLVA" class="logo">
+
 <h1>Português</h1>
 
 <div id="modulos"></div>
@@ -116,12 +124,11 @@ transition:0.3s;
 </div>
 </div>
 
-<!-- 🔥 BANCO DE PERGUNTAS PRIMEIRO -->
 <script src="perguntas-portugues.js"></script>
 
 <script>
 
-/* ===== LOGIN ===== */
+/* LOGIN */
 
 let user = localStorage.getItem("usuarioLogado");
 if(!user){ window.location.href="index.html"; }
@@ -144,7 +151,7 @@ if(!usuarioAtual.xp) usuarioAtual.xp=0;
 
 document.getElementById("xp").innerText=usuarioAtual.xp;
 
-/* ===== CRIAR MODULOS ===== */
+/* CRIAR MODULOS */
 
 let modulosLista=["fonologia","morfologia","sintaxe","semantica"];
 let modulosDiv=document.getElementById("modulos");
@@ -157,13 +164,13 @@ btn.onclick=()=>mostrarNiveis(mod);
 modulosDiv.appendChild(btn);
 });
 
-/* ===== VARIÁVEIS ===== */
+/* VARIÁVEIS */
 
 let moduloAtual;
 let nivelAtual;
 let perguntaAtual=0;
 
-/* ===== MOSTRAR NIVEIS ===== */
+/* MOSTRAR NIVEIS */
 
 function mostrarNiveis(modulo){
 moduloAtual=modulo;
@@ -185,7 +192,7 @@ document.getElementById("niveis").appendChild(btn);
 }
 }
 
-/* ===== INICIAR NIVEL ===== */
+/* INICIAR NIVEL */
 
 function iniciarNivel(nivel){
 nivelAtual="nivel"+nivel;
@@ -194,7 +201,7 @@ document.getElementById("quiz").style.display="block";
 mostrarPergunta();
 }
 
-/* ===== MOSTRAR PERGUNTA ===== */
+/* MOSTRAR PERGUNTA */
 
 function mostrarPergunta(){
 
@@ -224,7 +231,7 @@ botoes[i].disabled=false;
 atualizarBarra();
 }
 
-/* ===== RESPONDER ===== */
+/* RESPONDER */
 
 function responder(botao){
 let correta=bancoPerguntas[moduloAtual][nivelAtual][perguntaAtual].correta;
@@ -239,7 +246,7 @@ perguntaAtual++;
 mostrarPergunta();
 }
 
-/* ===== PROGRESSO ===== */
+/* BARRA */
 
 function atualizarBarra(){
 let total=bancoPerguntas[moduloAtual][nivelAtual].length;
@@ -247,7 +254,7 @@ let porcentagem=(perguntaAtual/total)*100;
 document.getElementById("progress").style.width=porcentagem+"%";
 }
 
-/* ===== FINALIZAR ===== */
+/* FINALIZAR */
 
 function finalizarNivel(){
 
@@ -265,7 +272,7 @@ document.getElementById("quiz").style.display="none";
 mostrarNiveis(moduloAtual);
 }
 
-/* ===== SALVAR ===== */
+/* SALVAR */
 
 function salvar(){
 localStorage.setItem("usuarios",JSON.stringify(usuarios));

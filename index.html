@@ -1,147 +1,150 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EVOLVA — Educação Inteligente</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVOLVA — Educação Inteligente</title>
 
-    body {
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      color: white;
-    }
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
+}
 
-    header {
-      padding: 20px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+}
 
-    header h1 {
-      font-size: 24px;
-      font-weight: 700;
-      color: #38bdf8;
-    }
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: #2eccff;
+}
 
-    .hero {
-      text-align: center;
-      padding: 100px 20px;
-    }
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+}
 
-    .hero h2 {
-      font-size: 42px;
-      margin-bottom: 20px;
-    }
+.hero h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
 
-    .hero p {
-      font-size: 18px;
-      max-width: 600px;
-      margin: 0 auto 30px auto;
-      opacity: 0.8;
-    }
+.hero p {
+    max-width: 600px;
+    margin: auto;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
 
-    .btn {
-      background: #38bdf8;
-      color: #0f172a;
-      padding: 14px 28px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: 0.3s;
-    }
+.hero button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    background: #2ecc71;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
 
-    .btn:hover {
-      background: #0ea5e9;
-    }
+.section {
+    padding: 60px 20px;
+    text-align: center;
+}
 
-    .cursos {
-      padding: 80px 20px;
-      text-align: center;
-    }
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
 
-    .cursos h3 {
-      font-size: 32px;
-      margin-bottom: 40px;
-    }
+.card {
+    background: #1e2a38;
+    padding: 30px;
+    border-radius: 15px;
+    width: 220px;
+    transition: 0.3s;
+}
 
-    .cards {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
+.card:hover {
+    transform: scale(1.05);
+}
 
-    .card {
-      background: #1e293b;
-      padding: 30px;
-      border-radius: 12px;
-      width: 280px;
-      transition: 0.3s;
-    }
+.card.disabled {
+    opacity: 0.5;
+}
 
-    .card:hover {
-      transform: translateY(-8px);
-      background: #334155;
-    }
+.card button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #3498db;
+    color: white;
+    cursor: pointer;
+}
 
-    .card h4 {
-      margin-bottom: 15px;
-      color: #38bdf8;
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px;
-      background: #0f172a;
-      margin-top: 60px;
-      opacity: 0.7;
-    }
-  </style>
+footer {
+    text-align: center;
+    padding: 20px;
+    opacity: 0.6;
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <h1>EVOLVA</h1>
-  <nav>
-    <a href="#" class="btn">Entrar</a>
-  </nav>
+    <div class="logo">EVOLVA</div>
+    <button style="padding:8px 15px; border:none; border-radius:6px; background:#2eccff; cursor:pointer;">
+        Entrar
+    </button>
 </header>
 
 <section class="hero">
-  <h2>Educação Inteligente para transformar seu futuro</h2>
-  <p>Reforço escolar, ensino para adultos e inglês focado no mercado de trabalho. Aprenda de forma moderna, prática e acessível.</p>
-  <a href="#" class="btn">Começar Agora</a>
+    <h1>Educação Inteligente para transformar seu futuro</h1>
+    <p>Português, Matemática e Inglês organizados em níveis, com progresso e sistema de evolução.</p>
+    <button>Começar Agora</button>
 </section>
 
-<section class="cursos">
-  <div class="cards">
-    <div class="card">
-      <h4>Reforço Escolar</h4>
-      <p>Ensino Fundamental e Médio com metodologia prática e clara.</p>
+<section class="section">
+    <h2>Escolha sua Área de Estudo</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>📘 Português</h3>
+            <p>Do básico ao avançado</p>
+            <button onclick="window.location.href='#'">
+                Começar
+            </button>
+        </div>
+
+        <div class="card disabled">
+            <h3>🔢 Matemática</h3>
+            <p>Do zero ao avançado</p>
+            <button disabled>Em breve</button>
+        </div>
+
+        <div class="card disabled">
+            <h3>🇺🇸 Inglês</h3>
+            <p>Para trabalho e concursos</p>
+            <button disabled>Em breve</button>
+        </div>
+
     </div>
-    <div class="card">
-      <h4>Educação para Adultos</h4>
-      <p>Matemática básica, português e preparação para oportunidades.</p>
-    </div>
-    <div class="card">
-      <h4>Inglês para Trabalho</h4>
-      <p>Aprenda inglês focado no mercado e entrevistas profissionais.</p>
-    </div>
-  </div>
 </section>
 
 <footer>
-  © 2026 EVOLVA — Educação Inteligente. Todos os direitos reservados.
+    © 2026 EVOLVA — Educação Inteligente
 </footer>
 
 </body>

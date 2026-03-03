@@ -217,4 +217,61 @@ document.getElementById("pergunta").innerText=p.pergunta;
 let botoes=document.querySelectorAll(".opcao");
 
 for(let i=0;i<botoes.length;i++){
-bot
+botoes[i].innerText=p.opcoes[i];
+botoes[i].disabled=false;
+}
+
+atualizarBarra();
+}
+
+/* ===== RESPONDER ===== */
+
+function responder(botao){
+let correta=bancoPerguntas[moduloAtual][nivelAtual][perguntaAtual].correta;
+
+if(botao.innerText===correta){
+usuarioAtual.xp+=5;
+document.getElementById("xp").innerText=usuarioAtual.xp;
+salvar();
+}
+
+perguntaAtual++;
+mostrarPergunta();
+}
+
+/* ===== PROGRESSO ===== */
+
+function atualizarBarra(){
+let total=bancoPerguntas[moduloAtual][nivelAtual].length;
+let porcentagem=(perguntaAtual/total)*100;
+document.getElementById("progress").style.width=porcentagem+"%";
+}
+
+/* ===== FINALIZAR ===== */
+
+function finalizarNivel(){
+
+alert("Nível concluído!");
+
+let nivelNumero=parseInt(nivelAtual.replace("nivel",""));
+
+if(usuarioAtual.progresso[moduloAtual]===nivelNumero){
+usuarioAtual.progresso[moduloAtual]++;
+}
+
+salvar();
+
+document.getElementById("quiz").style.display="none";
+mostrarNiveis(moduloAtual);
+}
+
+/* ===== SALVAR ===== */
+
+function salvar(){
+localStorage.setItem("usuarios",JSON.stringify(usuarios));
+}
+
+</script>
+
+</body>
+</html>

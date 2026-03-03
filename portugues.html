@@ -20,39 +20,28 @@ padding:30px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:15px;
+margin-bottom:20px;
 }
 
-.voltar{cursor:pointer;color:#00e5ff;}
+.usuario{
+color:#00e5ff;
+font-weight:bold;
+}
+
 .xp{color:#00ff88;font-weight:bold;}
 .tempo{color:#ffd700;font-weight:bold;}
 
-.progresso-container{
-width:100%;
-max-width:500px;
-height:20px;
-background:rgba(255,255,255,0.1);
-border-radius:20px;
-margin:20px auto;
+button{
+padding:12px 25px;
+border-radius:8px;
+border:none;
+background:linear-gradient(45deg,#00e5ff,#00ff88);
+cursor:pointer;
+font-weight:bold;
+margin-top:10px;
 }
 
-.progresso{
-height:100%;
-width:0%;
-background:linear-gradient(45deg,#00ff88,#00e5ff);
-border-radius:20px;
-transition:.3s;
-}
-
-.quiz{
-margin-top:30px;
-display:none;
-}
-
-.pergunta{
-font-size:20px;
-margin-bottom:20px;
-}
+.quiz{margin-top:30px;display:none;}
 
 .opcao{
 display:block;
@@ -64,7 +53,6 @@ border:none;
 cursor:pointer;
 background:rgba(255,255,255,0.1);
 color:white;
-transition:.3s;
 }
 
 .opcao:hover{
@@ -72,27 +60,8 @@ background:#00e5ff;
 color:black;
 }
 
-.correto{
-background:#00ff88 !important;
-color:black !important;
-}
-
-.errado{
-background:#ff4c4c !important;
-color:white !important;
-}
-
-.nivel-btn{
-margin-top:20px;
-padding:12px 25px;
-border-radius:8px;
-border:none;
-background:linear-gradient(45deg,#00e5ff,#00ff88);
-cursor:pointer;
-font-weight:bold;
-}
-
-/* PREMIUM */
+.correto{background:#00ff88 !important;color:black !important;}
+.errado{background:#ff4c4c !important;color:white !important;}
 
 .premium{
 position:fixed;
@@ -102,7 +71,6 @@ display:none;
 justify-content:center;
 align-items:center;
 flex-direction:column;
-z-index:1000;
 }
 
 .premium-box{
@@ -112,48 +80,23 @@ border-radius:20px;
 width:300px;
 }
 
-.premium-box h2{
-color:#00ff88;
-margin-bottom:20px;
-}
-
-.premium-box button{
-margin-top:20px;
-padding:12px 25px;
-border-radius:8px;
-border:none;
-background:linear-gradient(45deg,#00ff88,#00e5ff);
-cursor:pointer;
-font-weight:bold;
-}
-
-footer{
-margin-top:40px;
-opacity:.6;
-}
 </style>
 </head>
 
 <body>
 
 <div class="topo">
-<div class="voltar" onclick="window.location.href='index.html'">⬅ Voltar</div>
-<div class="xp">XP: <span id="xp">0</span></div>
-<div class="tempo">Tempo restante: <span id="tempo"></span></div>
+<div class="usuario">Aluno: <span id="nomeUser"></span></div>
+<div class="xp">XP: <span id="xp"></span></div>
+<div class="tempo">Tempo: <span id="tempo"></span></div>
 </div>
 
 <h1>Português</h1>
 
-<div class="progresso-container">
-<div class="progresso" id="barra"></div>
-</div>
-
-<button class="nivel-btn" onclick="iniciarQuiz()" id="btnIniciar">
-Iniciar Nível 1
-</button>
+<button onclick="iniciarQuiz()" id="btnIniciar">Iniciar Nível 1</button>
 
 <div class="quiz" id="quiz">
-<div class="pergunta" id="pergunta"></div>
+<h3 id="pergunta"></h3>
 <button class="opcao" onclick="responder(this)"></button>
 <button class="opcao" onclick="responder(this)"></button>
 <button class="opcao" onclick="responder(this)"></button>
@@ -164,36 +107,50 @@ Iniciar Nível 1
 <div class="premium-box">
 <h2>Plano Premium</h2>
 <p>Tempo ilimitado</p>
-<p>Acesso total aos cursos</p>
-<p>Sem limites diários</p>
-<button onclick="alert('Aqui futuramente entra pagamento real')">
-Assinar Agora
-</button>
+<p>Acesso total</p>
+<button onclick="alert('Pagamento futuro aqui')">Assinar</button>
 </div>
 </div>
-
-<footer>EVOLVA — Educação Inteligente</footer>
 
 <script>
-let xp = localStorage.getItem("xp") ? parseInt(localStorage.getItem("xp")) : 0;
-document.getElementById("xp").innerText = xp;
+
+/* ===== VERIFICAR LOGIN ===== */
+
+let user = localStorage.getItem("usuarioLogado");
+
+if(!user){
+window.location.href="index.html";
+}
+
+document.getElementById("nomeUser").innerText = user;
+
+/* ===== PEGAR DADOS DO USUÁRIO ===== */
+
+let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+let usuarioAtual = usuarios.find(u=>u.user===user);
+
+if(!usuarioAtual){
+window.location.href="index.html";
+}
+
+document.getElementById("xp").innerText = usuarioAtual.xp;
+
+/* ===== TEMPO INDIVIDUAL ===== */
 
 const LIMITE = 3 * 60 * 60;
 let hoje = new Date().toDateString();
-let dataSalva = localStorage.getItem("dataTempo");
 
-if(dataSalva !== hoje){
-localStorage.setItem("tempoUsado",0);
-localStorage.setItem("dataTempo",hoje);
+if(usuarioAtual.dataTempo !== hoje){
+usuarioAtual.tempo = 0;
+usuarioAtual.dataTempo = hoje;
+salvarUsuarios();
 }
 
-let tempoUsado = parseInt(localStorage.getItem("tempoUsado")) || 0;
-
 function atualizarTempo(){
-let restante = LIMITE - tempoUsado;
+let restante = LIMITE - usuarioAtual.tempo;
 
 if(restante <= 0){
-document.getElementById("tempo").innerText="Tempo esgotado";
+document.getElementById("tempo").innerText="Esgotado";
 document.getElementById("btnIniciar").disabled=true;
 document.getElementById("premium").style.display="flex";
 return;
@@ -208,24 +165,26 @@ document.getElementById("tempo").innerText=h+"h "+m+"m "+s+"s";
 
 setInterval(()=>{
 if(document.getElementById("quiz").style.display==="block"){
-tempoUsado++;
-localStorage.setItem("tempoUsado",tempoUsado);
+usuarioAtual.tempo++;
+salvarUsuarios();
 }
 atualizarTempo();
 },1000);
 
 atualizarTempo();
 
+/* ===== QUIZ ===== */
+
 let perguntas=[
-{pergunta:"Qual é o plural de 'cidadão'?",
+{
+pergunta:"Qual é o plural de 'cidadão'?",
 opcoes:["Cidadões","Cidadãos","Cidadães","Cidadans"],
-correta:"Cidadãos"}
+correta:"Cidadãos"
+}
 ];
 
-let perguntaAtual=0;
-
 function iniciarQuiz(){
-if(tempoUsado>=LIMITE){
+if(usuarioAtual.tempo >= LIMITE){
 document.getElementById("premium").style.display="flex";
 return;
 }
@@ -234,35 +193,10 @@ mostrarPergunta();
 }
 
 function mostrarPergunta(){
-let p=perguntas[perguntaAtual];
+let p=perguntas[0];
 document.getElementById("pergunta").innerText=p.pergunta;
 
 let botoes=document.querySelectorAll(".opcao");
 for(let i=0;i<botoes.length;i++){
 botoes[i].innerText=p.opcoes[i];
-botoes[i].classList.remove("correto","errado");
-botoes[i].disabled=false;
-}
-}
-
-function responder(botao){
-if(botao.innerText===perguntas[perguntaAtual].correta){
-botao.classList.add("correto");
-xp+=10;
-localStorage.setItem("xp",xp);
-document.getElementById("xp").innerText=xp;
-}
-else{
-botao.classList.add("errado");
-}
-
-document.querySelectorAll(".opcao").forEach(b=>b.disabled=true);
-
-setTimeout(()=>{
-document.getElementById("quiz").style.display="none";
-},1000);
-}
-</script>
-
-</body>
-</html>
+botoes[i].classList.remove(

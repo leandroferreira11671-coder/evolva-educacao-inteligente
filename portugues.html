@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Português — EVOLVA</title>
 
-<script src="perguntas-portugues.js"></script>
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 
@@ -89,7 +87,6 @@ width:0%;
 background:#00ff88;
 transition:0.3s;
 }
-
 </style>
 </head>
 
@@ -98,7 +95,7 @@ transition:0.3s;
 <div class="topo">
 <div class="usuario">Aluno: <span id="nomeUser"></span></div>
 <div class="xp">XP: <span id="xp"></span></div>
-<button onclick="window.location.href='index.html'">Voltar</button>
+<button onclick="window.location.href='dashboard.html'">Voltar</button>
 </div>
 
 <h1>Português</h1>
@@ -117,8 +114,10 @@ transition:0.3s;
 <div class="progress-container">
 <div class="progress-bar" id="progress"></div>
 </div>
-
 </div>
+
+<!-- 🔥 BANCO DE PERGUNTAS PRECISA VIR PRIMEIRO -->
+<script src="perguntas-portugues.js"></script>
 
 <script>
 
@@ -158,11 +157,13 @@ btn.onclick=()=>mostrarNiveis(mod);
 modulosDiv.appendChild(btn);
 });
 
-/* ===== MOSTRAR NIVEIS ===== */
+/* ===== VARIÁVEIS ===== */
 
 let moduloAtual;
 let nivelAtual;
 let perguntaAtual=0;
+
+/* ===== MOSTRAR NIVEIS ===== */
 
 function mostrarNiveis(modulo){
 moduloAtual=modulo;
@@ -196,6 +197,7 @@ mostrarPergunta();
 /* ===== MOSTRAR PERGUNTA ===== */
 
 function mostrarPergunta(){
+
 let perguntas=bancoPerguntas[moduloAtual][nivelAtual];
 
 if(perguntaAtual>=perguntas.length){
@@ -208,6 +210,7 @@ let p=perguntas[perguntaAtual];
 document.getElementById("pergunta").innerText=p.pergunta;
 
 let botoes=document.querySelectorAll(".opcao");
+
 for(let i=0;i<botoes.length;i++){
 botoes[i].innerText=p.opcoes[i];
 botoes[i].disabled=false;
@@ -216,7 +219,4 @@ botoes[i].disabled=false;
 atualizarBarra();
 }
 
-/* ===== RESPONDER ===== */
-
-function responder(botao){
-let correta=bancoPerguntas[moduloAtual][ni
+/* ===== R

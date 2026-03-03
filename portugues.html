@@ -116,7 +116,7 @@ transition:0.3s;
 </div>
 </div>
 
-<!-- 🔥 BANCO DE PERGUNTAS PRECISA VIR PRIMEIRO -->
+<!-- 🔥 BANCO DE PERGUNTAS PRIMEIRO -->
 <script src="perguntas-portugues.js"></script>
 
 <script>
@@ -200,6 +200,11 @@ function mostrarPergunta(){
 
 let perguntas=bancoPerguntas[moduloAtual][nivelAtual];
 
+if(!perguntas || perguntas.length===0){
+alert("Esse nível ainda não possui perguntas.");
+return;
+}
+
 if(perguntaAtual>=perguntas.length){
 finalizarNivel();
 return;
@@ -212,11 +217,4 @@ document.getElementById("pergunta").innerText=p.pergunta;
 let botoes=document.querySelectorAll(".opcao");
 
 for(let i=0;i<botoes.length;i++){
-botoes[i].innerText=p.opcoes[i];
-botoes[i].disabled=false;
-}
-
-atualizarBarra();
-}
-
-/* ===== R
+bot

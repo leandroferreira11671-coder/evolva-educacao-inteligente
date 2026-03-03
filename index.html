@@ -6,215 +6,138 @@
 <title>EVOLVA — Educação Inteligente</title>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:'Segoe UI',Arial;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
 }
 
-body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    color: white;
-    overflow-x: hidden;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    position: relative;
+.container{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(12px);
+padding:40px;
+border-radius:20px;
+width:320px;
+text-align:center;
 }
 
-/* FUNDO LOGO TELA TODA */
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: url('logo.jpeg') no-repeat center center;
-    background-size: cover;
-    opacity: 0.05;
-    z-index: 0;
+h1{
+margin-bottom:20px;
+color:#00e5ff;
 }
 
-/* Conteúdo acima do fundo */
-header, section, footer {
-    position: relative;
-    z-index: 1;
+input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:8px;
+border:none;
 }
 
-/* HEADER */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 25px 60px;
+button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+margin-top:10px;
+background:linear-gradient(45deg,#00e5ff,#00ff88);
+font-weight:bold;
+cursor:pointer;
 }
 
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #00e5ff;
-    letter-spacing: 1px;
-}
-
-header button {
-    padding: 10px 20px;
-    border-radius: 8px;
-    border: none;
-    background: linear-gradient(45deg, #00e5ff, #00ff88);
-    color: #000;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-header button:hover {
-    transform: scale(1.05);
-}
-
-/* HERO */
-.hero {
-    text-align: center;
-    padding: 120px 20px;
-}
-
-.hero h1 {
-    font-size: 46px;
-    margin-bottom: 25px;
-    font-weight: 700;
-}
-
-.hero p {
-    max-width: 650px;
-    margin: auto;
-    margin-bottom: 40px;
-    font-size: 18px;
-    opacity: 0.9;
-}
-
-.hero button {
-    padding: 16px 40px;
-    font-size: 17px;
-    border-radius: 10px;
-    border: none;
-    background: linear-gradient(45deg, #00ff88, #00e5ff);
-    color: #000;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.hero button:hover {
-    transform: scale(1.08);
-}
-
-/* SECTION */
-.section {
-    padding: 100px 20px;
-    text-align: center;
-}
-
-.section h2 {
-    font-size: 32px;
-    margin-bottom: 50px;
-}
-
-/* CARDS */
-.cards {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-}
-
-.card {
-    width: 280px;
-    padding: 35px;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.15);
-    transition: 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-10px);
-}
-
-.card h3 {
-    font-size: 22px;
-    margin-bottom: 15px;
-    color: #00e5ff;
-}
-
-.card p {
-    margin-bottom: 20px;
-    opacity: 0.85;
-}
-
-.card button {
-    padding: 12px 25px;
-    border-radius: 8px;
-    border: none;
-    background: linear-gradient(45deg, #00e5ff, #00ff88);
-    color: #000;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.card.disabled {
-    opacity: 0.4;
-}
-
-footer {
-    text-align: center;
-    padding: 30px;
-    opacity: 0.6;
+.link{
+margin-top:15px;
+cursor:pointer;
+color:#00e5ff;
+font-size:14px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-    <div class="logo">EVOLVA</div>
-    <button>Entrar</button>
-</header>
+<div class="container">
 
-<section class="hero">
-    <h1>Educação Inteligente para transformar seu futuro</h1>
-    <p>Português, Matemática e Inglês organizados em níveis com sistema de evolução, progresso e aprendizado gamificado.</p>
-    <button onclick="window.location.href='portugues.html'">
-        Começar Agora
-    </button>
-</section>
+<h1>EVOLVA</h1>
 
-<section class="section">
-    <h2>Escolha sua Área de Estudo</h2>
+<div id="loginBox">
+<input type="text" id="loginUser" placeholder="Usuário">
+<input type="password" id="loginPass" placeholder="Senha">
+<button onclick="login()">Entrar</button>
+<div class="link" onclick="mostrarCadastro()">Criar conta</div>
+</div>
 
-    <div class="cards">
+<div id="cadastroBox" style="display:none;">
+<input type="text" id="cadUser" placeholder="Usuário">
+<input type="password" id="cadPass" placeholder="Senha">
+<button onclick="cadastrar()">Cadastrar</button>
+<div class="link" onclick="mostrarLogin()">Voltar ao login</div>
+</div>
 
-        <div class="card">
-            <h3>Português</h3>
-            <p>Do básico ao avançado</p>
-            <button onclick="window.location.href='portugues.html'">
-                Começar
-            </button>
-        </div>
+</div>
 
-        <div class="card disabled">
-            <h3>Matemática</h3>
-            <p>Do zero ao avançado</p>
-            <button disabled>Em breve</button>
-        </div>
+<script>
+function mostrarCadastro(){
+document.getElementById("loginBox").style.display="none";
+document.getElementById("cadastroBox").style.display="block";
+}
 
-        <div class="card disabled">
-            <h3>Inglês</h3>
-            <p>Focado em trabalho</p>
-            <button disabled>Em breve</button>
-        </div>
+function mostrarLogin(){
+document.getElementById("loginBox").style.display="block";
+document.getElementById("cadastroBox").style.display="none";
+}
 
-    </div>
-</section>
+function cadastrar(){
+let user=document.getElementById("cadUser").value.trim();
+let pass=document.getElementById("cadPass").value.trim();
 
-<footer>
-    © 2026 EVOLVA — Educação Inteligente
-</footer>
+if(!user||!pass){
+alert("Preencha todos os campos");
+return;
+}
+
+let usuarios=JSON.parse(localStorage.getItem("usuarios"))||[];
+
+if(usuarios.find(u=>u.user===user)){
+alert("Usuário já existe");
+return;
+}
+
+usuarios.push({
+user:user,
+pass:btoa(pass),
+xp:0,
+tempo:0
+});
+
+localStorage.setItem("usuarios",JSON.stringify(usuarios));
+alert("Conta criada!");
+mostrarLogin();
+}
+
+function login(){
+let user=document.getElementById("loginUser").value.trim();
+let pass=document.getElementById("loginPass").value.trim();
+
+let usuarios=JSON.parse(localStorage.getItem("usuarios"))||[];
+
+let valido=usuarios.find(u=>u.user===user && u.pass===btoa(pass));
+
+if(!valido){
+alert("Login inválido");
+return;
+}
+
+localStorage.setItem("usuarioLogado",user);
+window.location.href="portugues.html";
+}
+</script>
 
 </body>
 </html>

@@ -9,28 +9,24 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    background: linear-gradient(135deg, rgba(15,32,39,0.95), rgba(32,58,67,0.95), rgba(44,83,100,0.95));
     color: white;
     position: relative;
     overflow-x: hidden;
 }
 
-/* Marca d'água */
+/* FUNDO COM LOGO OCUPANDO A TELA TODA */
 body::before {
     content: "";
     position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 500px;
-    height: 500px;
-    background: url('logo.jpeg') no-repeat center;
-    background-size: contain;
-    opacity: 0.06;
-    transform: translate(-50%, -50%);
+    inset: 0;
+    background: url('logo.jpeg') no-repeat center center;
+    background-size: cover;
+    opacity: 0.08;
     z-index: 0;
 }
 
-/* Garante que o conteúdo fique acima da logo */
+/* Conteúdo acima do fundo */
 header, section, footer {
     position: relative;
     z-index: 1;
@@ -51,11 +47,11 @@ header {
 
 .hero {
     text-align: center;
-    padding: 80px 20px;
+    padding: 100px 20px;
 }
 
 .hero h1 {
-    font-size: 36px;
+    font-size: 40px;
     margin-bottom: 20px;
 }
 
@@ -64,10 +60,11 @@ header {
     margin: auto;
     margin-bottom: 30px;
     opacity: 0.9;
+    font-size: 18px;
 }
 
 .hero button {
-    padding: 12px 25px;
+    padding: 14px 30px;
     border: none;
     border-radius: 8px;
     background: #2ecc71;
@@ -82,7 +79,7 @@ header {
 }
 
 .section {
-    padding: 60px 20px;
+    padding: 80px 20px;
     text-align: center;
 }
 
@@ -95,11 +92,12 @@ header {
 }
 
 .card {
-    background: #1e2a38;
+    background: rgba(30, 42, 56, 0.9);
     padding: 30px;
     border-radius: 15px;
-    width: 240px;
+    width: 250px;
     transition: 0.3s;
+    backdrop-filter: blur(5px);
 }
 
 .card:hover {

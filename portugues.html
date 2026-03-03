@@ -24,13 +24,8 @@ margin-bottom:15px;
 }
 
 .voltar{cursor:pointer;color:#00e5ff;}
-
 .xp{color:#00ff88;font-weight:bold;}
-
-.tempo{
-color:#ffd700;
-font-weight:bold;
-}
+.tempo{color:#ffd700;font-weight:bold;}
 
 .progresso-container{
 width:100%;
@@ -52,12 +47,6 @@ transition:.3s;
 .quiz{
 margin-top:30px;
 display:none;
-animation:fade .4s ease-in-out;
-}
-
-@keyframes fade{
-from{opacity:0;transform:translateY(20px);}
-to{opacity:1;transform:translateY(0);}
 }
 
 .pergunta{
@@ -103,6 +92,41 @@ cursor:pointer;
 font-weight:bold;
 }
 
+/* PREMIUM */
+
+.premium{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.9);
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:1000;
+}
+
+.premium-box{
+background:#1e2a38;
+padding:40px;
+border-radius:20px;
+width:300px;
+}
+
+.premium-box h2{
+color:#00ff88;
+margin-bottom:20px;
+}
+
+.premium-box button{
+margin-top:20px;
+padding:12px 25px;
+border-radius:8px;
+border:none;
+background:linear-gradient(45deg,#00ff88,#00e5ff);
+cursor:pointer;
+font-weight:bold;
+}
+
 footer{
 margin-top:40px;
 opacity:.6;
@@ -136,15 +160,25 @@ Iniciar Nível 1
 <button class="opcao" onclick="responder(this)"></button>
 </div>
 
+<div class="premium" id="premium">
+<div class="premium-box">
+<h2>Plano Premium</h2>
+<p>Tempo ilimitado</p>
+<p>Acesso total aos cursos</p>
+<p>Sem limites diários</p>
+<button onclick="alert('Aqui futuramente entra pagamento real')">
+Assinar Agora
+</button>
+</div>
+</div>
+
 <footer>EVOLVA — Educação Inteligente</footer>
 
 <script>
-/* ===== XP ===== */
 let xp = localStorage.getItem("xp") ? parseInt(localStorage.getItem("xp")) : 0;
 document.getElementById("xp").innerText = xp;
 
-/* ===== CONTROLE DE TEMPO ===== */
-const LIMITE = 3 * 60 * 60; // 3 horas em segundos
+const LIMITE = 3 * 60 * 60;
 let hoje = new Date().toDateString();
 let dataSalva = localStorage.getItem("dataTempo");
 
@@ -159,17 +193,17 @@ function atualizarTempo(){
 let restante = LIMITE - tempoUsado;
 
 if(restante <= 0){
-document.getElementById("tempo").innerText = "Tempo esgotado";
-document.getElementById("btnIniciar").disabled = true;
+document.getElementById("tempo").innerText="Tempo esgotado";
+document.getElementById("btnIniciar").disabled=true;
+document.getElementById("premium").style.display="flex";
 return;
 }
 
-let horas = Math.floor(restante/3600);
-let minutos = Math.floor((restante%3600)/60);
-let segundos = restante%60;
+let h=Math.floor(restante/3600);
+let m=Math.floor((restante%3600)/60);
+let s=restante%60;
 
-document.getElementById("tempo").innerText =
-horas+"h "+minutos+"m "+segundos+"s";
+document.getElementById("tempo").innerText=h+"h "+m+"m "+s+"s";
 }
 
 setInterval(()=>{
@@ -182,28 +216,53 @@ atualizarTempo();
 
 atualizarTempo();
 
-/* ===== QUIZ ===== */
-
-let perguntas = [
-{
-pergunta:"Qual é o plural de 'cidadão'?",
+let perguntas=[
+{pergunta:"Qual é o plural de 'cidadão'?",
 opcoes:["Cidadões","Cidadãos","Cidadães","Cidadans"],
-correta:"Cidadãos"
-},
-{
-pergunta:"Qual frase está correta?",
-opcoes:["A gente vamos sair.","A gente vai sair.","A gente vão sair.","A gente iremos sair."],
-correta:"A gente vai sair."
-},
-{
-pergunta:"Qual é um substantivo?",
-opcoes:["Correr","Bonito","Casa","Rapidamente"],
-correta:"Casa"
-}
+correta:"Cidadãos"}
 ];
 
-let perguntaAtual = 0;
+let perguntaAtual=0;
 
 function iniciarQuiz(){
-if(tempoUsado >= LIMITE){
-ale
+if(tempoUsado>=LIMITE){
+document.getElementById("premium").style.display="flex";
+return;
+}
+document.getElementById("quiz").style.display="block";
+mostrarPergunta();
+}
+
+function mostrarPergunta(){
+let p=perguntas[perguntaAtual];
+document.getElementById("pergunta").innerText=p.pergunta;
+
+let botoes=document.querySelectorAll(".opcao");
+for(let i=0;i<botoes.length;i++){
+botoes[i].innerText=p.opcoes[i];
+botoes[i].classList.remove("correto","errado");
+botoes[i].disabled=false;
+}
+}
+
+function responder(botao){
+if(botao.innerText===perguntas[perguntaAtual].correta){
+botao.classList.add("correto");
+xp+=10;
+localStorage.setItem("xp",xp);
+document.getElementById("xp").innerText=xp;
+}
+else{
+botao.classList.add("errado");
+}
+
+document.querySelectorAll(".opcao").forEach(b=>b.disabled=true);
+
+setTimeout(()=>{
+document.getElementById("quiz").style.display="none";
+},1000);
+}
+</script>
+
+</body>
+</html>

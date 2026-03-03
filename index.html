@@ -11,6 +11,29 @@ body {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
     color: white;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Marca d'água */
+body::before {
+    content: "";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 500px;
+    background: url('logo.jpeg') no-repeat center;
+    background-size: contain;
+    opacity: 0.06;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+}
+
+/* Garante que o conteúdo fique acima da logo */
+header, section, footer {
+    position: relative;
+    z-index: 1;
 }
 
 header {
@@ -51,6 +74,11 @@ header {
     color: white;
     cursor: pointer;
     font-size: 16px;
+    transition: 0.3s;
+}
+
+.hero button:hover {
+    background: #27ae60;
 }
 
 .section {
@@ -95,6 +123,11 @@ header {
     background: #3498db;
     color: white;
     cursor: pointer;
+    transition: 0.3s;
+}
+
+.card button:hover {
+    background: #2980b9;
 }
 
 footer {
@@ -129,7 +162,7 @@ footer {
 
         <div class="card">
             <h3>Português</h3>
-            <p>básico ao avançado</p>
+            <p>Básico ao avançado</p>
             <button onclick="window.location.href='portugues.html'">
                 Começar
             </button>
@@ -137,13 +170,13 @@ footer {
 
         <div class="card disabled">
             <h3>Matemática</h3>
-            <p>básico ao avançado</p>
+            <p>Básico ao avançado</p>
             <button disabled>Em breve</button>
         </div>
 
         <div class="card disabled">
             <h3>Inglês</h3>
-            <p>básico ao avançado</p>
+            <p>Básico ao avançado</p>
             <button disabled>Em breve</button>
         </div>
 

@@ -6,90 +6,109 @@
 <title>Português — EVOLVA</title>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:'Segoe UI',Arial;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+text-align:center;
+padding:30px;
 }
 
-body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    color: white;
-    text-align: center;
-    padding: 40px 20px;
+.topo{
+display:flex;
+justify-content:space-between;
+margin-bottom:20px;
 }
 
-/* HEADER */
-.topo {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 40px;
+.voltar{
+cursor:pointer;
+color:#00e5ff;
 }
 
-.voltar {
-    cursor: pointer;
-    color: #00e5ff;
+.xp{
+color:#00ff88;
+font-weight:bold;
 }
 
-.xp {
-    font-weight: bold;
-    color: #00ff88;
+.progresso-container{
+width:100%;
+max-width:500px;
+height:20px;
+background:rgba(255,255,255,0.1);
+border-radius:20px;
+margin:20px auto;
 }
 
-/* BARRA PROGRESSO */
-.progresso-container {
-    width: 100%;
-    max-width: 500px;
-    height: 20px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 20px;
-    margin: 20px auto 40px auto;
+.progresso{
+height:100%;
+width:0%;
+background:linear-gradient(45deg,#00ff88,#00e5ff);
+border-radius:20px;
+transition:.3s;
 }
 
-.progresso {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(45deg, #00ff88, #00e5ff);
-    border-radius: 20px;
-    transition: 0.3s;
+.quiz{
+margin-top:40px;
+display:none;
+animation:fade .4s ease-in-out;
 }
 
-/* NÍVEIS */
-.niveis {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    align-items: center;
+@keyframes fade{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
 }
 
-.nivel {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-    border: 2px solid rgba(255,255,255,0.2);
+.pergunta{
+font-size:20px;
+margin-bottom:20px;
 }
 
-.nivel:hover {
-    transform: scale(1.1);
+.opcao{
+display:block;
+margin:10px auto;
+padding:12px;
+width:250px;
+border-radius:8px;
+border:none;
+cursor:pointer;
+background:rgba(255,255,255,0.1);
+color:white;
+transition:.3s;
 }
 
-.bloqueado {
-    opacity: 0.3;
-    cursor: not-allowed;
+.opcao:hover{
+background:#00e5ff;
+color:black;
 }
 
-footer {
-    margin-top: 50px;
-    opacity: 0.5;
+.correto{
+background:#00ff88 !important;
+color:black !important;
+}
+
+.errado{
+background:#ff4c4c !important;
+color:white !important;
+}
+
+.niveis{
+margin-top:40px;
+}
+
+.nivel-btn{
+padding:12px 25px;
+border-radius:8px;
+border:none;
+background:linear-gradient(45deg,#00e5ff,#00ff88);
+cursor:pointer;
+font-weight:bold;
+}
+
+footer{
+margin-top:40px;
+opacity:.6;
 }
 </style>
 </head>
@@ -97,63 +116,99 @@ footer {
 <body>
 
 <div class="topo">
-    <div class="voltar" onclick="window.location.href='index.html'">⬅ Voltar</div>
-    <div class="xp">XP: <span id="xp">0</span></div>
+<div class="voltar" onclick="window.location.href='index.html'">⬅ Voltar</div>
+<div class="xp">XP: <span id="xp">0</span></div>
 </div>
 
 <h1>Português</h1>
-<p>Complete os níveis para evoluir</p>
 
 <div class="progresso-container">
-    <div class="progresso" id="barra"></div>
+<div class="progresso" id="barra"></div>
 </div>
 
 <div class="niveis">
-    <div class="nivel" onclick="completarNivel(1)">Nível 1</div>
-    <div class="nivel bloqueado" id="nivel2">Nível 2</div>
-    <div class="nivel bloqueado" id="nivel3">Nível 3</div>
-    <div class="nivel bloqueado" id="nivel4">Nível 4</div>
-    <div class="nivel bloqueado" id="nivel5">Nível 5</div>
+<button class="nivel-btn" onclick="iniciarQuiz()">Iniciar Nível 1</button>
 </div>
 
-<footer>
-EVOLVA — Sistema de Evolução
-</footer>
+<div class="quiz" id="quiz">
+<div class="pergunta" id="pergunta"></div>
+<button class="opcao" onclick="responder(this)"></button>
+<button class="opcao" onclick="responder(this)"></button>
+<button class="opcao" onclick="responder(this)"></button>
+<button class="opcao" onclick="responder(this)"></button>
+</div>
+
+<footer>EVOLVA — Educação Inteligente</footer>
 
 <script>
 let xp = localStorage.getItem("xp") ? parseInt(localStorage.getItem("xp")) : 0;
-let nivelAtual = localStorage.getItem("nivel") ? parseInt(localStorage.getItem("nivel")) : 1;
-
 document.getElementById("xp").innerText = xp;
-atualizarProgresso();
-desbloquearNiveis();
 
-function completarNivel(nivel) {
-    if (nivel === nivelAtual) {
-        xp += 20;
-        nivelAtual++;
-        localStorage.setItem("xp", xp);
-        localStorage.setItem("nivel", nivelAtual);
-        document.getElementById("xp").innerText = xp;
-        atualizarProgresso();
-        desbloquearNiveis();
-        alert("Parabéns! Você evoluiu 🚀");
-    }
+let perguntas = [
+{
+pergunta:"Qual é o plural de 'cidadão'?",
+opcoes:["Cidadões","Cidadãos","Cidadães","Cidadans"],
+correta:"Cidadãos"
+},
+{
+pergunta:"Qual frase está correta?",
+opcoes:["A gente vamos sair.","A gente vai sair.","A gente vão sair.","A gente iremos sair."],
+correta:"A gente vai sair."
+},
+{
+pergunta:"Qual é um substantivo?",
+opcoes:["Correr","Bonito","Casa","Rapidamente"],
+correta:"Casa"
+}
+];
+
+let perguntaAtual = 0;
+
+function iniciarQuiz(){
+document.querySelector(".quiz").style.display="block";
+mostrarPergunta();
 }
 
-function atualizarProgresso() {
-    let porcentagem = (nivelAtual - 1) * 20;
-    document.getElementById("barra").style.width = porcentagem + "%";
+function mostrarPergunta(){
+let p = perguntas[perguntaAtual];
+document.getElementById("pergunta").innerText = p.pergunta;
+
+let botoes = document.querySelectorAll(".opcao");
+for(let i=0;i<botoes.length;i++){
+botoes[i].innerText = p.opcoes[i];
+botoes[i].classList.remove("correto","errado");
+botoes[i].disabled=false;
+}
 }
 
-function desbloquearNiveis() {
-    for (let i = 2; i <= 5; i++) {
-        if (nivelAtual >= i) {
-            let el = document.getElementById("nivel" + i);
-            el.classList.remove("bloqueado");
-            el.setAttribute("onclick", "completarNivel(" + i + ")");
-        }
-    }
+function responder(botao){
+let resposta = botao.innerText;
+let correta = perguntas[perguntaAtual].correta;
+
+let botoes = document.querySelectorAll(".opcao");
+
+if(resposta === correta){
+botao.classList.add("correto");
+xp += 10;
+localStorage.setItem("xp",xp);
+document.getElementById("xp").innerText = xp;
+document.getElementById("barra").style.width = (xp % 100) + "%";
+}else{
+botao.classList.add("errado");
+}
+
+botoes.forEach(b=>b.disabled=true);
+
+setTimeout(()=>{
+perguntaAtual++;
+if(perguntaAtual < perguntas.length){
+mostrarPergunta();
+}else{
+alert("Nível concluído! 🚀");
+document.querySelector(".quiz").style.display="none";
+perguntaAtual=0;
+}
+},1000);
 }
 </script>
 

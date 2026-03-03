@@ -12,8 +12,8 @@ body{
 font-family:'Segoe UI',Arial;
 background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 color:white;
-text-align:center;
 padding:30px;
+text-align:center;
 }
 
 .topo{
@@ -21,27 +21,32 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 margin-bottom:20px;
+flex-wrap:wrap;
+gap:10px;
 }
 
-.usuario{
-color:#00e5ff;
-font-weight:bold;
-}
-
+.usuario{color:#00e5ff;font-weight:bold;}
 .xp{color:#00ff88;font-weight:bold;}
 .tempo{color:#ffd700;font-weight:bold;}
 
 button{
 padding:12px 25px;
-border-radius:8px;
 border:none;
+border-radius:8px;
 background:linear-gradient(45deg,#00e5ff,#00ff88);
 cursor:pointer;
 font-weight:bold;
-margin-top:10px;
+margin:8px;
 }
 
-.quiz{margin-top:30px;display:none;}
+.modulos{
+margin-top:20px;
+}
+
+.quiz{
+margin-top:30px;
+display:none;
+}
 
 .opcao{
 display:block;
@@ -71,6 +76,7 @@ display:none;
 justify-content:center;
 align-items:center;
 flex-direction:column;
+z-index:999;
 }
 
 .premium-box{
@@ -89,11 +95,17 @@ width:300px;
 <div class="usuario">Aluno: <span id="nomeUser"></span></div>
 <div class="xp">XP: <span id="xp"></span></div>
 <div class="tempo">Tempo: <span id="tempo"></span></div>
+<button onclick="window.location.href='dashboard.html'">Voltar</button>
 </div>
 
 <h1>Português</h1>
 
-<button onclick="iniciarQuiz()" id="btnIniciar">Iniciar Nível 1</button>
+<div class="modulos">
+<button onclick="abrirModulo('fonologia')">Fonologia e Ortografia</button>
+<button onclick="abrirModulo('morfologia')">Morfologia</button>
+<button onclick="abrirModulo('sintaxe')">Sintaxe</button>
+<button onclick="abrirModulo('semantica')">Semântica e Leitura</button>
+</div>
 
 <div class="quiz" id="quiz">
 <h3 id="pergunta"></h3>
@@ -107,7 +119,7 @@ width:300px;
 <div class="premium-box">
 <h2>Plano Premium</h2>
 <p>Tempo ilimitado</p>
-<p>Acesso total</p>
+<p>Acesso completo</p>
 <button onclick="alert('Pagamento futuro aqui')">Assinar</button>
 </div>
 </div>
@@ -117,14 +129,13 @@ width:300px;
 /* ===== VERIFICAR LOGIN ===== */
 
 let user = localStorage.getItem("usuarioLogado");
-
 if(!user){
 window.location.href="index.html";
 }
 
 document.getElementById("nomeUser").innerText = user;
 
-/* ===== PEGAR DADOS DO USUÁRIO ===== */
+/* ===== PEGAR USUÁRIO ===== */
 
 let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 let usuarioAtual = usuarios.find(u=>u.user===user);
@@ -133,9 +144,12 @@ if(!usuarioAtual){
 window.location.href="index.html";
 }
 
+if(!usuarioAtual.xp) usuarioAtual.xp = 0;
+if(!usuarioAtual.tempo) usuarioAtual.tempo = 0;
+
 document.getElementById("xp").innerText = usuarioAtual.xp;
 
-/* ===== TEMPO INDIVIDUAL ===== */
+/* ===== CONTROLE DE TEMPO ===== */
 
 const LIMITE = 3 * 60 * 60;
 let hoje = new Date().toDateString();
@@ -151,7 +165,6 @@ let restante = LIMITE - usuarioAtual.tempo;
 
 if(restante <= 0){
 document.getElementById("tempo").innerText="Esgotado";
-document.getElementById("btnIniciar").disabled=true;
 document.getElementById("premium").style.display="flex";
 return;
 }
@@ -173,30 +186,99 @@ atualizarTempo();
 
 atualizarTempo();
 
-/* ===== QUIZ ===== */
+/* ===== BANCO DE PERGUNTAS ===== */
 
-let perguntas=[
+let bancoPerguntas = {
+
+fonologia:[
 {
-pergunta:"Qual é o plural de 'cidadão'?",
-opcoes:["Cidadões","Cidadãos","Cidadães","Cidadans"],
-correta:"Cidadãos"
+pergunta:"Qual palavra está escrita corretamente?",
+opcoes:["Excessão","Exceção","Exsesão","Excessam"],
+correta:"Exceção"
 }
-];
+],
 
-function iniciarQuiz(){
+morfologia:[
+{
+pergunta:"'Correr' é classificado como:",
+opcoes:["Substantivo","Verbo","Adjetivo","Advérbio"],
+correta:"Verbo"
+}
+],
+
+sintaxe:[
+{
+pergunta:"Na frase 'João comprou pão', o sujeito é:",
+opcoes:["João","comprou","pão","comprou pão"],
+correta:"João"
+}
+],
+
+semantica:[
+{
+pergunta:"A palavra 'banco' pode significar instituição financeira ou assento. Isso é:",
+opcoes:["Antônimo","Sinonímia","Polissemia","Metáfora"],
+correta:"Polissemia"
+}
+]
+
+};
+
+let moduloAtual;
+let perguntaAtual=0;
+
+/* ===== FUNÇÕES QUIZ ===== */
+
+function abrirModulo(modulo){
 if(usuarioAtual.tempo >= LIMITE){
 document.getElementById("premium").style.display="flex";
 return;
 }
+
+moduloAtual=modulo;
+perguntaAtual=0;
 document.getElementById("quiz").style.display="block";
 mostrarPergunta();
 }
 
 function mostrarPergunta(){
-let p=perguntas[0];
+let p=bancoPerguntas[moduloAtual][perguntaAtual];
 document.getElementById("pergunta").innerText=p.pergunta;
 
 let botoes=document.querySelectorAll(".opcao");
 for(let i=0;i<botoes.length;i++){
 botoes[i].innerText=p.opcoes[i];
-botoes[i].classList.remove(
+botoes[i].classList.remove("correto","errado");
+botoes[i].disabled=false;
+}
+}
+
+function responder(botao){
+let correta=bancoPerguntas[moduloAtual][perguntaAtual].correta;
+
+if(botao.innerText===correta){
+botao.classList.add("correto");
+usuarioAtual.xp += 10;
+document.getElementById("xp").innerText=usuarioAtual.xp;
+salvarUsuarios();
+}else{
+botao.classList.add("errado");
+}
+
+document.querySelectorAll(".opcao").forEach(b=>b.disabled=true);
+
+setTimeout(()=>{
+document.getElementById("quiz").style.display="none";
+},1000);
+}
+
+/* ===== SALVAR ===== */
+
+function salvarUsuarios(){
+localStorage.setItem("usuarios", JSON.stringify(usuarios));
+}
+
+</script>
+
+</body>
+</html>

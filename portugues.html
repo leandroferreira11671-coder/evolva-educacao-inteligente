@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Português — EVOLVA</title>
 
+<script src="perguntas-portugues.js"></script>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 
@@ -20,27 +22,35 @@ text-align:center;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:20px;
 flex-wrap:wrap;
-gap:10px;
+margin-bottom:30px;
 }
 
 .usuario{color:#00e5ff;font-weight:bold;}
 .xp{color:#00ff88;font-weight:bold;}
-.tempo{color:#ffd700;font-weight:bold;}
 
 button{
 padding:12px 25px;
 border:none;
 border-radius:8px;
-background:linear-gradient(45deg,#00e5ff,#00ff88);
 cursor:pointer;
-font-weight:bold;
 margin:8px;
+font-weight:bold;
 }
 
-.modulos{
-margin-top:20px;
+.modulo-btn{
+background:#00e5ff;
+color:black;
+}
+
+.nivel-btn{
+background:#00ff88;
+color:black;
+}
+
+.nivel-btn.locked{
+background:gray;
+cursor:not-allowed;
 }
 
 .quiz{
@@ -65,25 +75,19 @@ background:#00e5ff;
 color:black;
 }
 
-.correto{background:#00ff88 !important;color:black !important;}
-.errado{background:#ff4c4c !important;color:white !important;}
-
-.premium{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.9);
-display:none;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-z-index:999;
+.progress-container{
+width:80%;
+margin:20px auto;
+background:#1e2a38;
+border-radius:20px;
+overflow:hidden;
 }
 
-.premium-box{
-background:#1e2a38;
-padding:40px;
-border-radius:20px;
-width:300px;
+.progress-bar{
+height:20px;
+width:0%;
+background:#00ff88;
+transition:0.3s;
 }
 
 </style>
@@ -94,191 +98,125 @@ width:300px;
 <div class="topo">
 <div class="usuario">Aluno: <span id="nomeUser"></span></div>
 <div class="xp">XP: <span id="xp"></span></div>
-<div class="tempo">Tempo: <span id="tempo"></span></div>
-<button onclick="window.location.href='dashboard.html'">Voltar</button>
+<button onclick="window.location.href='index.html'">Voltar</button>
 </div>
 
 <h1>Português</h1>
 
-<div class="modulos">
-<button onclick="abrirModulo('fonologia')">Fonologia e Ortografia</button>
-<button onclick="abrirModulo('morfologia')">Morfologia</button>
-<button onclick="abrirModulo('sintaxe')">Sintaxe</button>
-<button onclick="abrirModulo('semantica')">Semântica e Leitura</button>
-</div>
+<div id="modulos"></div>
+<div id="niveis"></div>
 
 <div class="quiz" id="quiz">
 <h3 id="pergunta"></h3>
+
 <button class="opcao" onclick="responder(this)"></button>
 <button class="opcao" onclick="responder(this)"></button>
 <button class="opcao" onclick="responder(this)"></button>
 <button class="opcao" onclick="responder(this)"></button>
+
+<div class="progress-container">
+<div class="progress-bar" id="progress"></div>
 </div>
 
-<div class="premium" id="premium">
-<div class="premium-box">
-<h2>Plano Premium</h2>
-<p>Tempo ilimitado</p>
-<p>Acesso completo</p>
-<button onclick="alert('Pagamento futuro aqui')">Assinar</button>
-</div>
 </div>
 
 <script>
 
-/* ===== VERIFICAR LOGIN ===== */
+/* ===== LOGIN ===== */
 
 let user = localStorage.getItem("usuarioLogado");
-if(!user){
-window.location.href="index.html";
-}
+if(!user){ window.location.href="index.html"; }
 
-document.getElementById("nomeUser").innerText = user;
-
-/* ===== PEGAR USUÁRIO ===== */
+document.getElementById("nomeUser").innerText=user;
 
 let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 let usuarioAtual = usuarios.find(u=>u.user===user);
 
-if(!usuarioAtual){
-window.location.href="index.html";
-}
-
-if(!usuarioAtual.xp) usuarioAtual.xp = 0;
-if(!usuarioAtual.tempo) usuarioAtual.tempo = 0;
-
-document.getElementById("xp").innerText = usuarioAtual.xp;
-
-/* ===== CONTROLE DE TEMPO ===== */
-
-const LIMITE = 3 * 60 * 60;
-let hoje = new Date().toDateString();
-
-if(usuarioAtual.dataTempo !== hoje){
-usuarioAtual.tempo = 0;
-usuarioAtual.dataTempo = hoje;
-salvarUsuarios();
-}
-
-function atualizarTempo(){
-let restante = LIMITE - usuarioAtual.tempo;
-
-if(restante <= 0){
-document.getElementById("tempo").innerText="Esgotado";
-document.getElementById("premium").style.display="flex";
-return;
-}
-
-let h=Math.floor(restante/3600);
-let m=Math.floor((restante%3600)/60);
-let s=restante%60;
-
-document.getElementById("tempo").innerText=h+"h "+m+"m "+s+"s";
-}
-
-setInterval(()=>{
-if(document.getElementById("quiz").style.display==="block"){
-usuarioAtual.tempo++;
-salvarUsuarios();
-}
-atualizarTempo();
-},1000);
-
-atualizarTempo();
-
-/* ===== BANCO DE PERGUNTAS ===== */
-
-let bancoPerguntas = {
-
-fonologia:[
-{
-pergunta:"Qual palavra está escrita corretamente?",
-opcoes:["Excessão","Exceção","Exsesão","Excessam"],
-correta:"Exceção"
-}
-],
-
-morfologia:[
-{
-pergunta:"'Correr' é classificado como:",
-opcoes:["Substantivo","Verbo","Adjetivo","Advérbio"],
-correta:"Verbo"
-}
-],
-
-sintaxe:[
-{
-pergunta:"Na frase 'João comprou pão', o sujeito é:",
-opcoes:["João","comprou","pão","comprou pão"],
-correta:"João"
-}
-],
-
-semantica:[
-{
-pergunta:"A palavra 'banco' pode significar instituição financeira ou assento. Isso é:",
-opcoes:["Antônimo","Sinonímia","Polissemia","Metáfora"],
-correta:"Polissemia"
-}
-]
-
+if(!usuarioAtual.progresso){
+usuarioAtual.progresso={
+fonologia:1,
+morfologia:1,
+sintaxe:1,
+semantica:1
 };
+}
+
+if(!usuarioAtual.xp) usuarioAtual.xp=0;
+
+document.getElementById("xp").innerText=usuarioAtual.xp;
+
+/* ===== CRIAR MODULOS ===== */
+
+let modulosLista=["fonologia","morfologia","sintaxe","semantica"];
+let modulosDiv=document.getElementById("modulos");
+
+modulosLista.forEach(mod=>{
+let btn=document.createElement("button");
+btn.innerText=mod.toUpperCase();
+btn.className="modulo-btn";
+btn.onclick=()=>mostrarNiveis(mod);
+modulosDiv.appendChild(btn);
+});
+
+/* ===== MOSTRAR NIVEIS ===== */
 
 let moduloAtual;
+let nivelAtual;
 let perguntaAtual=0;
 
-/* ===== FUNÇÕES QUIZ ===== */
+function mostrarNiveis(modulo){
+moduloAtual=modulo;
+document.getElementById("niveis").innerHTML="";
 
-function abrirModulo(modulo){
-if(usuarioAtual.tempo >= LIMITE){
-document.getElementById("premium").style.display="flex";
-return;
+for(let i=1;i<=3;i++){
+let btn=document.createElement("button");
+btn.innerText="Nível "+i;
+btn.className="nivel-btn";
+
+if(i>usuarioAtual.progresso[modulo]){
+btn.classList.add("locked");
+btn.disabled=true;
+}else{
+btn.onclick=()=>iniciarNivel(i);
 }
 
-moduloAtual=modulo;
+document.getElementById("niveis").appendChild(btn);
+}
+}
+
+/* ===== INICIAR NIVEL ===== */
+
+function iniciarNivel(nivel){
+nivelAtual="nivel"+nivel;
 perguntaAtual=0;
 document.getElementById("quiz").style.display="block";
 mostrarPergunta();
 }
 
+/* ===== MOSTRAR PERGUNTA ===== */
+
 function mostrarPergunta(){
-let p=bancoPerguntas[moduloAtual][perguntaAtual];
+let perguntas=bancoPerguntas[moduloAtual][nivelAtual];
+
+if(perguntaAtual>=perguntas.length){
+finalizarNivel();
+return;
+}
+
+let p=perguntas[perguntaAtual];
+
 document.getElementById("pergunta").innerText=p.pergunta;
 
 let botoes=document.querySelectorAll(".opcao");
 for(let i=0;i<botoes.length;i++){
 botoes[i].innerText=p.opcoes[i];
-botoes[i].classList.remove("correto","errado");
 botoes[i].disabled=false;
 }
+
+atualizarBarra();
 }
+
+/* ===== RESPONDER ===== */
 
 function responder(botao){
-let correta=bancoPerguntas[moduloAtual][perguntaAtual].correta;
-
-if(botao.innerText===correta){
-botao.classList.add("correto");
-usuarioAtual.xp += 10;
-document.getElementById("xp").innerText=usuarioAtual.xp;
-salvarUsuarios();
-}else{
-botao.classList.add("errado");
-}
-
-document.querySelectorAll(".opcao").forEach(b=>b.disabled=true);
-
-setTimeout(()=>{
-document.getElementById("quiz").style.display="none";
-},1000);
-}
-
-/* ===== SALVAR ===== */
-
-function salvarUsuarios(){
-localStorage.setItem("usuarios", JSON.stringify(usuarios));
-}
-
-</script>
-
-</body>
-</html>
+let correta=bancoPerguntas[moduloAtual][ni

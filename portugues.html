@@ -19,16 +19,16 @@ padding:30px;
 .topo{
 display:flex;
 justify-content:space-between;
-margin-bottom:20px;
+align-items:center;
+margin-bottom:15px;
 }
 
-.voltar{
-cursor:pointer;
-color:#00e5ff;
-}
+.voltar{cursor:pointer;color:#00e5ff;}
 
-.xp{
-color:#00ff88;
+.xp{color:#00ff88;font-weight:bold;}
+
+.tempo{
+color:#ffd700;
 font-weight:bold;
 }
 
@@ -50,7 +50,7 @@ transition:.3s;
 }
 
 .quiz{
-margin-top:40px;
+margin-top:30px;
 display:none;
 animation:fade .4s ease-in-out;
 }
@@ -69,7 +69,7 @@ margin-bottom:20px;
 display:block;
 margin:10px auto;
 padding:12px;
-width:250px;
+width:260px;
 border-radius:8px;
 border:none;
 cursor:pointer;
@@ -93,11 +93,8 @@ background:#ff4c4c !important;
 color:white !important;
 }
 
-.niveis{
-margin-top:40px;
-}
-
 .nivel-btn{
+margin-top:20px;
 padding:12px 25px;
 border-radius:8px;
 border:none;
@@ -118,6 +115,7 @@ opacity:.6;
 <div class="topo">
 <div class="voltar" onclick="window.location.href='index.html'">⬅ Voltar</div>
 <div class="xp">XP: <span id="xp">0</span></div>
+<div class="tempo">Tempo restante: <span id="tempo"></span></div>
 </div>
 
 <h1>Português</h1>
@@ -126,9 +124,9 @@ opacity:.6;
 <div class="progresso" id="barra"></div>
 </div>
 
-<div class="niveis">
-<button class="nivel-btn" onclick="iniciarQuiz()">Iniciar Nível 1</button>
-</div>
+<button class="nivel-btn" onclick="iniciarQuiz()" id="btnIniciar">
+Iniciar Nível 1
+</button>
 
 <div class="quiz" id="quiz">
 <div class="pergunta" id="pergunta"></div>
@@ -141,8 +139,50 @@ opacity:.6;
 <footer>EVOLVA — Educação Inteligente</footer>
 
 <script>
+/* ===== XP ===== */
 let xp = localStorage.getItem("xp") ? parseInt(localStorage.getItem("xp")) : 0;
 document.getElementById("xp").innerText = xp;
+
+/* ===== CONTROLE DE TEMPO ===== */
+const LIMITE = 3 * 60 * 60; // 3 horas em segundos
+let hoje = new Date().toDateString();
+let dataSalva = localStorage.getItem("dataTempo");
+
+if(dataSalva !== hoje){
+localStorage.setItem("tempoUsado",0);
+localStorage.setItem("dataTempo",hoje);
+}
+
+let tempoUsado = parseInt(localStorage.getItem("tempoUsado")) || 0;
+
+function atualizarTempo(){
+let restante = LIMITE - tempoUsado;
+
+if(restante <= 0){
+document.getElementById("tempo").innerText = "Tempo esgotado";
+document.getElementById("btnIniciar").disabled = true;
+return;
+}
+
+let horas = Math.floor(restante/3600);
+let minutos = Math.floor((restante%3600)/60);
+let segundos = restante%60;
+
+document.getElementById("tempo").innerText =
+horas+"h "+minutos+"m "+segundos+"s";
+}
+
+setInterval(()=>{
+if(document.getElementById("quiz").style.display==="block"){
+tempoUsado++;
+localStorage.setItem("tempoUsado",tempoUsado);
+}
+atualizarTempo();
+},1000);
+
+atualizarTempo();
+
+/* ===== QUIZ ===== */
 
 let perguntas = [
 {
@@ -165,52 +205,5 @@ correta:"Casa"
 let perguntaAtual = 0;
 
 function iniciarQuiz(){
-document.querySelector(".quiz").style.display="block";
-mostrarPergunta();
-}
-
-function mostrarPergunta(){
-let p = perguntas[perguntaAtual];
-document.getElementById("pergunta").innerText = p.pergunta;
-
-let botoes = document.querySelectorAll(".opcao");
-for(let i=0;i<botoes.length;i++){
-botoes[i].innerText = p.opcoes[i];
-botoes[i].classList.remove("correto","errado");
-botoes[i].disabled=false;
-}
-}
-
-function responder(botao){
-let resposta = botao.innerText;
-let correta = perguntas[perguntaAtual].correta;
-
-let botoes = document.querySelectorAll(".opcao");
-
-if(resposta === correta){
-botao.classList.add("correto");
-xp += 10;
-localStorage.setItem("xp",xp);
-document.getElementById("xp").innerText = xp;
-document.getElementById("barra").style.width = (xp % 100) + "%";
-}else{
-botao.classList.add("errado");
-}
-
-botoes.forEach(b=>b.disabled=true);
-
-setTimeout(()=>{
-perguntaAtual++;
-if(perguntaAtual < perguntas.length){
-mostrarPergunta();
-}else{
-alert("Nível concluído! 🚀");
-document.querySelector(".quiz").style.display="none";
-perguntaAtual=0;
-}
-},1000);
-}
-</script>
-
-</body>
-</html>
+if(tempoUsado >= LIMITE){
+ale

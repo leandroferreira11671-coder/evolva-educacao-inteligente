@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVOLVA — Dashboard</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:'Segoe UI',Arial;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+padding:40px;
+}
+
+.topo{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:40px;
+}
+
+.usuario{
+color:#00e5ff;
+font-weight:bold;
+}
+
+button{
+padding:10px 20px;
+border:none;
+border-radius:8px;
+background:linear-gradient(45deg,#00e5ff,#00ff88);
+cursor:pointer;
+font-weight:bold;
+}
+
+.cards{
+display:flex;
+gap:30px;
+flex-wrap:wrap;
+justify-content:center;
+margin-top:40px;
+}
+
+.card{
+width:250px;
+padding:30px;
+border-radius:20px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(12px);
+border:1px solid rgba(255,255,255,0.1);
+text-align:center;
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+}
+
+.card h3{
+color:#00ff88;
+margin-bottom:10px;
+}
+
+.card button{
+margin-top:15px;
+width:100%;
+}
+</style>
+</head>
+
+<body>
+
+<div class="topo">
+<div class="usuario">Olá, <span id="nomeUser"></span></div>
+<button onclick="logout()">Sair</button>
+</div>
+
+<h1>Escolha sua matéria</h1>
+
+<div class="cards">
+
+<div class="card">
+<h3>Português</h3>
+<p>Básico ao avançado</p>
+<button onclick="window.location.href='portugues.html'">
+Entrar
+</button>
+</div>
+
+<div class="card">
+<h3>Matemática</h3>
+<p>Em breve</p>
+<button disabled>Bloqueado</button>
+</div>
+
+<div class="card">
+<h3>Inglês</h3>
+<p>Em breve</p>
+<button disabled>Bloqueado</button>
+</div>
+
+</div>
+
+<script>
+let user = localStorage.getItem("usuarioLogado");
+
+if(!user){
+window.location.href="index.html";
+}
+
+document.getElementById("nomeUser").innerText = user;
+
+function logout(){
+localStorage.removeItem("usuarioLogado");
+window.location.href="index.html";
+}
+</script>
+
+</body>
+</html>

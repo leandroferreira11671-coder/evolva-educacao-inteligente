@@ -25,6 +25,7 @@ padding:40px;
 border-radius:20px;
 width:320px;
 text-align:center;
+box-shadow:0 0 30px rgba(0,0,0,0.4);
 }
 
 h1{
@@ -38,6 +39,7 @@ padding:12px;
 margin:10px 0;
 border-radius:8px;
 border:none;
+outline:none;
 }
 
 button{
@@ -49,6 +51,10 @@ margin-top:10px;
 background:linear-gradient(45deg,#00e5ff,#00ff88);
 font-weight:bold;
 cursor:pointer;
+}
+
+button:hover{
+opacity:0.9;
 }
 
 .link{
@@ -66,6 +72,7 @@ font-size:14px;
 
 <h1>EVOLVA</h1>
 
+<!-- LOGIN -->
 <div id="loginBox">
 <input type="text" id="loginUser" placeholder="Usuário">
 <input type="password" id="loginPass" placeholder="Senha">
@@ -73,9 +80,10 @@ font-size:14px;
 <div class="link" onclick="mostrarCadastro()">Criar conta</div>
 </div>
 
+<!-- CADASTRO -->
 <div id="cadastroBox" style="display:none;">
-<input type="text" id="cadUser" placeholder="Usuário">
-<input type="password" id="cadPass" placeholder="Senha">
+<input type="text" id="cadUser" placeholder="Novo usuário">
+<input type="password" id="cadPass" placeholder="Nova senha">
 <button onclick="cadastrar()">Cadastrar</button>
 <div class="link" onclick="mostrarLogin()">Voltar ao login</div>
 </div>
@@ -83,6 +91,9 @@ font-size:14px;
 </div>
 
 <script>
+
+/* ===== TROCAR TELAS ===== */
+
 function mostrarCadastro(){
 document.getElementById("loginBox").style.display="none";
 document.getElementById("cadastroBox").style.display="block";
@@ -92,6 +103,8 @@ function mostrarLogin(){
 document.getElementById("loginBox").style.display="block";
 document.getElementById("cadastroBox").style.display="none";
 }
+
+/* ===== CADASTRAR ===== */
 
 function cadastrar(){
 let user=document.getElementById("cadUser").value.trim();
@@ -113,13 +126,21 @@ usuarios.push({
 user:user,
 pass:btoa(pass),
 xp:0,
-tempo:0
+progresso:{
+fonologia:1,
+morfologia:1,
+sintaxe:1,
+semantica:1
+}
 });
 
 localStorage.setItem("usuarios",JSON.stringify(usuarios));
-alert("Conta criada!");
+
+alert("Conta criada com sucesso!");
 mostrarLogin();
 }
+
+/* ===== LOGIN ===== */
 
 function login(){
 let user=document.getElementById("loginUser").value.trim();
@@ -130,13 +151,14 @@ let usuarios=JSON.parse(localStorage.getItem("usuarios"))||[];
 let valido=usuarios.find(u=>u.user===user && u.pass===btoa(pass));
 
 if(!valido){
-alert("Login inválido");
+alert("Usuário ou senha incorretos");
 return;
 }
 
 localStorage.setItem("usuarioLogado",user);
 window.location.href="dashboard.html";
 }
+
 </script>
 
 </body>

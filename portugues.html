@@ -6,11 +6,7 @@
 <title>Português — EVOLVA</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
 font-family:'Segoe UI',Arial;
@@ -22,7 +18,7 @@ text-align:center;
 overflow:hidden;
 }
 
-/* 🔥 LOGO COMPLETA COMO FUNDO */
+/* LOGO FUNDO */
 .fundo-logo{
 position:fixed;
 top:50%;
@@ -30,28 +26,18 @@ left:50%;
 transform:translate(-50%,-50%);
 width:100vw;
 height:100vh;
-object-fit:contain;   /* mostra a logo inteira */
-opacity:0.04;         /* suavidade */
+object-fit:contain;
+opacity:0.04;
 z-index:-1;
 pointer-events:none;
 }
 
-/* TOPO */
 .topo{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:40px;
-}
-
-.usuario{
-color:#00e5ff;
-font-weight:bold;
-}
-
-.xp{
-color:#00ff88;
-font-weight:bold;
+margin-bottom:30px;
+flex-wrap:wrap;
 }
 
 button{
@@ -63,19 +49,14 @@ margin:8px;
 font-weight:bold;
 }
 
-.modulo-btn{
+.modelo-btn{
 background:#00e5ff;
 color:black;
 }
 
-.nivel-btn{
+.modulo-btn{
 background:#00ff88;
 color:black;
-}
-
-.nivel-btn.locked{
-background:gray;
-cursor:not-allowed;
 }
 
 .quiz{
@@ -87,7 +68,7 @@ display:none;
 display:block;
 margin:10px auto;
 padding:12px;
-width:260px;
+width:280px;
 border-radius:8px;
 border:none;
 cursor:pointer;
@@ -100,38 +81,29 @@ background:#00e5ff;
 color:black;
 }
 
-.progress-container{
-width:80%;
-margin:20px auto;
-background:#1e2a38;
-border-radius:20px;
-overflow:hidden;
-}
-
-.progress-bar{
-height:20px;
-width:0%;
-background:#00ff88;
-transition:0.3s;
+.pontos{
+margin-top:10px;
+color:#00ff88;
+font-weight:bold;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🔥 LOGO DE FUNDO -->
 <img src="logo.jpeg" class="fundo-logo">
 
 <div class="topo">
-<div class="usuario">Aluno: <span id="nomeUser"></span></div>
-<div class="xp">XP: <span id="xp"></span></div>
 <button onclick="window.location.href='dashboard.html'">Voltar</button>
 </div>
 
 <h1>Português</h1>
 
+<h2>Escolha o Modelo</h2>
+<div id="modelos"></div>
+
+<h2>Módulos</h2>
 <div id="modulos"></div>
-<div id="niveis"></div>
 
 <div class="quiz" id="quiz">
 <h3 id="pergunta"></h3>
@@ -141,9 +113,7 @@ transition:0.3s;
 <button class="opcao" onclick="responder(this)"></button>
 <button class="opcao" onclick="responder(this)"></button>
 
-<div class="progress-container">
-<div class="progress-bar" id="progress"></div>
-</div>
+<div class="pontos" id="pontuacaoModulo"></div>
 </div>
 
 <script src="perguntas-portugues.js"></script>
@@ -153,76 +123,66 @@ transition:0.3s;
 let user = localStorage.getItem("usuarioLogado");
 if(!user){ window.location.href="index.html"; }
 
-document.getElementById("nomeUser").innerText=user;
-
 let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 let usuarioAtual = usuarios.find(u=>u.user===user);
 
-if(!usuarioAtual.progresso){
-usuarioAtual.progresso={
-fonologia:1,
-morfologia:1,
-sintaxe:1,
-semantica:1
+/* NOVA ESTRUTURA DE PONTOS */
+
+if(!usuarioAtual.portugues){
+usuarioAtual.portugues={
+basico:{fonologia:0,morfologia:0,sintaxe:0,semantica:0},
+avancado:{fonologia:0,morfologia:0,sintaxe:0,semantica:0}
 };
 }
 
-if(!usuarioAtual.xp) usuarioAtual.xp=0;
-document.getElementById("xp").innerText=usuarioAtual.xp;
+/* MODELOS */
 
-let modulosLista=["fonologia","morfologia","sintaxe","semantica"];
+let modeloAtual="";
+let moduloAtual="";
+let perguntaAtual=0;
+
+let modelosDiv=document.getElementById("modelos");
+
+["basico","avancado"].forEach(modelo=>{
+let btn=document.createElement("button");
+btn.innerText=modelo.toUpperCase();
+btn.className="modelo-btn";
+btn.onclick=()=>{
+modeloAtual=modelo;
+alert("Modelo selecionado: "+modelo);
+};
+modelosDiv.appendChild(btn);
+});
+
+/* MÓDULOS */
+
 let modulosDiv=document.getElementById("modulos");
 
-modulosLista.forEach(mod=>{
+["fonologia","morfologia","sintaxe","semantica"].forEach(mod=>{
 let btn=document.createElement("button");
 btn.innerText=mod.toUpperCase();
 btn.className="modulo-btn";
-btn.onclick=()=>mostrarNiveis(mod);
-modulosDiv.appendChild(btn);
-});
-
-let moduloAtual;
-let nivelAtual;
-let perguntaAtual=0;
-
-function mostrarNiveis(modulo){
-moduloAtual=modulo;
-document.getElementById("niveis").innerHTML="";
-
-for(let i=1;i<=3;i++){
-let btn=document.createElement("button");
-btn.innerText="Nível "+i;
-btn.className="nivel-btn";
-
-if(i>usuarioAtual.progresso[modulo]){
-btn.classList.add("locked");
-btn.disabled=true;
-}else{
-btn.onclick=()=>iniciarNivel(i);
+btn.onclick=()=>{
+if(!modeloAtual){
+alert("Escolha Básico ou Avançado primeiro");
+return;
 }
-
-document.getElementById("niveis").appendChild(btn);
-}
-}
-
-function iniciarNivel(nivel){
-nivelAtual="nivel"+nivel;
+moduloAtual=mod;
 perguntaAtual=0;
 document.getElementById("quiz").style.display="block";
 mostrarPergunta();
-}
+};
+modulosDiv.appendChild(btn);
+});
+
+/* MOSTRAR PERGUNTA */
 
 function mostrarPergunta(){
 
-let perguntas=bancoPerguntas[moduloAtual][nivelAtual];
+let perguntas=bancoPerguntas[modeloAtual][moduloAtual];
 
-if(!perguntas || perguntas.length===0){
-alert("Esse nível ainda não possui perguntas.");
-return;
-}
-
-if(perguntaAtual>=perguntas.length){
-finalizarNivel();
+if(!perguntas || perguntaAtual>=perguntas.length){
+alert("Fim das perguntas desse módulo.");
 return;
 }
 
@@ -234,18 +194,19 @@ let botoes=document.querySelectorAll(".opcao");
 
 for(let i=0;i<botoes.length;i++){
 botoes[i].innerText=p.opcoes[i];
-botoes[i].disabled=false;
 }
 
-atualizarBarra();
+atualizarPontuacao();
 }
+
+/* RESPONDER */
 
 function responder(botao){
-let correta=bancoPerguntas[moduloAtual][nivelAtual][perguntaAtual].correta;
+
+let correta=bancoPerguntas[modeloAtual][moduloAtual][perguntaAtual].correta;
 
 if(botao.innerText===correta){
-usuarioAtual.xp+=5;
-document.getElementById("xp").innerText=usuarioAtual.xp;
+usuarioAtual.portugues[modeloAtual][moduloAtual]+=10;
 salvar();
 }
 
@@ -253,25 +214,15 @@ perguntaAtual++;
 mostrarPergunta();
 }
 
-function atualizarBarra(){
-let total=bancoPerguntas[moduloAtual][nivelAtual].length;
-let porcentagem=(perguntaAtual/total)*100;
-document.getElementById("progress").style.width=porcentagem+"%";
+/* ATUALIZAR PONTOS */
+
+function atualizarPontuacao(){
+let pontos=usuarioAtual.portugues[modeloAtual][moduloAtual];
+document.getElementById("pontuacaoModulo").innerText=
+"Pontos em "+moduloAtual+": "+pontos;
 }
 
-function finalizarNivel(){
-alert("Nível concluído!");
-
-let nivelNumero=parseInt(nivelAtual.replace("nivel",""));
-
-if(usuarioAtual.progresso[moduloAtual]===nivelNumero){
-usuarioAtual.progresso[moduloAtual]++;
-}
-
-salvar();
-document.getElementById("quiz").style.display="none";
-mostrarNiveis(moduloAtual);
-}
+/* SALVAR */
 
 function salvar(){
 localStorage.setItem("usuarios",JSON.stringify(usuarios));

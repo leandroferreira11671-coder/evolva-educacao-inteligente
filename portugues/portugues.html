@@ -1,1 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Português — EVOLVA</title>
 
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:'Segoe UI',Arial;
+min-height:100vh;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+padding:30px;
+text-align:center;
+overflow:hidden;
+}
+
+/* LOGO FUNDO */
+.fundo-logo{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:100vw;
+height:100vh;
+object-fit:contain;
+opacity:0.04;
+z-index:-1;
+pointer-events:none;
+}
+
+.topo{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+flex-wrap:wrap;
+}
+
+button{
+padding:12px 25px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+margin:8px;
+font-weight:bold;
+}
+
+.modelo-btn{
+background:#00e5ff;
+color:black;
+}
+
+.modulo-btn{
+background:#00ff88;
+color:black;
+}
+
+.quiz{
+margin-top:30px;
+display:none;
+}
+
+.opcao{
+display:block;
+margin:10px auto;
+padding:12px;
+width:280px;
+border-radius:8px;
+border:none;
+cursor:pointer;
+background:rgba(255,255,255,0.1);
+color:white;
+}
+
+.opcao:hover{
+background:#00e5ff;
+color:black;
+}
+
+.pontos{
+margin-top:10px;
+color:#00ff88;
+font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<img src="logo.jpeg" class="fundo-logo">
+
+<div class="topo">
+<button onclick="window.location.href='dashboard.html'">Voltar</button>
+</div>
+
+<h1>Português</h1>
+
+<h2>Escolha o Modelo</h2>
+<div id="modelos"></div>
+
+<h2>Módulos</h2>
+<div id="modulos"></div>
+
+<div class="quiz" id="quiz">
+<h3 id="pergunta"></h3>
+
+<button class="opcao" onclick="responder(this)"></button>
+<button class="opcao" onclick="responder(this)"></button>
+<button class="opcao" onclick="responder(this)"></button>
+<button class="opcao" onclick="responder(this)"></button>
+
+<div class="pontos" id="pontuacaoModulo"></div>
+</div>
+
+<script src="perguntas-portugues.js"></script>
+
+<script>
+
+let user = localStorage.getItem("usuarioLogado");
+if(!user){ window.location.href="index.html"; }
+
+let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+let usuarioAtual = usuarios.find(u=>u.user===user);
+
+/* NOVA ESTRUTURA DE PONTOS */
+
+if(!usuarioAtual.portugues){
+usuarioAtual.portugues={
+basico:{fonologia:0,morfologia:0,sintaxe:0,semantica:0},
+avancado:{fonologia:0,morfologia:0,sintaxe:0,semantica:0}
+};
+}
+
+/* MODELOS */
+
+let modeloAtual="";
+let moduloAtual="";
+let perguntaAtual=0;
+
+let modelosDiv=document.getElementById("modelos");
+
+["basico","avancado"].forEach(modelo=>{
+let btn=document.createElement("button");
+btn.innerText=modelo.toUpperCase();
+btn.className="modelo-btn";
+btn.onclick=()=>{
+modeloAtual=modelo;
+alert("Modelo selecionado: "+modelo);
+};
+modelosDiv.appendChild(btn);
+});
+
+/* MÓDULOS */
+
+let modulosDiv=document.getElementById("modulos");
+
+["fonologia","morfologia","sintaxe","semantica"].forEach(mod=>{
+let btn=document.createElement("button");
+btn.innerText=mod.toUpperCase();
+btn.className="modulo-btn";
+btn.onclick=()=>{
+if(!modeloAtual){
+alert("Escolha Básico ou Avançado primeiro");
+return;
+}
+moduloAtual=mod;
+perguntaAtual=0;
+document.getElementById("quiz").style.display="block";
+mostrarPergunta();
+};
+modulosDiv.appendChild(btn);
+});
+
+/* MOSTRAR PERGUNTA */
+
+function mostrarPergunta(){
+
+let perguntas=bancoPerguntas[modeloAtual][moduloAtual];
+
+if(!perguntas || perguntaAtual>=perguntas.length){
+alert("Fim das perguntas desse módulo.");
+return;
+}
+
+let p=perguntas[perguntaAtual];
+
+document.getElementById("pergunta").innerText=p.pergunta;
+
+let botoes=document.querySelectorAll(".opcao");
+
+for(let i=0;i<botoes.length;i++){
+botoes[i].innerText=p.opcoes[i];
+}
+
+atualizarPontuacao();
+}
+
+/* RESPONDER */
+
+function responder(botao){
+
+let correta=bancoPerguntas[modeloAtual][moduloAtual][perguntaAtual].correta;
+
+if(botao.innerText===correta){
+usuarioAtual.portugues[modeloAtual][moduloAtual]+=10;
+salvar();
+}
+
+perguntaAtual++;
+mostrarPergunta();
+}
+
+/* ATUALIZAR PONTOS */
+
+function atualizarPontuacao(){
+let pontos=usuarioAtual.portugues[modeloAtual][moduloAtual];
+document.getElementById("pontuacaoModulo").innerText=
+"Pontos em "+moduloAtual+": "+pontos;
+}
+
+/* SALVAR */
+
+function salvar(){
+localStorage.setItem("usuarios",JSON.stringify(usuarios));
+}
+
+</script>
+
+</body>
+</html>

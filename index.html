@@ -6,7 +6,12 @@
 <title>EVOLVA — Educação Inteligente</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 body{
 font-family:'Segoe UI',Arial;
@@ -63,6 +68,7 @@ cursor:pointer;
 color:#00e5ff;
 font-size:14px;
 }
+
 </style>
 </head>
 
@@ -73,19 +79,35 @@ font-size:14px;
 <h1>EVOLVA</h1>
 
 <!-- LOGIN -->
+
 <div id="loginBox">
+
 <input type="text" id="loginUser" placeholder="Usuário">
+
 <input type="password" id="loginPass" placeholder="Senha">
+
 <button onclick="login()">Entrar</button>
-<div class="link" onclick="mostrarCadastro()">Criar conta</div>
+
+<div class="link" onclick="mostrarCadastro()">
+Criar conta
+</div>
+
 </div>
 
 <!-- CADASTRO -->
+
 <div id="cadastroBox" style="display:none;">
+
 <input type="text" id="cadUser" placeholder="Novo usuário">
+
 <input type="password" id="cadPass" placeholder="Nova senha">
+
 <button onclick="cadastrar()">Cadastrar</button>
-<div class="link" onclick="mostrarLogin()">Voltar ao login</div>
+
+<div class="link" onclick="mostrarLogin()">
+Voltar ao login
+</div>
+
 </div>
 
 </div>
@@ -95,68 +117,89 @@ font-size:14px;
 /* ===== TROCAR TELAS ===== */
 
 function mostrarCadastro(){
+
 document.getElementById("loginBox").style.display="none";
 document.getElementById("cadastroBox").style.display="block";
+
 }
 
 function mostrarLogin(){
+
 document.getElementById("loginBox").style.display="block";
 document.getElementById("cadastroBox").style.display="none";
+
 }
 
 /* ===== CADASTRAR ===== */
 
 function cadastrar(){
+
 let user=document.getElementById("cadUser").value.trim();
 let pass=document.getElementById("cadPass").value.trim();
 
 if(!user||!pass){
+
 alert("Preencha todos os campos");
 return;
+
 }
 
 let usuarios=JSON.parse(localStorage.getItem("usuarios"))||[];
 
 if(usuarios.find(u=>u.user===user)){
+
 alert("Usuário já existe");
 return;
+
 }
 
 usuarios.push({
+
 user:user,
 pass:btoa(pass),
 xp:0,
+
 progresso:{
 fonologia:1,
 morfologia:1,
 sintaxe:1,
 semantica:1
 }
+
 });
 
 localStorage.setItem("usuarios",JSON.stringify(usuarios));
 
 alert("Conta criada com sucesso!");
+
 mostrarLogin();
+
 }
 
 /* ===== LOGIN ===== */
 
 function login(){
+
 let user=document.getElementById("loginUser").value.trim();
 let pass=document.getElementById("loginPass").value.trim();
 
 let usuarios=JSON.parse(localStorage.getItem("usuarios"))||[];
 
-let valido=usuarios.find(u=>u.user===user && u.pass===btoa(pass));
+let valido=usuarios.find(
+u=>u.user===user && u.pass===btoa(pass)
+);
 
 if(!valido){
+
 alert("Usuário ou senha incorretos");
 return;
+
 }
 
 localStorage.setItem("usuarioLogado",user);
-window.location.href="dashboard.html";
+
+window.location.href="painel.html";
+
 }
 
 </script>

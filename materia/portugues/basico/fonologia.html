@@ -1,1 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVOLVA - Fonologia</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+padding:20px;
+}
+
+h1{
+text-align:center;
+}
+
+.pergunta{
+background:#1e293b;
+padding:15px;
+margin:15px 0;
+border-radius:10px;
+}
+
+button{
+margin-top:10px;
+padding:8px 15px;
+border:none;
+border-radius:6px;
+background:#22c55e;
+color:white;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Quiz de Fonologia</h1>
+
+<div id="quiz"></div>
+
+<button onclick="verificar()">Ver resultado</button>
+
+<h2 id="resultado"></h2>
+
+<script>
+
+const perguntas = [
+
+{
+pergunta:"A fonologia estuda:",
+opcoes:["Estrutura das frases","Sons da língua","Pontuação"],
+correta:1
+},
+
+{
+pergunta:"A menor unidade sonora da língua é:",
+opcoes:["Letra","Fonema","Palavra"],
+correta:1
+},
+
+{
+pergunta:"A palavra 'chave' possui:",
+opcoes:["Hiato","Dígrafo","Tritongo"],
+correta:1
+},
+
+{
+pergunta:"A palavra 'pai' apresenta:",
+opcoes:["Ditongo","Hiato","Tritongo"],
+correta:0
+},
+
+{
+pergunta:"A palavra 'baú' apresenta:",
+opcoes:["Ditongo","Hiato","Tritongo"],
+correta:1
+}
+
+];
+
+const quiz = document.getElementById("quiz");
+
+perguntas.forEach((p,i)=>{
+
+let html = `<div class="pergunta">
+<p>${i+1}) ${p.pergunta}</p>`;
+
+p.opcoes.forEach((op,j)=>{
+html += `<input type="radio" name="p${i}" value="${j}"> ${op}<br>`;
+});
+
+html += `</div>`;
+
+quiz.innerHTML += html;
+
+});
+
+function verificar(){
+
+let pontos = 0;
+
+perguntas.forEach((p,i)=>{
+
+let marcada = document.querySelector(`input[name="p${i}"]:checked`);
+
+if(marcada && marcada.value == p.correta){
+
+pontos++;
+
+}
+
+});
+
+document.getElementById("resultado").innerText =
+"Você acertou "+pontos+" de "+perguntas.length+" perguntas";
+
+}
+
+</script>
+
+</body>
+</html>

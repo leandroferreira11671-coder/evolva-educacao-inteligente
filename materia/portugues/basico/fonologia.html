@@ -1,1 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EVOLVA - Fonologia</title>
+
+<style>
+
+body{
+    font-family: Arial;
+    background:#0f172a;
+    color:white;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+}
+
+.pergunta{
+    background:#1e293b;
+    padding:15px;
+    margin:15px 0;
+    border-radius:10px;
+}
+
+button{
+    margin-top:10px;
+    padding:8px 15px;
+    border:none;
+    border-radius:6px;
+    background:#22c55e;
+    color:white;
+    cursor:pointer;
+}
+
+.resultado{
+    margin-top:10px;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Fonologia - Quiz</h1>
+
+<div class="pergunta">
+<p>1) A fonologia estuda:</p>
+
+<input type="radio" name="q1"> A estrutura das frases<br>
+<input type="radio" name="q1" id="q1c"> Os sons da língua<br>
+<input type="radio" name="q1"> A origem das palavras<br>
+
+<button onclick="verificar1()">Responder</button>
+
+<p class="resultado" id="r1"></p>
+</div>
+
+
+<div class="pergunta">
+<p>2) A menor unidade sonora da língua é:</p>
+
+<input type="radio" name="q2"> Letra<br>
+<input type="radio" name="q2" id="q2c"> Fonema<br>
+<input type="radio" name="q2"> Palavra<br>
+
+<button onclick="verificar2()">Responder</button>
+
+<p class="resultado" id="r2"></p>
+</div>
+
+
+<div class="pergunta">
+<p>3) A palavra "chave" possui:</p>
+
+<input type="radio" name="q3"> Hiato<br>
+<input type="radio" name="q3" id="q3c"> Dígrafo<br>
+<input type="radio" name="q3"> Tritongo<br>
+
+<button onclick="verificar3()">Responder</button>
+
+<p class="resultado" id="r3"></p>
+</div>
+
+
+<div class="pergunta">
+<p>4) O encontro vocálico da palavra "pai" é:</p>
+
+<input type="radio" name="q4" id="q4c"> Ditongo<br>
+<input type="radio" name="q4"> Hiato<br>
+<input type="radio" name="q4"> Tritongo<br>
+
+<button onclick="verificar4()">Responder</button>
+
+<p class="resultado" id="r4"></p>
+</div>
+
+
+<div class="pergunta">
+<p>5) A palavra "baú" apresenta:</p>
+
+<input type="radio" name="q5"> Ditongo<br>
+<input type="radio" name="q5" id="q5c"> Hiato<br>
+<input type="radio" name="q5"> Tritongo<br>
+
+<button onclick="verificar5()">Responder</button>
+
+<p class="resultado" id="r5"></p>
+</div>
+
+
+<script>
+
+function verificar1(){
+if(document.getElementById("q1c").checked){
+document.getElementById("r1").innerHTML="✅ Correto"
+}else{
+document.getElementById("r1").innerHTML="❌ Errado"
+}
+}
+
+function verificar2(){
+if(document.getElementById("q2c").checked){
+document.getElementById("r2").innerHTML="✅ Correto"
+}else{
+document.getElementById("r2").innerHTML="❌ Errado"
+}
+}
+
+function verificar3(){
+if(document.getElementById("q3c").checked){
+document.getElementById("r3").innerHTML="✅ Correto"
+}else{
+document.getElementById("r3").innerHTML="❌ Errado"
+}
+}
+
+function verificar4(){
+if(document.getElementById("q4c").checked){
+document.getElementById("r4").innerHTML="✅ Correto"
+}else{
+document.getElementById("r4").innerHTML="❌ Errado"
+}
+}
+
+function verificar5(){
+if(document.getElementById("q5c").checked){
+document.getElementById("r5").innerHTML="✅ Correto"
+}else{
+document.getElementById("r5").innerHTML="❌ Errado"
+}
+}
+
+</script>
+
+</body>
+</html>

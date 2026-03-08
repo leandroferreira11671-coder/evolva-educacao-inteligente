@@ -1,1 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EVOLVA - Fonologia</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+padding:20px;
+}
+
+h1{
+text-align:center;
+}
+
+.pergunta{
+background:#1e293b;
+padding:15px;
+margin:15px 0;
+border-radius:10px;
+}
+
+button{
+margin-top:20px;
+padding:10px 18px;
+border:none;
+border-radius:8px;
+background:#22c55e;
+color:white;
+cursor:pointer;
+font-size:16px;
+}
+
+#resultado{
+margin-top:20px;
+font-size:22px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Quiz de Fonologia</h1>
+
+<div id="quiz"></div>
+
+<button onclick="verificar()">Ver resultado</button>
+
+<h2 id="resultado"></h2>
+
+<script>
+
+function embaralhar(array){
+
+for(let i=array.length-1;i>0;i--){
+
+let j=Math.floor(Math.random()*(i+1));
+
+[array[i],array[j]]=[array[j],array[i]];
+
+}
+
+return array;
+
+}
+
+const perguntas=[
+
+Ditongo","Hiato","Tritongo","Dígrafo"],
+correta:"Ditongo"
+},
+
+{
+pergunta:"A palavra 'baú' apresenta:",
+opcoes:["Ditongo","Hiato","Tritongo","Dígrafo"],
+correta:"Hiato"
+},
+
+{
+pergunta:"A palavra 'saída' apresenta:",
+opcoes:["Ditongo","Hiato","Tritongo","Dígrafo"],
+correta:"Hiato"
+},
+
+{
+pergunta:"A palavra 'saara' apresenta:",
+opcoes:["Ditongo","Hiato","Tritongo","Dígrafo"],
+correta:"Hiato"
+},
+
+{
+pergunta:"A palavra 'aéreo' apresenta:",
+
+
+{
+pergunta
+{
+pergunta:"A palavra 'milho' possui:",
+opcoes:["Ditongo","Hiato","Tritongo","Dígrafo"],
+correta:"Dígrafo"
+},
+
+{
+pergunta:"A palavra 'chuva' possui:",
+opcoes:["Ditongo","Hiato","Tritongo","Dígrafo"],
+correta:"Dígrafo"
+},
+
+{
+pergunta:"A palavra 'guitarra' possui:",
+opcoes:["Ditongo","Hiato","Tritongo","Dígrafo"],
+correta:"Dígrafo"
+},
+
+{
+pergunta:"A palavra 'queijo' possui:",
+opcoes:["Ditongo","Hiato","Tritongo","Dígrafo"],
+correta:"Dígrafo"
+},
+
+{
+pergunta:"A palavra 'guerra' possui:",
+opcoes:["Ditongo","Hiato","Tritongo","Dígrafo"],
+correta:"Dígrafo"
+},
+
+{
+pergunta:"A palavra 'linha' possui:",
+opcoes:["Ditongo","Hiato","Tritongo","Dígrafo"],
+correta:"Dígrafo"
+},
+
+{
+pergunta:"A palavra 'banho' possui:",
+opcoes:["Ditongo","Hiato","Tritongo","Dígrafo"],
+correta:"Dígrafo"
+},
+
+{
+pergunta:"A palavra 'sonho' possui:",
+opcoes:["Ditongo","Hiato","Tritongo","Dígrafo"],
+correta:"Dígrafo"
+},
+
+{
+pergunta:"A palavra 'telha' possui:",
+opcoes:["Ditongo","Hiato","Tritongo","Dígrafo"],
+correta:"Dígrafo"
+},
+
+{
+pergunta:"A palavra 'alho' possui:",
+opcoes:["Ditongo","Hiato","Tritongo","Dígrafo"],
+correta:"Dígrafo"
+},
+
+{
+pergunta:"A palavra 'velho' possui:",
+opcoes:["Ditongo","Hiato","Tritongo","Dígrafo"],
+correta:"Dígrafo"
+
+},
+
+{
+pergunta:"A palavra 'cachorro' possui:",
+opcoes:["Ditongo",
+
+];
+
+perguntas.forEach(p=>{
+p.opcoes=embaralhar(p.opcoes);
+});
+
+embaralhar(perguntas);
+
+const quiz=document.getElementById("quiz");
+
+perguntas.forEach((p,i)=>{
+
+let html=`<div class="pergunta">
+<p>${i+1}) ${p.pergunta}</p>`;
+
+p.opcoes.forEach((op,j)=>{
+html+=`<input type="radio" name="p${i}" value="${op}"> ${op}<br>`;
+});
+
+html+=`</div>`;
+
+quiz.innerHTML+=html;
+
+});
+
+function verificar(){
+
+let pontos=0;
+
+perguntas.forEach((p,i)=>{
+
+let marcada=document.querySelector(`input[name="p${i}"]:checked`);
+
+if(marcada && marcada.value==p.correta){
+
+pontos++;
+
+}
+
+});
+
+document.getElementById("resultado").innerText=
+"Você acertou "+pontos+" de "+perguntas.length+" perguntas";
+
+}
+
+</script>
+
+</body>
+</html>

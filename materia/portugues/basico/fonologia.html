@@ -1,1 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EVOLVA - Fonologia</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+padding:20px;
+}
+
+h1{
+text-align:center;
+}
+
+.pergunta{
+background:#1e293b;
+padding:15px;
+margin:15px 0;
+border-radius:10px;
+}
+
+button{
+margin-top:20px;
+padding:10px 18px;
+border:none;
+border-radius:8px;
+background:#22c55e;
+color:white;
+cursor:pointer;
+font-size:16px;
+}
+
+button:hover{
+background:#16a34a;
+}
+
+#resultado{
+margin-top:20px;
+font-size:22px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Quiz de Fonologia</h1>
+
+<div id="quiz"></div>
+
+<button onclick="verificar()">Ver resultado</button>
+
+<h2 id="resultado"></h2>
+
+<script>
+
+function embaralhar(array){
+
+for(let i=array.length-1;i>0;i--){
+
+let j=Math.floor(Math.random()*(i+1));
+
+[array[i],array[j]]=[array[j],array[i]];
+
+}
+
+return array;
+
+}
+
+
+const banco=[
+
+{palavra:"pai",tipo:"Ditongo"},
+{palavra:"boi",tipo:"Ditongo"},
+{palavra:"rei",tipo:"Ditongo"},
+{palavra:"céu",tipo:"Ditongo"},
+{palavra:"mãe",tipo:"Ditongo"},
+{palavra:"pão",tipo:"Ditongo"},
+{palavra:"cão",tipo:"Ditongo"},
+{palavra:"noite",tipo:"Ditongo"},
+{palavra:"caixa",tipo:"Ditongo"},
+{palavra:"peixe",tipo:"Ditongo"},
+{palavra:"beijo",tipo:"Ditongo"},
+{palavra:"coisa",tipo:"Ditongo"},
+{palavra:"feira",tipo:"Ditongo"},
+{palavra:"roupa",tipo:"Ditongo"},
+{palavra:"pouco",tipo:"Ditongo"},
+{palavra:"doido",tipo:"Ditongo"},
+{palavra:"jeito",tipo:"Ditongo"},
+{palavra:"teima",tipo:"Ditongo"},
+{palavra:"coitado",tipo:"Ditongo"},
+{palavra:"louro",tipo:"Ditongo"},
+
+{palavra:"saída",tipo:"Hiato"},
+{palavra:"baú",tipo:"Hiato"},
+{palavra:"país",tipo:"Hiato"},
+{palavra:"raiz",tipo:"Hiato"},
+{palavra:"saúde",tipo:"Hiato"},
+{palavra:"poeta",tipo:"Hiato"},
+{palavra:"aorta",tipo:"Hiato"},
+{palavra:"cooperar",tipo:"Hiato"},
+{palavra:"veículo",tipo:"Hiato"},
+{palavra:"heroína",tipo:"Hiato"},
+{palavra:"zoológico",tipo:"Hiato"},
+{palavra:"voar",tipo:"Hiato"},
+{palavra:"doar",tipo:"Hiato"},
+{palavra:"saara",tipo:"Hiato"},
+{palavra:"miolo",tipo:"Hiato"},
+
+{palavra:"saguão",tipo:"Tritongo"},
+{palavra:"Paraguai",tipo:"Tritongo"},
+{palavra:"Uruguai",tipo:"Tritongo"},
+{palavra:"quais",tipo:"Tritongo"},
+{palavra:"iguais",tipo:"Tritongo"},
+{palavra:"averiguei",tipo:"Tritongo"},
+{palavra:"delinquiu",tipo:"Tritongo"},
+
+{palavra:"chave",tipo:"Dígrafo"},
+{palavra:"chuva",tipo:"Dígrafo"},
+{palavra:"cheiro",tipo:"Dígrafo"},
+{palavra:"chefe",tipo:"Dígrafo"},
+{palavra:"carro",tipo:"Dígrafo"},
+{palavra:"ninho",tipo:"Dígrafo"},
+{palavra:"filho",tipo:"Dígrafo"},
+{palavra:"milho",tipo:"Dígrafo"},
+{palavra:"banho",tipo:"Dígrafo"},
+{palavra:"linha",tipo:"Dígrafo"},
+{palavra:"sonho",tipo:"Dígrafo"},
+{palavra:"telha",tipo:"Dígrafo"},
+{palavra:"velho",tipo:"Dígrafo"},
+{palavra:"folha",tipo:"Dígrafo"}
+
+];
+
+
+let usadas=[];
+
+function gerarPergunta(){
+
+if(usadas.length===banco.length){
+
+usadas=[]; // reinicia quando acabar
+
+}
+
+let indice;
+
+do{
+
+indice=Math.floor(Math.random()*banco.length);
+
+}while(usadas.includes(indice));
+
+usadas.push(indice);
+
+let palavra=banco[indice];
+
+let opcoes=["Ditongo","Hiato","Tritongo","Dígrafo"];
+
+embaralhar(opcoes);
+
+return{
+
+pergunta:`A palavra "${palavra.palavra}" possui:`,
+
+opcoes:opcoes,
+
+correta:palavra.tipo
+
+};
+
+}
+
+
+const perguntas=[];
+
+for(let i=0;i<30;i++){
+
+perguntas.push(gerarPergunta());
+
+}
+
+embaralhar(perguntas);
+
+
+const quiz=document.getElementById("quiz");
+
+perguntas.forEach((p,i)=>{
+
+let html=`<div class="pergunta">
+<p>${i+1}) ${p.pergunta}</p>`;
+
+p.opcoes.forEach(op=>{
+
+html+=`<input type="radio" name="p${i}" value="${op}"> ${op}<br>`;
+
+});
+
+html+=`</div>`;
+
+quiz.innerHTML+=html;
+
+});
+
+
+function verificar(){
+
+let pontos=0;
+
+perguntas.forEach((p,i)=>{
+
+let marcada=document.querySelector(`input[name="p${i}"]:checked`);
+
+if(marcada && marcada.value==p.correta){
+
+pontos++;
+
+}
+
+});
+
+document.getElementById("resultado").innerText=
+"Você acertou "+pontos+" de "+perguntas.length+" perguntas";
+
+}
+
+</script>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EVOLVA - Educação Inteligente</title>
+    <title>EVOLVA - Português Completo</title>
     <style>
         * {
             margin: 0;
@@ -20,7 +20,7 @@
             align-items: center;
         }
 
-        /* WALLPAPER FIXO E BEM VISÍVEL */
+        /* WALLPAPER */
         body::before {
             content: "";
             position: fixed;
@@ -32,7 +32,6 @@
             z-index: -2;
         }
 
-        /* CAMADA COM A LOGO GRANDE */
         body::after {
             content: "EVOLVA";
             position: fixed;
@@ -41,82 +40,329 @@
             transform: translate(-50%, -50%);
             font-size: 15vw;
             font-weight: 900;
-            color: rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.1);
             white-space: nowrap;
             text-transform: uppercase;
             letter-spacing: 20px;
             z-index: -1;
             pointer-events: none;
-            text-shadow: 0 0 50px rgba(255,255,255,0.1);
             animation: pulseLogo 4s ease-in-out infinite;
         }
 
-        /* SUBTÍTULO DA LOGO */
         .wallpaper-subtitle {
             position: fixed;
             top: 65%;
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 2vw;
-            color: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.08);
             white-space: nowrap;
             letter-spacing: 5px;
             z-index: -1;
             pointer-events: none;
             font-weight: 300;
-            text-transform: uppercase;
         }
 
         @keyframes pulseLogo {
-            0%, 100% { opacity: 0.15; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 0.2; transform: translate(-50%, -50%) scale(1.02); }
+            0%, 100% { opacity: 0.1; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.15; transform: translate(-50%, -50%) scale(1.02); }
         }
 
-        /* EFEITO DE GRADE NO FUNDO */
         .grid-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
             background-size: 50px 50px;
             z-index: -1;
-            pointer-events: none;
         }
 
-        /* CÍRCULOS DECORATIVOS */
-        .circle {
-            position: fixed;
+        /* CONTEÚDO PRINCIPAL */
+        .dashboard {
+            width: 100%;
+            max-width: 1400px;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+            display: none;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        /* HEADER */
+        .dashboard-header {
+            background: white;
+            border-radius: 20px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.03);
-            z-index: -1;
-            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
         }
 
-        .circle1 {
-            width: 400px;
-            height: 400px;
-            top: -100px;
-            right: -100px;
+        .user-details h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 5px;
         }
 
-        .circle2 {
-            width: 300px;
-            height: 300px;
-            bottom: -50px;
-            left: -50px;
+        .user-details p {
+            color: #666;
+            font-size: 14px;
         }
 
-        .circle3 {
-            width: 200px;
-            height: 200px;
-            bottom: 30%;
-            right: 10%;
+        .logout-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
         }
 
+        .logout-btn:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+        }
+
+        /* BEM-VINDO */
+        .welcome-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .welcome-section h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-section p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        /* NÍVEIS DE ENSINO */
+        .niveis-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .nivel-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nivel-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+        }
+
+        .nivel-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+        }
+
+        .nivel-card.nivel1::before { background: #4CAF50; }
+        .nivel-card.nivel2::before { background: #FF9800; }
+        .nivel-card.nivel3::before { background: #f44336; }
+        .nivel-card.nivel4::before { background: #9C27B0; }
+
+        .nivel-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .nivel-card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .nivel-card.nivel1 h3 { color: #4CAF50; }
+        .nivel-card.nivel2 h3 { color: #FF9800; }
+        .nivel-card.nivel3 h3 { color: #f44336; }
+        .nivel-card.nivel4 h3 { color: #9C27B0; }
+
+        .nivel-card p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* MATÉRIAS */
+        .materias-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .materias-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .materias-header h2 {
+            color: #333;
+            font-size: 28px;
+        }
+
+        .nivel-tag {
+            background: #667eea;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+
+        .materias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .materia-item {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s;
+            border-left: 4px solid;
+            cursor: pointer;
+        }
+
+        .materia-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .materia-item h4 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .materia-item p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .materia-tag {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* CONTEÚDO DA AULA */
+        .aula-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .aula-content h3 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .aula-content h4 {
+            color: #667eea;
+            font-size: 22px;
+            margin: 25px 0 15px;
+        }
+
+        .aula-content p {
+            color: #444;
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .exemplo-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .exemplo-box strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .back-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #5a67d8;
+            transform: translateX(-5px);
+        }
+
+        /* TELA DE LOGIN */
         .container {
             width: 100%;
             max-width: 400px;
@@ -136,23 +382,20 @@
             font-weight: 900;
             letter-spacing: 4px;
             text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-            margin-bottom: 5px;
         }
 
         .small-logo p {
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255,255,255,0.9);
             font-size: 16px;
             letter-spacing: 2px;
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
         }
 
         .form-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255,255,255,0.95);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 40px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .tabs {
@@ -219,12 +462,12 @@
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
         }
 
         .forgot-password {
@@ -236,10 +479,6 @@
             color: #667eea;
             text-decoration: none;
             font-size: 14px;
-        }
-
-        .forgot-password a:hover {
-            text-decoration: underline;
         }
 
         .message {
@@ -261,166 +500,49 @@
             border: 1px solid #cfc;
         }
 
-        .dashboard {
-            display: none;
-            width: 100%;
-            max-width: 1200px;
-            padding: 20px;
-            position: relative;
-            z-index: 2;
+        /* RESPONSIVIDADE */
+        @media (max-width: 1024px) {
+            .niveis-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
-        .dashboard.active {
-            display: block;
-        }
-
-        .dashboard-header {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .user-avatar {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .logout-btn {
-            background: #f44336;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background 0.3s;
-        }
-
-        .logout-btn:hover {
-            background: #d32f2f;
-        }
-
-        .welcome-message {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            text-align: center;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .welcome-message h2 {
-            color: #333;
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .welcome-message p {
-            color: #666;
-            font-size: 18px;
-        }
-
-        .materias-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .materia-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-            cursor: pointer;
-        }
-
-        .materia-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .materia-card.portugues { border-top: 4px solid #e74c3c; }
-        .materia-card.matematica { border-top: 4px solid #3498db; }
-        .materia-card.ingles { border-top: 4px solid #2ecc71; }
-
-        .materia-card h3 {
-            font-size: 24px;
-            margin: 15px 0;
-        }
-
-        .materia-card.portugues h3 { color: #e74c3c; }
-        .materia-card.matematica h3 { color: #3498db; }
-        .materia-card.ingles h3 { color: #2ecc71; }
-
-        .materia-card p {
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .materia-card button {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 10px 30px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s;
-        }
-
-        .materia-card button:hover {
-            background: #5a67d8;
+        @media (max-width: 768px) {
+            .niveis-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .user-info {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- ELEMENTOS DO WALLPAPER -->
     <div class="wallpaper-subtitle">— Educação Inteligente —</div>
     <div class="grid-overlay"></div>
-    <div class="circle circle1"></div>
-    <div class="circle circle2"></div>
-    <div class="circle circle3"></div>
 
-    <!-- Container de Login/Cadastro -->
+    <!-- TELA DE LOGIN -->
     <div class="container" id="authContainer">
-        <!-- Logo pequena no topo -->
         <div class="small-logo">
             <h1>EVOLVA</h1>
             <p>— Educação Inteligente —</p>
         </div>
 
         <div class="form-card">
-            <!-- Abas -->
             <div class="tabs">
                 <div class="tab active" onclick="switchTab('login')">Entrar</div>
                 <div class="tab" onclick="switchTab('register')">Cadastrar</div>
             </div>
 
-            <!-- Mensagens -->
             <div class="message" id="message"></div>
 
-            <!-- Formulário de Login -->
             <div class="form active" id="loginForm">
                 <div class="form-group">
                     <label>E-mail</label>
@@ -436,7 +558,6 @@
                 <button class="btn" onclick="login()">Entrar</button>
             </div>
 
-            <!-- Formulário de Cadastro -->
             <div class="form" id="registerForm">
                 <div class="form-group">
                     <label>Nome completo</label>
@@ -457,7 +578,6 @@
                 <button class="btn" onclick="register()">Cadastrar</button>
             </div>
 
-            <!-- Formulário de Recuperar Senha -->
             <div class="form" id="forgotForm">
                 <div class="form-group">
                     <label>E-mail cadastrado</label>
@@ -471,197 +591,140 @@
         </div>
     </div>
 
-    <!-- Dashboard (após login) -->
+    <!-- DASHBOARD PRINCIPAL -->
     <div class="dashboard" id="dashboard">
         <div class="dashboard-header">
             <div class="user-info">
                 <div class="user-avatar" id="userAvatar">U</div>
-                <div>
-                    <h3 id="userName">Usuário</h3>
-                    <p id="userEmail">email@exemplo.com</p>
+                <div class="user-details">
+                    <h2 id="userName">Carregando...</h2>
+                    <p id="userEmail">carregando@email.com</p>
                 </div>
             </div>
             <button class="logout-btn" onclick="logout()">Sair</button>
         </div>
 
-        <div class="welcome-message">
-            <h2 id="welcomeUser">Bem-vindo(a), Estudante! 👋</h2>
-            <p>Escolha uma matéria para começar a evoluir!</p>
+        <div class="welcome-section">
+            <h1 id="welcomeUser">Bem-vindo(a) ao EVOLVA!</h1>
+            <p>Escolha seu nível e comece a aprender Português de forma completa</p>
         </div>
 
-        <div class="materias-grid">
-            <div class="materia-card portugues" onclick="abrirMateria('portugues')">
-                <h3>📖 Português</h3>
-                <p>Gramática, redação, literatura e interpretação</p>
-                <button>Começar</button>
+        <!-- NÍVEIS -->
+        <div class="niveis-container">
+            <div class="nivel-card nivel1" onclick="mostrarNivel(1)">
+                <div class="nivel-icon">🔰</div>
+                <h3>Nível 1</h3>
+                <p>Ensino Fundamental Inicial</p>
+                <small>1º ao 5º ano</small>
             </div>
-
-            <div class="materia-card matematica" onclick="abrirMateria('matematica')">
-                <h3>🧮 Matemática</h3>
-                <p>Operações, geometria, frações e equações</p>
-                <button>Começar</button>
+            <div class="nivel-card nivel2" onclick="mostrarNivel(2)">
+                <div class="nivel-icon">📚</div>
+                <h3>Nível 2</h3>
+                <p>Ensino Fundamental - Intermediário</p>
+                <small>6º ao 7º ano</small>
             </div>
-
-            <div class="materia-card ingles" onclick="abrirMateria('ingles')">
-                <h3>🌎 Inglês</h3>
-                <p>Vocabulary, grammar, conversation e writing</p>
-                <button>Começar</button>
+            <div class="nivel-card nivel3" onclick="mostrarNivel(3)">
+                <div class="nivel-icon">🎯</div>
+                <h3>Nível 3</h3>
+                <p>Ensino Fundamental - Avançado</p>
+                <small>8º ao 9º ano</small>
+            </div>
+            <div class="nivel-card nivel4" onclick="mostrarNivel(4)">
+                <div class="nivel-icon">🚀</div>
+                <h3>Nível 4</h3>
+                <p>Ensino Médio</p>
+                <small>1º ao 3º ano</small>
             </div>
         </div>
-    </div>
 
-    <script>
-        // Simulação de banco de dados local
-        let users = JSON.parse(localStorage.getItem('evolva_users')) || [];
+        <!-- MATÉRIAS DO NÍVEL 1 -->
+        <div id="nivel1-content" style="display: none;">
+            <div class="materias-section">
+                <div class="materias-header">
+                    <h2>📖 Nível 1 - Português Básico</h2>
+                    <span class="nivel-tag">Fundamental Inicial</span>
+                </div>
+                <div class="materias-grid">
+                    <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('fonetica1')">
+                        <h4>🔊 Fonética e Fonologia</h4>
+                        <p>Sons das letras, vogais e consoantes, encontros vocálicos</p>
+                        <span class="materia-tag">Básico</span>
+                    </div>
+                    <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('morfologia1')">
+                        <h4>📝 Morfologia</h4>
+                        <p>Substantivo, adjetivo, verbo, artigo, numeral</p>
+                        <span class="materia-tag">Básico</span>
+                    </div>
+                    <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('sintaxe1')">
+                        <h4>🔤 Sintaxe</h4>
+                        <p>Frases, orações, sujeito e predicado simples</p>
+                        <span class="materia-tag">Básico</span>
+                    </div>
+                    <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('ortografia1')">
+                        <h4>✍️ Ortografia</h4>
+                        <p>Uso do S e Z, M e N, C e QU, G e J</p>
+                        <span class="materia-tag">Básico</span>
+                    </div>
+                    <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('semantica1')">
+                        <h4>💭 Semântica</h4>
+                        <p>Sinônimos, antônimos, sentido das palavras</p>
+                        <span class="materia-tag">Básico</span>
+                    </div>
+                    <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('pontuacao1')">
+                        <h4>❗ Pontuação Básica</h4>
+                        <p>Ponto final, vírgula, ponto de interrogação e exclamação</p>
+                        <span class="materia-tag">Básico</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        function showMessage(text, type) {
-            const message = document.getElementById('message');
-            message.textContent = text;
-            message.className = `message ${type}`;
-            message.style.display = 'block';
-            setTimeout(() => {
-                message.style.display = 'none';
-            }, 3000);
-        }
+        <!-- MATÉRIAS DO NÍVEL 2 -->
+        <div id="nivel2-content" style="display: none;">
+            <div class="materias-section">
+                <div class="materias-header">
+                    <h2>📖 Nível 2 - Português Intermediário</h2>
+                    <span class="nivel-tag">6º/7º Ano</span>
+                </div>
+                <div class="materias-grid">
+                    <div class="materia-item" style="border-left-color: #FF9800;" onclick="mostrarAula('morfologia2')">
+                        <h4>📚 Morfologia Avançada</h4>
+                        <p>Estrutura das palavras: radical, afixos, desinências</p>
+                        <span class="materia-tag">Intermediário</span>
+                    </div>
+                    <div class="materia-item" style="border-left-color: #FF9800;" onclick="mostrarAula('classes')">
+                        <h4>🔤 Classes Gramaticais</h4>
+                        <p>Substantivo, adjetivo, verbo, advérbio, preposição, conjunção</p>
+                        <span class="materia-tag">Intermediário</span>
+                    </div>
+                    <div class="materia-item" style="border-left-color: #FF9800;" onclick="mostrarAula('formacao')">
+                        <h4>📝 Formação de Palavras</h4>
+                        <p>Derivação, composição, onomatopeia, abreviação</p>
+                        <span class="materia-tag">Intermediário</span>
+                    </div>
+                    <div class="materia-item" style="border-left-color: #FF9800;" onclick="mostrarAula('verbos')">
+                        <h4>🎯 Verbos</h4>
+                        <p>Conjugação, tempos verbais, modos indicativo e subjuntivo</p>
+                        <span class="materia-tag">Intermediário</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        function switchTab(tab) {
-            document.getElementById('loginForm').classList.remove('active');
-            document.getElementById('registerForm').classList.remove('active');
-            document.getElementById('forgotForm').classList.remove('active');
-            
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            
-            if (tab === 'login') {
-                document.getElementById('loginForm').classList.add('active');
-                document.querySelectorAll('.tab')[0].classList.add('active');
-            } else if (tab === 'register') {
-                document.getElementById('registerForm').classList.add('active');
-                document.querySelectorAll('.tab')[1].classList.add('active');
-            }
-        }
-
-        function showForgotPassword() {
-            document.getElementById('loginForm').classList.remove('active');
-            document.getElementById('registerForm').classList.remove('active');
-            document.getElementById('forgotForm').classList.add('active');
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        }
-
-        function register() {
-            const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
-            const password = document.getElementById('regPassword').value;
-            const confirmPass = document.getElementById('regConfirmPassword').value;
-
-            if (!name || !email || !password || !confirmPass) {
-                showMessage('Preencha todos os campos!', 'error');
-                return;
-            }
-
-            if (password !== confirmPass) {
-                showMessage('As senhas não coincidem!', 'error');
-                return;
-            }
-
-            if (password.length < 6) {
-                showMessage('A senha deve ter pelo menos 6 caracteres!', 'error');
-                return;
-            }
-
-            if (users.find(u => u.email === email)) {
-                showMessage('Este e-mail já está cadastrado!', 'error');
-                return;
-            }
-
-            const newUser = {
-                id: Date.now(),
-                name: name,
-                email: email,
-                password: password
-            };
-
-            users.push(newUser);
-            localStorage.setItem('evolva_users', JSON.stringify(users));
-            
-            showMessage('Cadastro realizado com sucesso! Faça login.', 'success');
-            switchTab('login');
-            
-            document.getElementById('regName').value = '';
-            document.getElementById('regEmail').value = '';
-            document.getElementById('regPassword').value = '';
-            document.getElementById('regConfirmPassword').value = '';
-        }
-
-        function login() {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-
-            if (!email || !password) {
-                showMessage('Preencha todos os campos!', 'error');
-                return;
-            }
-
-            const user = users.find(u => u.email === email && u.password === password);
-
-            if (user) {
-                localStorage.setItem('evolva_current_user', JSON.stringify(user));
-                
-                document.getElementById('authContainer').style.display = 'none';
-                document.getElementById('dashboard').classList.add('active');
-                
-                document.getElementById('userName').textContent = user.name;
-                document.getElementById('userEmail').textContent = user.email;
-                document.getElementById('welcomeUser').textContent = `Bem-vindo(a), ${user.name}! 👋`;
-                document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
-                
-                document.getElementById('loginEmail').value = '';
-                document.getElementById('loginPassword').value = '';
-            } else {
-                showMessage('E-mail ou senha incorretos!', 'error');
-            }
-        }
-
-        function resetPassword() {
-            const email = document.getElementById('forgotEmail').value;
-            
-            if (!email) {
-                showMessage('Digite seu e-mail!', 'error');
-                return;
-            }
-
-            const user = users.find(u => u.email === email);
-            
-            if (user) {
-                showMessage(`Instruções enviadas para ${email}`, 'success');
-                console.log('Recuperar senha para:', email);
-            } else {
-                showMessage('E-mail não encontrado!', 'error');
-            }
-        }
-
-        function logout() {
-            localStorage.removeItem('evolva_current_user');
-            document.getElementById('authContainer').style.display = 'block';
-            document.getElementById('dashboard').classList.remove('active');
-            switchTab('login');
-        }
-
-        function abrirMateria(materia) {
-            const user = JSON.parse(localStorage.getItem('evolva_current_user'));
-            alert(`${user.name}, você escolheu ${materia}! Prepare-se para evoluir! 🚀`);
-        }
-
-        window.onload = function() {
-            const currentUser = JSON.parse(localStorage.getItem('evolva_current_user'));
-            if (currentUser) {
-                document.getElementById('authContainer').style.display = 'none';
-                document.getElementById('dashboard').classList.add('active');
-                document.getElementById('userName').textContent = currentUser.name;
-                document.getElementById('userEmail').textContent = currentUser.email;
-                document.getElementById('welcomeUser').textContent = `Bem-vindo(a), ${currentUser.name}! 👋`;
-                document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
-            }
-        };
-    </script>
-</body>
-</html>
+        <!-- MATÉRIAS DO NÍVEL 3 -->
+        <div id="nivel3-content" style="display: none;">
+            <div class="materias-section">
+                <div class="materias-header">
+                    <h2>📖 Nível 3 - Português Avançado</h2>
+                    <span class="nivel-tag">8º/9º Ano</span>
+                </div>
+                <div class="materias-grid">
+                    <div class="materia-item" style="border-left-color: #f44336;" onclick="mostrarAula('sintaxe2')">
+                        <h4>🔗 Sintaxe</h4>
+                        <p>Termos essenciais, integrantes e acessórios da oração</p>
+                        <span class="materia-tag">Avançado</span>
+                    </div>
+                    <div class="materia-item" style="border-left-color: #f44336;" onclick="mostrarAula('periodo')">
+                        <h4>📐 Período Composto</h4>
+                        <p>Coordenação e subordinação, orações desenvolvidas</p>
+                        <

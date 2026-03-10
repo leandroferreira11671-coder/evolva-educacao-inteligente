@@ -961,4 +961,147 @@
                     </div>
                     
                     <h3>Consoantes</h3>
-                    <p>São sons produzidos
+                    <p>São sons produzidos com obstáculos à passagem do ar. Exemplos: b, c, d, f, g, etc.</p>
+                    
+                    <h3>Encontros Vocálicos</h3>
+                    <ul class="lista">
+                        <li><strong>Ditongo:</strong> vogal + semivogal na mesma sílaba (pai, céu, história)</li>
+                        <li><strong>Tritongo:</strong> semivogal + vogal + semivogal (Paraguai, enxaguei)</li>
+                        <li><strong>Hiato:</strong> vogais em sílabas diferentes (sa-ú-de, pa-ís)</li>
+                    </ul>
+                `;
+            } else if (aulaId === 'morfologia1') {
+                html += `
+                    <h2>📝 Morfologia</h2>
+                    <p>A morfologia estuda a estrutura, formação e classificação das palavras.</p>
+                    
+                    <h3>Substantivo</h3>
+                    <p>Palavra que nomeia seres, objetos, sentimentos, etc.</p>
+                    <div class="exemplo-box">
+                        <strong>Exemplos:</strong>
+                        <ul class="lista">
+                            <li><strong>Comum:</strong> casa, carro, menino</li>
+                            <li><strong>Próprio:</strong> João, Brasil, Maria</li>
+                            <li><strong>Concreto:</strong> mesa, árvore, água</li>
+                            <li><strong>Abstrato:</strong> amor, saudade, beleza</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>Adjetivo</h3>
+                    <p>Palavra que caracteriza o substantivo.</p>
+                    <div class="exemplo-box">
+                        <strong>Exemplos:</strong> casa <strong>grande</strong>, dia <strong>ensolarado</strong>, menino <strong>inteligente</strong>
+                    </div>
+                    
+                    <h3>Verbo</h3>
+                    <p>Palavra que indica ação, estado ou fenômeno.</p>
+                    <div class="exemplo-box">
+                        <strong>Exemplos:</strong> <strong>correr</strong>, <strong>ser</strong>, <strong>chover</strong>
+                    </div>
+                `;
+            } else if (aulaId === 'concordancia4') {
+                html += `
+                    <h2>🤝 Concordância</h2>
+                    
+                    <h3>Concordância Verbal</h3>
+                    <p>O verbo concorda com o sujeito em número e pessoa.</p>
+                    <div class="exemplo-box">
+                        <strong>Exemplos:</strong>
+                        <ul class="lista">
+                            <li>O aluno <strong>estudou</strong> para a prova. (singular)</li>
+                            <li>Os alunos <strong>estudaram</strong> para a prova. (plural)</li>
+                            <li><strong>Estudamos</strong> juntos. (1ª pessoa do plural)</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>Casos Especiais</h3>
+                    <ul class="lista">
+                        <li><strong>Sujeito composto antes do verbo:</strong> verbo vai para o plural</li>
+                        <li><strong>Sujeito composto depois do verbo:</strong> verbo pode concordar com o núcleo mais próximo</li>
+                        <li><strong>Verbo com partícula "se":</strong> se for índice de indeterminação, verbo fica na 3ª pessoa</li>
+                    </ul>
+                    
+                    <h3>Concordância Nominal</h3>
+                    <p>Artigos, adjetivos, numerais e pronomes concordam com o substantivo.</p>
+                    <div class="exemplo-box">
+                        <strong>Exemplos:</strong>
+                        <ul class="lista">
+                            <li><strong>As</strong> meninas <strong>bonitas</strong></li>
+                            <li><strong>Um</strong> livro <strong>novo</strong></li>
+                            <li><strong>Muitas</strong> pessoas <strong>simpáticas</strong></li>
+                        </ul>
+                    </div>
+                `;
+            } else if (aulaId === 'crase4') {
+                html += `
+                    <h2>📌 Crase</h2>
+                    <p>Crase é a fusão da preposição "a" com o artigo feminino "a" ou com o "a" inicial de pronomes.</p>
+                    
+                    <h3>Regras Básicas</h3>
+                    <ul class="lista">
+                        <li>Só ocorre antes de palavras femininas</li>
+                        <li>O verbo deve exigir preposição "a"</li>
+                        <li>A palavra seguinte deve aceitar artigo "a"</li>
+                    </ul>
+                    
+                    <h3>Casos Obrigatórios</h3>
+                    <div class="exemplo-box">
+                        <strong>Exemplos:</strong>
+                        <ul class="lista">
+                            <li>Vou <strong>à</strong> escola. (a + a)</li>
+                            <li>Entreguei <strong>à</strong> professora.</li>
+                            <li>Cheguei <strong>à</strong> mesma conclusão.</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>Antes de Palavras Masculinas</h3>
+                    <p>Não ocorre crase antes de palavras masculinas.</p>
+                    <div class="exemplo-box">
+                        <strong>Exemplo:</strong> Vou <strong>a</strong> pé. (não tem crase)
+                    </div>
+                    
+                    <h3>Dica Prática</h3>
+                    <p>Substitua a palavra feminina por uma masculina. Se aparecer "ao", usa crase.</p>
+                    <div class="exemplo-box">
+                        Vou <strong>à</strong> praia (Vou ao mar) → Tem crase<br>
+                        Vou <strong>a</strong> Brasília (Vou ao Rio) → Não tem crase
+                    </div>
+                `;
+            } else {
+                html += `
+                    <h2>📚 Conteúdo em Desenvolvimento</h2>
+                    <p>Esta aula está sendo preparada com muito carinho para você!</p>
+                    <div class="exemplo-box">
+                        <strong>Em breve:</strong> Todo o conteúdo completo de Português.
+                    </div>
+                `;
+            }
+            
+            html += `
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('conteudoArea').innerHTML = html;
+        }
+
+        function voltarParaNiveis() {
+            mostrarNivel(1);
+        }
+
+        // Verificar se já existe usuário logado
+        window.onload = function() {
+            const currentUser = JSON.parse(localStorage.getItem('evolva_current_user'));
+            if (currentUser) {
+                document.getElementById('authContainer').style.display = 'none';
+                document.getElementById('dashboard').classList.add('active');
+                document.getElementById('userName').textContent = currentUser.name;
+                document.getElementById('userEmail').textContent = currentUser.email;
+                document.getElementById('welcomeUser').textContent = `Bem-vindo(a), ${currentUser.name}! 👋`;
+                document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+                mostrarNivel(1);
+            }
+        };
+    </script>
+</body>
+</html>

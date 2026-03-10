@@ -188,6 +188,13 @@
             box-shadow: 0 5px 15px rgba(102,126,234,0.4);
         }
 
+        .btn-small {
+            width: auto;
+            padding: 8px 20px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
         .forgot-password {
             text-align: right;
             margin-top: 10px;
@@ -308,7 +315,6 @@
             opacity: 0.9;
         }
 
-        /* NÍVEIS */
         .niveis-container {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -367,7 +373,6 @@
             font-size: 14px;
         }
 
-        /* MATÉRIAS */
         .materias-section {
             background: white;
             border-radius: 20px;
@@ -381,6 +386,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .materias-header h2 {
@@ -438,7 +445,7 @@
             color: #333;
         }
 
-        /* CONTEÚDO DA AULA */
+        /* ESTILOS PARA AULAS E EXERCÍCIOS */
         .aula-container {
             background: white;
             border-radius: 20px;
@@ -511,6 +518,145 @@
             color: #444;
         }
 
+        /* EXERCÍCIOS */
+        .exercicios-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .exercicios-section h3 {
+            color: #667eea;
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .questao {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        .questao p {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .opcoes {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .opcao {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .opcao:hover {
+            background: #e3f2fd;
+            border-color: #667eea;
+        }
+
+        .opcao input[type="radio"] {
+            margin-right: 15px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .opcao label {
+            flex: 1;
+            cursor: pointer;
+            font-size: 16px;
+            color: #444;
+        }
+
+        .opcao.correta {
+            background: #c8e6c9;
+            border-color: #4CAF50;
+        }
+
+        .opcao.incorreta {
+            background: #ffcdd2;
+            border-color: #f44336;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .feedback.correto {
+            background: #c8e6c9;
+            color: #2e7d32;
+            display: block;
+        }
+
+        .feedback.incorreto {
+            background: #ffcdd2;
+            color: #c62828;
+            display: block;
+        }
+
+        .resultado-exercicio {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .btn-exercicio {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .btn-exercicio:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102,126,234,0.3);
+        }
+
+        .btn-exercicio.secondary {
+            background: #6c757d;
+        }
+
+        .btn-exercicio.secondary:hover {
+            background: #5a6268;
+        }
+
         @media (max-width: 1024px) {
             .niveis-container {
                 grid-template-columns: repeat(2, 1fr);
@@ -530,6 +676,11 @@
             
             .user-info {
                 flex-direction: column;
+            }
+            
+            .materias-header {
+                flex-direction: column;
+                text-align: center;
             }
         }
     </style>
@@ -557,11 +708,11 @@
             <div class="form active" id="loginForm">
                 <div class="form-group">
                     <label>E-mail</label>
-                    <input type="email" id="loginEmail" placeholder="Digite seu e-mail">
+                    <input type="email" id="loginEmail" placeholder="Digite seu e-mail" value="admin@evolva.com">
                 </div>
                 <div class="form-group">
                     <label>Senha</label>
-                    <input type="password" id="loginPassword" placeholder="Digite sua senha">
+                    <input type="password" id="loginPassword" placeholder="Digite sua senha" value="123456">
                 </div>
                 <div class="forgot-password">
                     <a href="#" onclick="showForgotPassword()">Esqueceu a senha?</a>
@@ -657,6 +808,26 @@
     <script>
         // Banco de dados local
         let users = JSON.parse(localStorage.getItem('evolva_users')) || [];
+
+        // CRIAR USUÁRIO ADMIN PADRÃO SE NÃO EXISTIR
+        function criarUsuarioPadrao() {
+            const adminExiste = users.find(u => u.email === 'admin@evolva.com');
+            
+            if (!adminExiste) {
+                const adminUser = {
+                    id: 1,
+                    name: 'Administrador',
+                    email: 'admin@evolva.com',
+                    password: '123456'
+                };
+                users.push(adminUser);
+                localStorage.setItem('evolva_users', JSON.stringify(users));
+                console.log('Usuário admin criado!');
+            }
+        }
+
+        // Chamar a função para criar usuário padrão
+        criarUsuarioPadrao();
 
         // FUNÇÕES DE AUTENTICAÇÃO
         function showMessage(text, type) {
@@ -759,10 +930,7 @@
                 document.getElementById('welcomeUser').textContent = `Bem-vindo(a), ${user.name}! 👋`;
                 document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
                 
-                document.getElementById('loginEmail').value = '';
-                document.getElementById('loginPassword').value = '';
-                
-                // Mostrar tela inicial
+                // Mostrar nível 1 por padrão
                 mostrarNivel(1);
             } else {
                 showMessage('E-mail ou senha incorretos!', 'error');
@@ -794,7 +962,6 @@
             switchTab('login');
         }
 
-        // FUNÇÕES DE CONTEÚDO
         function mostrarNivel(nivel) {
             let html = '';
             
@@ -839,97 +1006,14 @@
                         </div>
                     </div>
                 `;
-            } else if (nivel === 2) {
+            } else {
                 html = `
                     <div class="materias-section">
                         <div class="materias-header">
-                            <h2>📖 Nível 2 - Português Intermediário</h2>
-                            <span class="nivel-tag">6º/7º Ano</span>
+                            <h2>📖 Nível ${nivel} - Em Desenvolvimento</h2>
+                            <span class="nivel-tag">Em breve</span>
                         </div>
-                        <div class="materias-grid">
-                            <div class="materia-item" style="border-left-color: #FF9800;" onclick="mostrarAula('morfologia2')">
-                                <h4>📚 Estrutura das Palavras</h4>
-                                <p>Radical, afixos, desinências, vogal temática</p>
-                                <span class="materia-tag">Intermediário</span>
-                            </div>
-                            <div class="materia-item" style="border-left-color: #FF9800;" onclick="mostrarAula('classes2')">
-                                <h4>🔤 Classes Gramaticais</h4>
-                                <p>Substantivo, adjetivo, verbo, advérbio, preposição</p>
-                                <span class="materia-tag">Intermediário</span>
-                            </div>
-                            <div class="materia-item" style="border-left-color: #FF9800;" onclick="mostrarAula('verbos2')">
-                                <h4>🎯 Verbos</h4>
-                                <p>Conjugação, tempos verbais, modos indicativo/subjuntivo</p>
-                                <span class="materia-tag">Intermediário</span>
-                            </div>
-                            <div class="materia-item" style="border-left-color: #FF9800;" onclick="mostrarAula('formacao2')">
-                                <h4>📝 Formação de Palavras</h4>
-                                <p>Derivação, composição, onomatopeia</p>
-                                <span class="materia-tag">Intermediário</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            } else if (nivel === 3) {
-                html = `
-                    <div class="materias-section">
-                        <div class="materias-header">
-                            <h2>📖 Nível 3 - Português Avançado</h2>
-                            <span class="nivel-tag">8º/9º Ano</span>
-                        </div>
-                        <div class="materias-grid">
-                            <div class="materia-item" style="border-left-color: #f44336;" onclick="mostrarAula('sintaxe3')">
-                                <h4>🔗 Sintaxe</h4>
-                                <p>Termos essenciais, integrantes e acessórios da oração</p>
-                                <span class="materia-tag">Avançado</span>
-                            </div>
-                            <div class="materia-item" style="border-left-color: #f44336;" onclick="mostrarAula('periodo3')">
-                                <h4>📐 Período Composto</h4>
-                                <p>Coordenação e subordinação, orações desenvolvidas</p>
-                                <span class="materia-tag">Avançado</span>
-                            </div>
-                            <div class="materia-item" style="border-left-color: #f44336;" onclick="mostrarAula('verbos3')">
-                                <h4>⚡ Verbos</h4>
-                                <p>Vozes verbais, tempos compostos, formas nominais</p>
-                                <span class="materia-tag">Avançado</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            } else if (nivel === 4) {
-                html = `
-                    <div class="materias-section">
-                        <div class="materias-header">
-                            <h2>📖 Nível 4 - Português Ensino Médio</h2>
-                            <span class="nivel-tag">1º ao 3º Ano</span>
-                        </div>
-                        <div class="materias-grid">
-                            <div class="materia-item" style="border-left-color: #9C27B0;" onclick="mostrarAula('concordancia4')">
-                                <h4>🤝 Concordância</h4>
-                                <p>Concordância nominal e verbal</p>
-                                <span class="materia-tag">Ensino Médio</span>
-                            </div>
-                            <div class="materia-item" style="border-left-color: #9C27B0;" onclick="mostrarAula('regencia4')">
-                                <h4>🎯 Regência</h4>
-                                <p>Regência nominal e verbal</p>
-                                <span class="materia-tag">Ensino Médio</span>
-                            </div>
-                            <div class="materia-item" style="border-left-color: #9C27B0;" onclick="mostrarAula('crase4')">
-                                <h4>📌 Crase</h4>
-                                <p>Uso da crase, casos obrigatórios e facultativos</p>
-                                <span class="materia-tag">Ensino Médio</span>
-                            </div>
-                            <div class="materia-item" style="border-left-color: #9C27B0;" onclick="mostrarAula('colocacao4')">
-                                <h4>📍 Colocação Pronominal</h4>
-                                <p>Próclise, mesóclise, ênclise</p>
-                                <span class="materia-tag">Ensino Médio</span>
-                            </div>
-                            <div class="materia-item" style="border-left-color: #9C27B0;" onclick="mostrarAula('semantica4')">
-                                <h4>💭 Semântica</h4>
-                                <p>Polissemia, homonímia, paronímia, conotação/denotação</p>
-                                <span class="materia-tag">Ensino Médio</span>
-                            </div>
-                        </div>
+                        <p style="text-align: center; padding: 40px;">Conteúdo sendo preparado com muito carinho! 🚀</p>
                     </div>
                 `;
             }
@@ -940,7 +1024,7 @@
         function mostrarAula(aulaId) {
             let html = `
                 <div class="aula-container">
-                    <button class="back-btn" onclick="voltarParaNiveis()">← Voltar para matérias</button>
+                    <button class="back-btn" onclick="mostrarNivel(1)">← Voltar para matérias</button>
                     <div class="aula-content">
             `;
             
@@ -999,77 +1083,43 @@
                         <strong>Exemplos:</strong> <strong>correr</strong>, <strong>ser</strong>, <strong>chover</strong>
                     </div>
                 `;
-            } else if (aulaId === 'concordancia4') {
+            } else if (aulaId === 'ortografia1') {
                 html += `
-                    <h2>🤝 Concordância</h2>
+                    <h2>✍️ Ortografia</h2>
+                    <p>A ortografia ensina a escrever corretamente as palavras.</p>
                     
-                    <h3>Concordância Verbal</h3>
-                    <p>O verbo concorda com o sujeito em número e pessoa.</p>
-                    <div class="exemplo-box">
-                        <strong>Exemplos:</strong>
-                        <ul class="lista">
-                            <li>O aluno <strong>estudou</strong> para a prova. (singular)</li>
-                            <li>Os alunos <strong>estudaram</strong> para a prova. (plural)</li>
-                            <li><strong>Estudamos</strong> juntos. (1ª pessoa do plural)</li>
-                        </ul>
-                    </div>
-                    
-                    <h3>Casos Especiais</h3>
+                    <h3>Uso do S e Z</h3>
                     <ul class="lista">
-                        <li><strong>Sujeito composto antes do verbo:</strong> verbo vai para o plural</li>
-                        <li><strong>Sujeito composto depois do verbo:</strong> verbo pode concordar com o núcleo mais próximo</li>
-                        <li><strong>Verbo com partícula "se":</strong> se for índice de indeterminação, verbo fica na 3ª pessoa</li>
+                        <li>Usamos S em palavras com sufixo -oso (cheiroso, gostoso)</li>
+                        <li>Usamos Z em palavras com sufixo -ez (sensatez, palidez)</li>
                     </ul>
                     
-                    <h3>Concordância Nominal</h3>
-                    <p>Artigos, adjetivos, numerais e pronomes concordam com o substantivo.</p>
-                    <div class="exemplo-box">
-                        <strong>Exemplos:</strong>
-                        <ul class="lista">
-                            <li><strong>As</strong> meninas <strong>bonitas</strong></li>
-                            <li><strong>Um</strong> livro <strong>novo</strong></li>
-                            <li><strong>Muitas</strong> pessoas <strong>simpáticas</strong></li>
-                        </ul>
-                    </div>
+                    <h3>Uso do G e J</h3>
+                    <ul class="lista">
+                        <li>Usamos G em palavras terminadas em -agem, -igem, -ugem (viagem, origem, ferrugem)</li>
+                        <li>Usamos J em palavras de origem africana ou indígena (jiboia, canjica)</li>
+                    </ul>
                 `;
-            } else if (aulaId === 'crase4') {
+            } else if (aulaId === 'semantica1') {
                 html += `
-                    <h2>📌 Crase</h2>
-                    <p>Crase é a fusão da preposição "a" com o artigo feminino "a" ou com o "a" inicial de pronomes.</p>
+                    <h2>💭 Semântica</h2>
+                    <p>A semântica estuda o significado das palavras.</p>
                     
-                    <h3>Regras Básicas</h3>
-                    <ul class="lista">
-                        <li>Só ocorre antes de palavras femininas</li>
-                        <li>O verbo deve exigir preposição "a"</li>
-                        <li>A palavra seguinte deve aceitar artigo "a"</li>
-                    </ul>
-                    
-                    <h3>Casos Obrigatórios</h3>
+                    <h3>Sinônimos</h3>
+                    <p>Palavras com significado parecido.</p>
                     <div class="exemplo-box">
-                        <strong>Exemplos:</strong>
-                        <ul class="lista">
-                            <li>Vou <strong>à</strong> escola. (a + a)</li>
-                            <li>Entreguei <strong>à</strong> professora.</li>
-                            <li>Cheguei <strong>à</strong> mesma conclusão.</li>
-                        </ul>
+                        <strong>Exemplos:</strong> casa/lar, alegre/feliz, bonito/lindo
                     </div>
                     
-                    <h3>Antes de Palavras Masculinas</h3>
-                    <p>Não ocorre crase antes de palavras masculinas.</p>
+                    <h3>Antônimos</h3>
+                    <p>Palavras com significado oposto.</p>
                     <div class="exemplo-box">
-                        <strong>Exemplo:</strong> Vou <strong>a</strong> pé. (não tem crase)
-                    </div>
-                    
-                    <h3>Dica Prática</h3>
-                    <p>Substitua a palavra feminina por uma masculina. Se aparecer "ao", usa crase.</p>
-                    <div class="exemplo-box">
-                        Vou <strong>à</strong> praia (Vou ao mar) → Tem crase<br>
-                        Vou <strong>a</strong> Brasília (Vou ao Rio) → Não tem crase
+                        <strong>Exemplos:</strong> alto/baixo, quente/frio, dia/noite
                     </div>
                 `;
             } else {
                 html += `
-                    <h2>📚 Conteúdo em Desenvolvimento</h2>
+                    <h2>📚 ${aulaId}</h2>
                     <p>Esta aula está sendo preparada com muito carinho para você!</p>
                     <div class="exemplo-box">
                         <strong>Em breve:</strong> Todo o conteúdo completo de Português.
@@ -1077,16 +1127,377 @@
                 `;
             }
             
+            // ADICIONAR EXERCÍCIOS
+            html += `
+                <div class="exercicios-section" id="exercicios-${aulaId}">
+                    <h3>📝 Exercícios - Teste seus conhecimentos</h3>
+                    <div id="exercicios-container-${aulaId}"></div>
+                    <button class="btn-exercicio" onclick="corrigirExercicios('${aulaId}')">Corrigir respostas</button>
+                    <button class="btn-exercicio secondary" onclick="resetarExercicios('${aulaId}')">Tentar novamente</button>
+                    <div id="resultado-${aulaId}" class="resultado-exercicio" style="display: none;"></div>
+                </div>
+            `;
+            
             html += `
                     </div>
                 </div>
             `;
             
             document.getElementById('conteudoArea').innerHTML = html;
+            
+            // Carregar exercícios específicos para cada aula
+            carregarExercicios(aulaId);
         }
 
-        function voltarParaNiveis() {
-            mostrarNivel(1);
+        function carregarExercicios(aulaId) {
+            let exerciciosHTML = '';
+            
+            if (aulaId === 'fonetica1') {
+                exerciciosHTML = `
+                    <div class="questao" id="q1-${aulaId}">
+                        <p>1. Quantas vogais existem na palavra "CASA"?</p>
+                        <div class="opcoes">
+                            <div class="opcao">
+                                <input type="radio" name="q1-${aulaId}" value="a" id="q1a-${aulaId}">
+                                <label for="q1a-${aulaId}">a) 1 vogal</label>
+                            </div>
+                            <div class="opcao">
+                                <input type="radio" name="q1-${aulaId}" value="b" id="q1b-${aulaId}">
+                                <label for="q1b-${aulaId}">b) 2 vogais</label>
+                            </div>
+                            <div class="opcao">
+                                <input type="radio" name="q1-${aulaId}" value="c" id="q1c-${aulaId}">
+                                <label for="q1c-${aulaId}">c) 3 vogais</label>
+                            </div>
+                        </div>
+                        <div class="feedback" id="feedback-q1-${aulaId}"></div>
+                    </div>
+                    
+                    <div class="questao" id="q2-${aulaId}">
+                        <p>2. Qual palavra tem um ditongo?</p>
+                        <div class="opcoes">
+                            <div class="opcao">
+                                <input type="radio" name="q2-${aulaId}" value="a" id="q2a-${aulaId}">
+                                <label for="q2a-${aulaId}">a) Sa-ú-de</label>
+                            </div>
+                            <div class="opcao">
+                                <input type="radio" name="q2-${aulaId}" value="b" id="q2b-${aulaId}">
+                                <label for="q2b-${aulaId}">b) Pai</label>
+                            </div>
+                            <div class="opcao">
+                                <input type="radio" name="q2-${aulaId}" value="c" id="q2c-${aulaId}">
+                                <label for="q2c-${aulaId}">c) Ca-der-no</label>
+                            </div>
+                        </div>
+                        <div class="feedback" id="feedback-q2-${aulaId}"></div>
+                    </div>
+                    
+                    <div class="questao" id="q3-${aulaId}">
+                        <p>3. Quantas consoantes tem a palavra "ESCOLA"?</p>
+                        <div class="opcoes">
+                            <div class="opcao">
+                                <input type="radio" name="q3-${aulaId}" value="a" id="q3a-${aulaId}">
+                                <label for="q3a-${aulaId}">a) 2 consoantes</label>
+                            </div>
+                            <div class="opcao">
+                                <input type="radio" name="q3-${aulaId}" value="b" id="q3b-${aulaId}">
+                                <label for="q3b-${aulaId}">b) 3 consoantes</label>
+                            </div>
+                            <div class="opcao">
+                                <input type="radio" name="q3-${aulaId}" value="c" id="q3c-${aulaId}">
+                                <label for="q3c-${aulaId}">c) 4 consoantes</label>
+                            </div>
+                        </div>
+                        <div class="feedback" id="feedback-q3-${aulaId}"></div>
+                    </div>
+                `;
+            } else if (aulaId === 'morfologia1') {
+                exerciciosHTML = `
+                    <div class="questao" id="q1-${aulaId}">
+                        <p>1. Qual é o substantivo na frase: "O menino bonito correu"?</p>
+                        <div class="opcoes">
+                            <div class="opcao">
+                                <input type="radio" name="q1-${aulaId}" value="a" id="q1a-${aulaId}">
+                                <label for="q1a-${aulaId}">a) bonito</label>
+                            </div>
+                            <div class="opcao">
+                                <input type="radio" name="q1-${aulaId}" value="b" id="q1b-${aulaId}">
+                                <label for="q1b-${aulaId}">b) menino</label>
+                            </div>
+                            <div class="opcao">
+                                <input type="radio" name="q1-${aulaId}" value="c" id="q1c-${aulaId}">
+                                <label for="q1c-${aulaId}">c) correu</label>
+                            </div>
+                        </div>
+                        <div class="feedback" id="feedback-q1-${aulaId}"></div>
+                    </div>
+                    
+                    <div class="questao" id="q2-${aulaId}">
+                        <p>2. Qual palavra é um adjetivo?</p>
+                        <div class="opcoes">
+                            <div class="opcao">
+                                <input type="radio" name="q2-${aulaId}" value="a" id="q2a-${aulaId}">
+                                <label for="q2a-${aulaId}">a) corrida</label>
+                            </div>
+                            <div class="opcao">
+                                <input type="radio" name="q2-${aulaId}" value="b" id="q2b-${aulaId}">
+                                <label for="q2b-${aulaId}">b) inteligente</label>
+                            </div>
+                            <div class="opcao">
+                                <input type="radio" name="q2-${aulaId}" value="c" id="q2c-${aulaId}">
+                                <label for="q2c-${aulaId}">c) comer</label>
+                            </div>
+                        </div>
+                        <div class="feedback" id="feedback-q2-${aulaId}"></div>
+                    </div>
+                    
+                    <div class="questao" id="q3-${aulaId}">
+                        <p>3. "Amor" é um substantivo:</p>
+                        <div class="opcoes">
+                            <div class="opcao">
+                                <input type="radio" name="q3-${aulaId}" value="a" id="q3a-${aulaId}">
+                                <label for="q3a-${aulaId}">a) Concreto</label>
+                            </div>
+                            <div class="opcao">
+                                <input type="radio" name="q3-${aulaId}" value="b" id="q3b-${aulaId}">
+                                <label for="q3b-${aulaId}">b) Abstrato</label>
+                            </div>
+                            <div class="opcao">
+                                <input type="radio" name="q3-${aulaId}" value="c" id="q3c-${aulaId}">
+                                <label for="q3c-${aulaId}">c) Próprio</label>
+                            </div>
+                        </div>
+                        <div class="feedback" id="feedback-q3-${aulaId}"></div>
+                    </div>
+                `;
+            } else if (aulaId === 'semantica1') {
+                exerciciosHTML = `
+                    <div class="questao" id="q1-${aulaId}">
+                        <p>1. Qual é o sinônimo de "alegre"?</p>
+                        <div class="opcoes">
+                            <div class="opcao">
+                                <input type="radio" name="q1-${aulaId}" value="a" id="q1a-${aulaId}">
+                                <label for="q1a-${aulaId}">a) triste</label>
+                            </div>
+                            <div class="opcao">
+                                <input type="radio" name="q1-${aulaId}" value="b" id="q1b-${aulaId}">
+                                <label for="q1b-${aulaId}">b) feliz</label>
+                            </div>
+                            <div class="opcao">
+                                <input type="radio" name="q1-${aulaId}" value="c" id="q1c-${aulaId}">
+                                <label for="q1c-${aulaId}">c) cansado</label>
+                            </div>
+                        </div>
+                        <div class="feedback" id="feedback-q1-${aulaId}"></div>
+                    </div>
+                    
+                    <div class="questao" id="q2-${aulaId}">
+                        <p>2. Qual é o antônimo de "quente"?</p>
+                        <div class="opcoes">
+                            <div class="opcao">
+                                <input type="radio" name="q2-${aulaId}" value="a" id="q2a-${aulaId}">
+                                <label for="q2a-${aulaId}">a) morno</label>
+                            </div>
+                            <div class="opcao">
+                                <input type="radio" name="q2-${aulaId}" value="b" id="q2b-${aulaId}">
+                                <label for="q2b-${aulaId}">b) gelado</label>
+                            </div>
+                            <div class="opcao">
+                                <input type="radio" name="q2-${aulaId}" value="c" id="q2c-${aulaId}">
+                                <label for="q2c-${aulaId}">c) frio</label>
+                            </div>
+                        </div>
+                        <div class="feedback" id="feedback-q2-${aulaId}"></div>
+                    </div>
+                `;
+            } else {
+                exerciciosHTML = `
+                    <div class="questao">
+                        <p>Exercícios em desenvolvimento para esta matéria!</p>
+                    </div>
+                `;
+            }
+            
+            document.getElementById(`exercicios-container-${aulaId}`).innerHTML = exerciciosHTML;
+        }
+
+        function corrigirExercicios(aulaId) {
+            let acertos = 0;
+            let total = 0;
+            
+            if (aulaId === 'fonetica1') {
+                // Correção questão 1
+                const q1 = document.querySelector(`input[name="q1-${aulaId}"]:checked`);
+                const feedback1 = document.getElementById(`feedback-q1-${aulaId}`);
+                if (q1) {
+                    if (q1.value === 'b') {
+                        feedback1.textContent = '✅ Correto! CASA tem 2 vogais (A e A)';
+                        feedback1.className = 'feedback correto';
+                        acertos++;
+                    } else {
+                        feedback1.textContent = '❌ Incorreto. CASA tem 2 vogais.';
+                        feedback1.className = 'feedback incorreto';
+                    }
+                } else {
+                    feedback1.textContent = '⚠️ Responda esta questão!';
+                    feedback1.className = 'feedback incorreto';
+                }
+                
+                // Questão 2
+                const q2 = document.querySelector(`input[name="q2-${aulaId}"]:checked`);
+                const feedback2 = document.getElementById(`feedback-q2-${aulaId}`);
+                if (q2) {
+                    if (q2.value === 'b') {
+                        feedback2.textContent = '✅ Correto! "Pai" tem ditongo (ai)';
+                        feedback2.className = 'feedback correto';
+                        acertos++;
+                    } else {
+                        feedback2.textContent = '❌ Incorreto. A palavra com ditongo é "pai".';
+                        feedback2.className = 'feedback incorreto';
+                    }
+                } else {
+                    feedback2.textContent = '⚠️ Responda esta questão!';
+                    feedback2.className = 'feedback incorreto';
+                }
+                
+                // Questão 3
+                const q3 = document.querySelector(`input[name="q3-${aulaId}"]:checked`);
+                const feedback3 = document.getElementById(`feedback-q3-${aulaId}`);
+                if (q3) {
+                    if (q3.value === 'b') {
+                        feedback3.textContent = '✅ Correto! ESCOLA tem 3 consoantes (S, C, L)';
+                        feedback3.className = 'feedback correto';
+                        acertos++;
+                    } else {
+                        feedback3.textContent = '❌ Incorreto. ESCOLA tem 3 consoantes.';
+                        feedback3.className = 'feedback incorreto';
+                    }
+                } else {
+                    feedback3.textContent = '⚠️ Responda esta questão!';
+                    feedback3.className = 'feedback incorreto';
+                }
+                
+                total = 3;
+            } else if (aulaId === 'morfologia1') {
+                // Questão 1
+                const q1 = document.querySelector(`input[name="q1-${aulaId}"]:checked`);
+                const feedback1 = document.getElementById(`feedback-q1-${aulaId}`);
+                if (q1) {
+                    if (q1.value === 'b') {
+                        feedback1.textContent = '✅ Correto! "menino" é o substantivo.';
+                        feedback1.className = 'feedback correto';
+                        acertos++;
+                    } else {
+                        feedback1.textContent = '❌ Incorreto. O substantivo é "menino".';
+                        feedback1.className = 'feedback incorreto';
+                    }
+                } else {
+                    feedback1.textContent = '⚠️ Responda esta questão!';
+                    feedback1.className = 'feedback incorreto';
+                }
+                
+                // Questão 2
+                const q2 = document.querySelector(`input[name="q2-${aulaId}"]:checked`);
+                const feedback2 = document.getElementById(`feedback-q2-${aulaId}`);
+                if (q2) {
+                    if (q2.value === 'b') {
+                        feedback2.textContent = '✅ Correto! "inteligente" é adjetivo.';
+                        feedback2.className = 'feedback correto';
+                        acertos++;
+                    } else {
+                        feedback2.textContent = '❌ Incorreto. A palavra "inteligente" é adjetivo.';
+                        feedback2.className = 'feedback incorreto';
+                    }
+                } else {
+                    feedback2.textContent = '⚠️ Responda esta questão!';
+                    feedback2.className = 'feedback incorreto';
+                }
+                
+                // Questão 3
+                const q3 = document.querySelector(`input[name="q3-${aulaId}"]:checked`);
+                const feedback3 = document.getElementById(`feedback-q3-${aulaId}`);
+                if (q3) {
+                    if (q3.value === 'b') {
+                        feedback3.textContent = '✅ Correto! "Amor" é substantivo abstrato.';
+                        feedback3.className = 'feedback correto';
+                        acertos++;
+                    } else {
+                        feedback3.textContent = '❌ Incorreto. "Amor" é abstrato.';
+                        feedback3.className = 'feedback incorreto';
+                    }
+                } else {
+                    feedback3.textContent = '⚠️ Responda esta questão!';
+                    feedback3.className = 'feedback incorreto';
+                }
+                
+                total = 3;
+            } else if (aulaId === 'semantica1') {
+                // Questão 1
+                const q1 = document.querySelector(`input[name="q1-${aulaId}"]:checked`);
+                const feedback1 = document.getElementById(`feedback-q1-${aulaId}`);
+                if (q1) {
+                    if (q1.value === 'b') {
+                        feedback1.textContent = '✅ Correto! "feliz" é sinônimo de "alegre".';
+                        feedback1.className = 'feedback correto';
+                        acertos++;
+                    } else {
+                        feedback1.textContent = '❌ Incorreto. O sinônimo é "feliz".';
+                        feedback1.className = 'feedback incorreto';
+                    }
+                } else {
+                    feedback1.textContent = '⚠️ Responda esta questão!';
+                    feedback1.className = 'feedback incorreto';
+                }
+                
+                // Questão 2
+                const q2 = document.querySelector(`input[name="q2-${aulaId}"]:checked`);
+                const feedback2 = document.getElementById(`feedback-q2-${aulaId}`);
+                if (q2) {
+                    if (q2.value === 'c') {
+                        feedback2.textContent = '✅ Correto! "frio" é antônimo de "quente".';
+                        feedback2.className = 'feedback correto';
+                        acertos++;
+                    } else {
+                        feedback2.textContent = '❌ Incorreto. O antônimo é "frio".';
+                        feedback2.className = 'feedback incorreto';
+                    }
+                } else {
+                    feedback2.textContent = '⚠️ Responda esta questão!';
+                    feedback2.className = 'feedback incorreto';
+                }
+                
+                total = 2;
+            }
+            
+            // Mostrar resultado final
+            const resultadoDiv = document.getElementById(`resultado-${aulaId}`);
+            resultadoDiv.style.display = 'block';
+            resultadoDiv.textContent = `Você acertou ${acertos} de ${total} questões! ${acertos === total ? '🎉 Parabéns!' : '👨‍🎓 Continue praticando!'}`;
+            
+            // Salvar progresso
+            const user = JSON.parse(localStorage.getItem('evolva_current_user'));
+            if (user) {
+                let progresso = JSON.parse(localStorage.getItem(`progresso_${user.id}`)) || {};
+                progresso[aulaId] = acertos;
+                localStorage.setItem(`progresso_${user.id}`, JSON.stringify(progresso));
+            }
+        }
+
+        function resetarExercicios(aulaId) {
+            // Limpar seleções
+            const radios = document.querySelectorAll(`input[name^="q"][name$="-${aulaId}"]`);
+            radios.forEach(radio => radio.checked = false);
+            
+            // Limpar feedbacks
+            const feedbacks = document.querySelectorAll(`[id^="feedback-q"][id$="-${aulaId}"]`);
+            feedbacks.forEach(feedback => {
+                feedback.textContent = '';
+                feedback.className = 'feedback';
+            });
+            
+            // Esconder resultado
+            const resultadoDiv = document.getElementById(`resultado-${aulaId}`);
+            resultadoDiv.style.display = 'none';
         }
 
         // Verificar se já existe usuário logado

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EVOLVA - Português Completo</title>
+    <title>EVOLVA - Português, Matemática e Inglês</title>
     <style>
         * {
             margin: 0;
@@ -188,13 +188,6 @@
             box-shadow: 0 5px 15px rgba(102,126,234,0.4);
         }
 
-        .btn-small {
-            width: auto;
-            padding: 8px 20px;
-            font-size: 14px;
-            margin: 5px;
-        }
-
         .forgot-password {
             text-align: right;
             margin-top: 10px;
@@ -313,6 +306,52 @@
         .welcome-section p {
             font-size: 18px;
             opacity: 0.9;
+        }
+
+        /* DISCIPLINAS */
+        .disciplinas-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .disciplina-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .disciplina-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+        }
+
+        .disciplina-card.portugues { border-bottom: 5px solid #4CAF50; }
+        .disciplina-card.matematica { border-bottom: 5px solid #FF9800; }
+        .disciplina-card.ingles { border-bottom: 5px solid #2196F3; }
+
+        .disciplina-icon {
+            font-size: 64px;
+            margin-bottom: 15px;
+        }
+
+        .disciplina-card h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .disciplina-card.portugues h2 { color: #4CAF50; }
+        .disciplina-card.matematica h2 { color: #FF9800; }
+        .disciplina-card.ingles h2 { color: #2196F3; }
+
+        .disciplina-card p {
+            color: #666;
+            font-size: 16px;
         }
 
         .niveis-container {
@@ -728,12 +767,18 @@
         }
 
         @media (max-width: 1024px) {
+            .disciplinas-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
             .niveis-container {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media (max-width: 768px) {
+            .disciplinas-container {
+                grid-template-columns: 1fr;
+            }
             .niveis-container {
                 grid-template-columns: 1fr;
             }
@@ -845,38 +890,29 @@
 
         <div class="welcome-section">
             <h1 id="welcomeUser">Bem-vindo(a) ao EVOLVA!</h1>
-            <p>Escolha seu nível e comece a aprender Português de forma completa</p>
+            <p>Escolha uma disciplina e comece a aprender</p>
         </div>
 
-        <!-- CARDS DOS NÍVEIS -->
-        <div class="niveis-container">
-            <div class="nivel-card nivel1" onclick="mostrarNivel(1)">
-                <div class="nivel-icon">🔰</div>
-                <h3>Nível 1</h3>
-                <p>Ensino Fundamental Inicial</p>
-                <small>1º ao 5º ano</small>
+        <!-- DISCIPLINAS -->
+        <div class="disciplinas-container">
+            <div class="disciplina-card portugues" onclick="mostrarDisciplina('portugues')">
+                <div class="disciplina-icon">📚</div>
+                <h2>Português</h2>
+                <p>Gramática, redação, literatura e interpretação</p>
             </div>
-            <div class="nivel-card nivel2" onclick="mostrarNivel(2)">
-                <div class="nivel-icon">📚</div>
-                <h3>Nível 2</h3>
-                <p>Fundamental - Intermediário</p>
-                <small>6º ao 7º ano</small>
+            <div class="disciplina-card matematica" onclick="mostrarDisciplina('matematica')">
+                <div class="disciplina-icon">🧮</div>
+                <h2>Matemática</h2>
+                <p>Números, operações, álgebra, geometria</p>
             </div>
-            <div class="nivel-card nivel3" onclick="mostrarNivel(3)">
-                <div class="nivel-icon">🎯</div>
-                <h3>Nível 3</h3>
-                <p>Fundamental - Avançado</p>
-                <small>8º ao 9º ano</small>
-            </div>
-            <div class="nivel-card nivel4" onclick="mostrarNivel(4)">
-                <div class="nivel-icon">🚀</div>
-                <h3>Nível 4</h3>
-                <p>Ensino Médio</p>
-                <small>1º ao 3º ano</small>
+            <div class="disciplina-card ingles" onclick="mostrarDisciplina('ingles')">
+                <div class="disciplina-icon">🌎</div>
+                <h2>Inglês</h2>
+                <p>Grammar, vocabulary, conversation, interpretation</p>
             </div>
         </div>
 
-        <!-- ÁREA DE MATÉRIAS E AULAS -->
+        <!-- ÁREA DE CONTEÚDO -->
         <div id="conteudoArea"></div>
     </div>
 
@@ -884,7 +920,7 @@
         // Banco de dados local
         let users = JSON.parse(localStorage.getItem('evolva_users')) || [];
 
-        // CRIAR USUÁRIO ADMIN PADRÃO SE NÃO EXISTIR
+        // CRIAR USUÁRIO ADMIN PADRÃO
         function criarUsuarioPadrao() {
             const adminExiste = users.find(u => u.email === 'admin@evolva.com');
             
@@ -897,11 +933,9 @@
                 };
                 users.push(adminUser);
                 localStorage.setItem('evolva_users', JSON.stringify(users));
-                console.log('Usuário admin criado!');
             }
         }
 
-        // Chamar a função para criar usuário padrão
         criarUsuarioPadrao();
 
         // FUNÇÕES DE AUTENTICAÇÃO
@@ -1005,8 +1039,7 @@
                 document.getElementById('welcomeUser').textContent = `Bem-vindo(a), ${user.name}! 👋`;
                 document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
                 
-                // Mostrar nível 1 por padrão
-                mostrarNivel(1);
+                mostrarDisciplina('portugues');
             } else {
                 showMessage('E-mail ou senha incorretos!', 'error');
             }
@@ -1037,69 +1070,233 @@
             switchTab('login');
         }
 
-        function mostrarNivel(nivel) {
-            let html = '';
+        let disciplinaAtual = 'portugues';
+
+        function mostrarDisciplina(disciplina) {
+            disciplinaAtual = disciplina;
             
-            if (nivel === 1) {
-                html = `
-                    <div class="materias-section">
-                        <div class="materias-header">
-                            <h2>📖 Nível 1 - Português Básico</h2>
-                            <span class="nivel-tag">Fundamental Inicial</span>
-                        </div>
-                        <div class="materias-grid">
-                            <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('fonetica1')">
-                                <h4>🔊 Fonética e Fonologia</h4>
-                                <p>Sons das letras, vogais, consoantes, encontros vocálicos</p>
-                                <span class="materia-tag">30 exercícios</span>
-                            </div>
-                            <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('morfologia1')">
-                                <h4>📝 Morfologia</h4>
-                                <p>Substantivo, adjetivo, verbo, artigo, numeral</p>
-                                <span class="materia-tag">30 exercícios</span>
-                            </div>
-                            <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('sintaxe1')">
-                                <h4>🔤 Sintaxe</h4>
-                                <p>Frases, orações, sujeito e predicado simples</p>
-                                <span class="materia-tag">30 exercícios</span>
-                            </div>
-                            <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('ortografia1')">
-                                <h4>✍️ Ortografia</h4>
-                                <p>Uso do S e Z, M e N, C e QU, G e J</p>
-                                <span class="materia-tag">30 exercícios</span>
-                            </div>
-                            <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('semantica1')">
-                                <h4>💭 Semântica</h4>
-                                <p>Sinônimos, antônimos, sentido das palavras</p>
-                                <span class="materia-tag">30 exercícios</span>
-                            </div>
-                            <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('pontuacao1')">
-                                <h4>❗ Pontuação Básica</h4>
-                                <p>Ponto final, vírgula, interrogação e exclamação</p>
-                                <span class="materia-tag">30 exercícios</span>
-                            </div>
-                        </div>
+            let html = `
+                <div class="niveis-container">
+            `;
+            
+            if (disciplina === 'portugues') {
+                html += `
+                    <div class="nivel-card nivel1" onclick="mostrarNivel(1)">
+                        <div class="nivel-icon">🔰</div>
+                        <h3>Nível 1</h3>
+                        <p>Ensino Fundamental Inicial</p>
+                        <small>1º ao 5º ano</small>
+                    </div>
+                    <div class="nivel-card nivel2" onclick="mostrarNivel(2)">
+                        <div class="nivel-icon">📚</div>
+                        <h3>Nível 2</h3>
+                        <p>Fundamental - Intermediário</p>
+                        <small>6º ao 7º ano</small>
+                    </div>
+                    <div class="nivel-card nivel3" onclick="mostrarNivel(3)">
+                        <div class="nivel-icon">🎯</div>
+                        <h3>Nível 3</h3>
+                        <p>Fundamental - Avançado</p>
+                        <small>8º ao 9º ano</small>
+                    </div>
+                    <div class="nivel-card nivel4" onclick="mostrarNivel(4)">
+                        <div class="nivel-icon">🚀</div>
+                        <h3>Nível 4</h3>
+                        <p>Ensino Médio</p>
+                        <small>1º ao 3º ano</small>
+                    </div>
+                `;
+            } else if (disciplina === 'matematica') {
+                html += `
+                    <div class="nivel-card nivel1" onclick="mostrarNivel(5)">
+                        <div class="nivel-icon">🔢</div>
+                        <h3>Matemática Básica</h3>
+                        <p>Fundamental Inicial</p>
+                        <small>Números e operações</small>
+                    </div>
+                    <div class="nivel-card nivel2" onclick="mostrarNivel(6)">
+                        <div class="nivel-icon">📊</div>
+                        <h3>Matemática Intermediária</h3>
+                        <p>Fundamental - Intermediário</p>
+                        <small>Frações, decimais, porcentagem</small>
+                    </div>
+                    <div class="nivel-card nivel3" onclick="mostrarNivel(7)">
+                        <div class="nivel-icon">⚡</div>
+                        <h3>Matemática Avançada</h3>
+                        <p>Fundamental - Avançado</p>
+                        <small>Expressões, potenciação, equações</small>
+                    </div>
+                    <div class="nivel-card nivel4" onclick="mostrarNivel(8)">
+                        <div class="nivel-icon">🎓</div>
+                        <h3>Matemática Superior</h3>
+                        <p>Ensino Médio</p>
+                        <small>Álgebra, geometria, trigonometria</small>
                     </div>
                 `;
             } else {
-                html = `
-                    <div class="materias-section">
-                        <div class="materias-header">
-                            <h2>📖 Nível ${nivel} - Em Desenvolvimento</h2>
-                            <span class="nivel-tag">Em breve</span>
-                        </div>
-                        <p style="text-align: center; padding: 40px;">Conteúdo sendo preparado com muito carinho! 🚀</p>
+                html += `
+                    <div class="nivel-card nivel1" onclick="mostrarNivel(9)">
+                        <div class="nivel-icon">🔤</div>
+                        <h3>Inglês Básico</h3>
+                        <p>Iniciante</p>
+                        <small>Alphabet, numbers, verb to be</small>
+                    </div>
+                    <div class="nivel-card nivel2" onclick="mostrarNivel(10)">
+                        <div class="nivel-icon">📝</div>
+                        <h3>Inglês Intermediário</h3>
+                        <p>Intermediate</p>
+                        <small>Tenses, sentence formation</small>
+                    </div>
+                    <div class="nivel-card nivel3" onclick="mostrarNivel(11)">
+                        <div class="nivel-icon">🚀</div>
+                        <h3>Inglês Avançado</h3>
+                        <p>Advanced</p>
+                        <small>Phrasal verbs, conditionals, idioms</small>
+                    </div>
+                    <div class="nivel-card nivel4" onclick="mostrarNivel(12)">
+                        <div class="nivel-icon">🎯</div>
+                        <h3>Inglês Fluente</h3>
+                        <p>Fluent</p>
+                        <small>Interpretation, writing, advanced grammar</small>
                     </div>
                 `;
             }
             
+            html += `</div>`;
             document.getElementById('conteudoArea').innerHTML = html;
         }
 
-        // Variáveis globais para controle dos exercícios
+        function mostrarNivel(nivel) {
+            let html = `
+                <div class="materias-section">
+                    <div class="materias-header">
+                        <h2>${getTituloNivel(nivel)}</h2>
+                        <span class="nivel-tag">${getTagNivel(nivel)}</span>
+                    </div>
+                    <div class="materias-grid">
+            `;
+            
+            const materias = getMateriasPorNivel(nivel);
+            
+            materias.forEach(materia => {
+                html += `
+                    <div class="materia-item" style="border-left-color: ${materia.cor}" onclick="mostrarAula('${materia.id}')">
+                        <h4>${materia.icone} ${materia.nome}</h4>
+                        <p>${materia.descricao}</p>
+                        <span class="materia-tag">${materia.exercicios} exercícios</span>
+                    </div>
+                `;
+            });
+            
+            html += `
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('conteudoArea').innerHTML = html;
+        }
+
+        function getTituloNivel(nivel) {
+            const titulos = {
+                // Português
+                1: '📖 Nível 1 - Português Básico',
+                2: '📖 Nível 2 - Português Intermediário',
+                3: '📖 Nível 3 - Português Avançado',
+                4: '📖 Nível 4 - Português Ensino Médio',
+                // Matemática
+                5: '🔢 Matemática Básica',
+                6: '📊 Matemática Intermediária',
+                7: '⚡ Matemática Avançada',
+                8: '🎓 Matemática Ensino Médio',
+                // Inglês
+                9: '🔤 Inglês Básico',
+                10: '📝 Inglês Intermediário',
+                11: '🚀 Inglês Avançado',
+                12: '🎯 Inglês Fluente'
+            };
+            return titulos[nivel] || '';
+        }
+
+        function getTagNivel(nivel) {
+            const tags = {
+                1: '1º ao 5º ano',
+                2: '6º/7º ano',
+                3: '8º/9º ano',
+                4: '1º ao 3º ano',
+                5: 'Fundamental Inicial',
+                6: 'Intermediário',
+                7: 'Avançado',
+                8: 'Ensino Médio',
+                9: 'Beginner',
+                10: 'Intermediate',
+                11: 'Advanced',
+                12: 'Fluent'
+            };
+            return tags[nivel] || '';
+        }
+
+        function getMateriasPorNivel(nivel) {
+            const materias = {
+                // Português Nível 1
+                1: [
+                    { id: 'fonetica1', icone: '🔊', nome: 'Fonética e Fonologia', descricao: 'Sons das letras, vogais, consoantes', cor: '#4CAF50', exercicios: 30 },
+                    { id: 'morfologia1', icone: '📝', nome: 'Morfologia', descricao: 'Substantivo, adjetivo, verbo', cor: '#4CAF50', exercicios: 30 },
+                    { id: 'sintaxe1', icone: '🔤', nome: 'Sintaxe', descricao: 'Frases, orações, sujeito', cor: '#4CAF50', exercicios: 30 },
+                    { id: 'ortografia1', icone: '✍️', nome: 'Ortografia', descricao: 'Uso do S/Z, M/N, G/J', cor: '#4CAF50', exercicios: 30 },
+                    { id: 'semantica1', icone: '💭', nome: 'Semântica', descricao: 'Sinônimos, antônimos', cor: '#4CAF50', exercicios: 30 },
+                    { id: 'pontuacao1', icone: '❗', nome: 'Pontuação Básica', descricao: 'Ponto, vírgula, interrogação', cor: '#4CAF50', exercicios: 30 }
+                ],
+                // Matemática Básica (Nível 5)
+                5: [
+                    { id: 'numeros', icone: '🔢', nome: 'Números', descricao: 'Naturais, inteiros, ordinais', cor: '#FF9800', exercicios: 30 },
+                    { id: 'operacoes', icone: '➕', nome: 'Operações Básicas', descricao: 'Adição, subtração, multiplicação, divisão', cor: '#FF9800', exercicios: 30 },
+                    { id: 'tabuada', icone: '✖️', nome: 'Tabuada', descricao: 'Tabuada do 1 ao 10', cor: '#FF9800', exercicios: 30 },
+                    { id: 'ordem', icone: '📏', nome: 'Ordem Crescente/Decrescente', descricao: 'Comparar e ordenar números', cor: '#FF9800', exercicios: 30 },
+                    { id: 'ordinais', icone: '🥇', nome: 'Números Ordinais', descricao: '1º, 2º, 3º...', cor: '#FF9800', exercicios: 30 },
+                    { id: 'decimal', icone: '💧', nome: 'Sistema Decimal', descricao: 'Unidades, dezenas, centenas', cor: '#FF9800', exercicios: 30 }
+                ],
+                // Inglês Básico (Nível 9)
+                9: [
+                    { id: 'alphabet', icone: '🔤', nome: 'Alphabet', descricao: 'Letters and pronunciation', cor: '#2196F3', exercicios: 50 },
+                    { id: 'numbers', icone: '🔢', nome: 'Numbers', descricao: 'Cardinal and ordinal numbers', cor: '#2196F3', exercicios: 50 },
+                    { id: 'vocabulary1', icone: '📚', nome: 'Basic Vocabulary', descricao: 'Greetings, colors, family', cor: '#2196F3', exercicios: 50 },
+                    { id: 'verbtobe', icone: '👤', nome: 'Verb to Be', descricao: 'Am, is, are - affirmative, negative, questions', cor: '#2196F3', exercicios: 50 },
+                    { id: 'pronouns', icone: '👥', nome: 'Personal Pronouns', descricao: 'I, you, he, she, it, we, they', cor: '#2196F3', exercicios: 50 },
+                    { id: 'articles', icone: '📝', nome: 'Articles', descricao: 'A, an, the', cor: '#2196F3', exercicios: 50 }
+                ],
+                // Inglês Intermediário (Nível 10)
+                10: [
+                    { id: 'present', icone: '⏰', nome: 'Present Tenses', descricao: 'Simple present, present continuous', cor: '#2196F3', exercicios: 50 },
+                    { id: 'past', icone: '⌛', nome: 'Past Tenses', descricao: 'Simple past, past continuous', cor: '#2196F3', exercicios: 50 },
+                    { id: 'future', icone: '🔮', nome: 'Future Tenses', descricao: 'Will, going to, present continuous for future', cor: '#2196F3', exercicios: 50 },
+                    { id: 'sentence', icone: '📄', nome: 'Sentence Formation', descricao: 'Word order, questions, negatives', cor: '#2196F3', exercicios: 50 },
+                    { id: 'vocabulary2', icone: '📖', nome: 'Intermediate Vocabulary', descricao: 'Daily activities, work, travel', cor: '#2196F3', exercicios: 50 },
+                    { id: 'prepositions', icone: '📍', nome: 'Prepositions', descricao: 'In, on, at, for, since, etc.', cor: '#2196F3', exercicios: 50 }
+                ],
+                // Inglês Avançado (Nível 11)
+                11: [
+                    { id: 'phrasal', icone: '🔗', nome: 'Phrasal Verbs', descricao: 'Common phrasal verbs and meanings', cor: '#2196F3', exercicios: 50 },
+                    { id: 'conditionals', icone: '⚖️', nome: 'Conditionals', descricao: 'Zero, first, second, third conditionals', cor: '#2196F3', exercicios: 50 },
+                    { id: 'idioms', icone: '💬', nome: 'Idioms', descricao: 'Common English expressions', cor: '#2196F3', exercicios: 50 },
+                    { id: 'modal', icone: '🎯', nome: 'Modal Verbs', descricao: 'Can, could, may, might, must, should', cor: '#2196F3', exercicios: 50 },
+                    { id: 'passive', icone: '🔄', nome: 'Passive Voice', descricao: 'Active to passive transformation', cor: '#2196F3', exercicios: 50 }
+                ],
+                // Inglês Fluente (Nível 12)
+                12: [
+                    { id: 'interpretation', icone: '📖', nome: 'Reading Interpretation', descricao: 'Text comprehension and analysis', cor: '#2196F3', exercicios: 50 },
+                    { id: 'writing', icone: '✍️', nome: 'Writing', descricao: 'Essays, emails, reports', cor: '#2196F3', exercicios: 50 },
+                    { id: 'advancedgrammar', icone: '📚', nome: 'Advanced Grammar', descricao: 'Complex structures, inversions', cor: '#2196F3', exercicios: 50 },
+                    { id: 'collocations', icone: '🤝', nome: 'Collocations', descricao: 'Word partnerships', cor: '#2196F3', exercicios: 50 },
+                    { id: 'slang', icone: '💭', nome: 'Slang & Expressions', descricao: 'Informal language', cor: '#2196F3', exercicios: 50 }
+                ]
+            };
+            
+            return materias[nivel] || [];
+        }
+
+        // Variáveis para controle dos exercícios
         let currentPage = 1;
         const questionsPerPage = 3;
-        let totalQuestions = 30;
         let currentAulaId = '';
 
         function mostrarAula(aulaId) {
@@ -1108,80 +1305,18 @@
             
             let html = `
                 <div class="aula-container">
-                    <button class="back-btn" onclick="mostrarNivel(1)">← Voltar para matérias</button>
+                    <button class="back-btn" onclick="voltarParaNivel()">← Voltar para matérias</button>
                     <div class="aula-content">
             `;
             
-            if (aulaId === 'fonetica1') {
-                html += `
-                    <h2>🔊 Fonética e Fonologia</h2>
-                    <p>A fonética e a fonologia estudam os sons da língua. A fonética se preocupa com a produção e percepção dos sons, enquanto a fonologia estuda como esses sons funcionam em uma língua.</p>
-                    
-                    <h3>Vogais</h3>
-                    <p>São sons produzidos sem obstáculos à passagem do ar. Em português, temos: a, e, i, o, u.</p>
-                    <div class="exemplo-box">
-                        <strong>Exemplos:</strong>
-                        <ul class="lista">
-                            <li>c<strong>a</strong>s<strong>a</strong></li>
-                            <li>p<strong>e</strong>rr<strong>o</strong></li>
-                            <li><strong>i</strong>lh<strong>a</strong></li>
-                        </ul>
-                    </div>
-                    
-                    <h3>Consoantes</h3>
-                    <p>São sons produzidos com obstáculos à passagem do ar. Exemplos: b, c, d, f, g, etc.</p>
-                    
-                    <h3>Encontros Vocálicos</h3>
-                    <ul class="lista">
-                        <li><strong>Ditongo:</strong> vogal + semivogal na mesma sílaba (pai, céu, história)</li>
-                        <li><strong>Tritongo:</strong> semivogal + vogal + semivogal (Paraguai, enxaguei)</li>
-                        <li><strong>Hiato:</strong> vogais em sílabas diferentes (sa-ú-de, pa-ís)</li>
-                    </ul>
-                `;
-            } else if (aulaId === 'morfologia1') {
-                html += `
-                    <h2>📝 Morfologia</h2>
-                    <p>A morfologia estuda a estrutura, formação e classificação das palavras.</p>
-                    
-                    <h3>Substantivo</h3>
-                    <p>Palavra que nomeia seres, objetos, sentimentos, etc.</p>
-                    <div class="exemplo-box">
-                        <strong>Exemplos:</strong>
-                        <ul class="lista">
-                            <li><strong>Comum:</strong> casa, carro, menino</li>
-                            <li><strong>Próprio:</strong> João, Brasil, Maria</li>
-                            <li><strong>Concreto:</strong> mesa, árvore, água</li>
-                            <li><strong>Abstrato:</strong> amor, saudade, beleza</li>
-                        </ul>
-                    </div>
-                    
-                    <h3>Adjetivo</h3>
-                    <p>Palavra que caracteriza o substantivo.</p>
-                    <div class="exemplo-box">
-                        <strong>Exemplos:</strong> casa <strong>grande</strong>, dia <strong>ensolarado</strong>, menino <strong>inteligente</strong>
-                    </div>
-                    
-                    <h3>Verbo</h3>
-                    <p>Palavra que indica ação, estado ou fenômeno.</p>
-                    <div class="exemplo-box">
-                        <strong>Exemplos:</strong> <strong>correr</strong>, <strong>ser</strong>, <strong>chover</strong>
-                    </div>
-                `;
-            } else {
-                html += `
-                    <h2>📚 ${aulaId}</h2>
-                    <p>Esta aula está sendo preparada com muito carinho para você!</p>
-                    <div class="exemplo-box">
-                        <strong>Em breve:</strong> Todo o conteúdo completo de Português.
-                    </div>
-                `;
-            }
+            html += getConteudoAula(aulaId);
             
-            // ADICIONAR EXERCÍCIOS
+            const totalExercicios = getTotalExercicios(aulaId);
+            
             html += `
                 <div class="exercicios-section" id="exercicios-${aulaId}">
                     <div class="exercicios-header">
-                        <h3>📝 30 Exercícios - Teste seus conhecimentos</h3>
+                        <h3>📝 ${totalExercicios} Exercícios</h3>
                         <div class="progress-bar">
                             <div class="progress-fill" id="progress-${aulaId}" style="width: 0%"></div>
                         </div>
@@ -1191,174 +1326,252 @@
                     
                     <div class="navegacao-exercicios">
                         <button class="btn-nav" id="prev-${aulaId}" onclick="mudarPagina('${aulaId}', -1)">← Anterior</button>
-                        <span class="pagina-indicador" id="pagina-${aulaId}">Página 1/10</span>
+                        <span class="pagina-indicador" id="pagina-${aulaId}">Página 1/${Math.ceil(totalExercicios/questionsPerPage)}</span>
                         <button class="btn-nav" id="next-${aulaId}" onclick="mudarPagina('${aulaId}', 1)">Próxima →</button>
                     </div>
                     
-                    <div style="text-align: center; margin-top: 20px;">
-                        <button class="btn-exercicio" onclick="corrigirPaginaAtual('${aulaId}')">Corrigir respostas desta página</button>
-                        <button class="btn-exercicio secondary" onclick="corrigirTodosExercicios('${aulaId}')">Corrigir todos os 30</button>
-                        <button class="btn-exercicio secondary" onclick="resetarExercicios('${aulaId}')">Tentar novamente</button>
+                    <div style="text-align: center;">
+                        <button class="btn-exercicio" onclick="corrigirPaginaAtual('${aulaId}')">Corrigir página</button>
+                        <button class="btn-exercicio secondary" onclick="corrigirTodos('${aulaId}')">Corrigir todos</button>
+                        <button class="btn-exercicio secondary" onclick="resetarExercicios('${aulaId}')">Resetar</button>
                     </div>
                     
                     <div id="resultado-${aulaId}" class="resultado-exercicio" style="display: none;"></div>
                 </div>
             `;
             
-            html += `
-                    </div>
-                </div>
-            `;
+            html += `</div></div>`;
             
             document.getElementById('conteudoArea').innerHTML = html;
-            
-            // Carregar exercícios
             carregarExercicios(aulaId);
         }
 
+        function getTotalExercicios(aulaId) {
+            // Se for matéria de inglês, retorna 50, senão 30
+            if (aulaId.includes('ingles') || 
+                aulaId === 'alphabet' || aulaId === 'numbers' || 
+                aulaId === 'vocabulary1' || aulaId === 'verbtobe' ||
+                aulaId === 'pronouns' || aulaId === 'articles' ||
+                aulaId === 'present' || aulaId === 'past' ||
+                aulaId === 'future' || aulaId === 'sentence' ||
+                aulaId === 'vocabulary2' || aulaId === 'prepositions' ||
+                aulaId === 'phrasal' || aulaId === 'conditionals' ||
+                aulaId === 'idioms' || aulaId === 'modal' ||
+                aulaId === 'passive' || aulaId === 'interpretation' ||
+                aulaId === 'writing' || aulaId === 'advancedgrammar' ||
+                aulaId === 'collocations' || aulaId === 'slang') {
+                return 50;
+            }
+            return 30;
+        }
+
+        function getConteudoAula(aulaId) {
+            const conteudos = {
+                // Inglês Básico
+                alphabet: `
+                    <h2>🔤 English Alphabet</h2>
+                    <p>The English alphabet has 26 letters.</p>
+                    
+                    <h3>Vowels (Vogais)</h3>
+                    <p>A, E, I, O, U</p>
+                    
+                    <h3>Consonants (Consoantes)</h3>
+                    <p>B, C, D, F, G, H, J, K, L, M, N, P, Q, R, S, T, V, W, X, Y, Z</p>
+                    
+                    <div class="exemplo-box">
+                        <strong>Pronunciation Tips:</strong>
+                        <ul class="lista">
+                            <li>A = ei</li>
+                            <li>B = bi</li>
+                            <li>C = ci</li>
+                            <li>D = di</li>
+                            <li>E = i</li>
+                        </ul>
+                    </div>
+                `,
+                numbers: `
+                    <h2>🔢 Numbers in English</h2>
+                    
+                    <h3>Cardinal Numbers</h3>
+                    <ul class="lista">
+                        <li>1 - one</li>
+                        <li>2 - two</li>
+                        <li>3 - three</li>
+                        <li>4 - four</li>
+                        <li>5 - five</li>
+                        <li>10 - ten</li>
+                        <li>100 - one hundred</li>
+                    </ul>
+                    
+                    <h3>Ordinal Numbers</h3>
+                    <ul class="lista">
+                        <li>1st - first</li>
+                        <li>2nd - second</li>
+                        <li>3rd - third</li>
+                        <li>4th - fourth</li>
+                        <li>5th - fifth</li>
+                    </ul>
+                `,
+                verbtobe: `
+                    <h2>👤 Verb to Be</h2>
+                    
+                    <h3>Affirmative</h3>
+                    <ul class="lista">
+                        <li>I am (I'm) a student</li>
+                        <li>You are (You're) my friend</li>
+                        <li>He is (He's) a teacher</li>
+                        <li>She is (She's) a doctor</li>
+                        <li>It is (It's) a book</li>
+                        <li>We are (We're) happy</li>
+                        <li>They are (They're) here</li>
+                    </ul>
+                    
+                    <h3>Negative</h3>
+                    <ul class="lista">
+                        <li>I am not (I'm not) tired</li>
+                        <li>You are not (aren't) late</li>
+                        <li>He is not (isn't) here</li>
+                    </ul>
+                    
+                    <h3>Questions</h3>
+                    <ul class="lista">
+                        <li>Am I correct?</li>
+                        <li>Are you ready?</li>
+                        <li>Is he your brother?</li>
+                    </ul>
+                `,
+                // Inglês Intermediário
+                present: `
+                    <h2>⏰ Present Tenses</h2>
+                    
+                    <h3>Simple Present</h3>
+                    <p>Used for habits, facts, routines.</p>
+                    <div class="exemplo-box">
+                        <strong>Examples:</strong>
+                        <ul class="lista">
+                            <li>I work every day</li>
+                            <li>She works in a hospital</li>
+                            <li>They don't like coffee</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>Present Continuous</h3>
+                    <p>Used for actions happening now.</p>
+                    <div class="exemplo-box">
+                        <strong>Examples:</strong>
+                        <ul class="lista">
+                            <li>I am studying now</li>
+                            <li>She is reading a book</li>
+                            <li>They are playing soccer</li>
+                        </ul>
+                    </div>
+                `,
+                // Inglês Avançado
+                phrasal: `
+                    <h2>🔗 Phrasal Verbs</h2>
+                    <p>Phrasal verbs are combinations of verbs with prepositions or adverbs.</p>
+                    
+                    <div class="exemplo-box">
+                        <strong>Common Phrasal Verbs:</strong>
+                        <ul class="lista">
+                            <li><strong>Get up</strong> - levantar (I get up at 7am)</li>
+                            <li><strong>Look for</strong> - procurar (I'm looking for my keys)</li>
+                            <li><strong>Turn on/off</strong> - ligar/desligar (Turn on the TV)</li>
+                            <li><strong>Give up</strong> - desistir (Never give up!)</li>
+                            <li><strong>Come back</strong> - voltar (He came back home)</li>
+                        </ul>
+                    </div>
+                `,
+                conditionals: `
+                    <h2>⚖️ Conditionals</h2>
+                    
+                    <h3>Zero Conditional</h3>
+                    <p>General truths: If + present, present</p>
+                    <div class="exemplo-box">
+                        If you heat water, it boils.
+                    </div>
+                    
+                    <h3>First Conditional</h3>
+                    <p>Real possibility: If + present, will + verb</p>
+                    <div class="exemplo-box">
+                        If it rains, I will stay home.
+                    </div>
+                    
+                    <h3>Second Conditional</h3>
+                    <p>Unreal situations: If + past, would + verb</p>
+                    <div class="exemplo-box">
+                        If I had money, I would travel.
+                    </div>
+                    
+                    <h3>Third Conditional</h3>
+                    <p>Past unreal: If + past perfect, would have + participle</p>
+                    <div class="exemplo-box">
+                        If I had studied, I would have passed.
+                    </div>
+                `,
+                idioms: `
+                    <h2>💬 English Idioms</h2>
+                    <p>Idioms are expressions with figurative meanings.</p>
+                    
+                    <div class="exemplo-box">
+                        <strong>Common Idioms:</strong>
+                        <ul class="lista">
+                            <li><strong>Piece of cake</strong> - muito fácil (The test was a piece of cake)</li>
+                            <li><strong>Break a leg</strong> - boa sorte! (Break a leg on your presentation!)</li>
+                            <li><strong>Cost an arm and a leg</strong> - muito caro (This car costs an arm and a leg)</li>
+                            <li><strong>Hit the books</strong> - estudar muito (I need to hit the books)</li>
+                            <li><strong>Under the weather</strong> - doente (I'm feeling under the weather)</li>
+                        </ul>
+                    </div>
+                `,
+                interpretation: `
+                    <h2>📖 Reading Interpretation</h2>
+                    <p>Practice understanding English texts.</p>
+                    
+                    <div class="exemplo-box">
+                        <strong>Reading Tips:</strong>
+                        <ul class="lista">
+                            <li>Read the questions first</li>
+                            <li>Look for keywords</li>
+                            <li>Understand the main idea</li>
+                            <li>Pay attention to context</li>
+                        </ul>
+                    </div>
+                `
+            };
+            
+            return conteudos[aulaId] || `<h2>📚 ${aulaId}</h2><p>Content being prepared!</p>`;
+        }
+
+        function voltarParaNivel() {
+            if (disciplinaAtual === 'portugues') {
+                mostrarDisciplina('portugues');
+            } else if (disciplinaAtual === 'matematica') {
+                mostrarDisciplina('matematica');
+            } else {
+                mostrarDisciplina('ingles');
+            }
+        }
+
         function carregarExercicios(aulaId) {
+            const totalExercicios = getTotalExercicios(aulaId);
             let exercicios = [];
             
-            if (aulaId === 'fonetica1') {
-                exercicios = [
-                    // Página 1 - Questões 1-3
-                    { pergunta: "1. Quantas vogais tem a palavra 'CASA'?", opcoes: ["1 vogal", "2 vogais", "3 vogais"], correta: 1 },
-                    { pergunta: "2. Qual palavra tem ditongo?", opcoes: ["Sa-ú-de", "Pai", "Ca-der-no"], correta: 1 },
-                    { pergunta: "3. Quantas consoantes tem 'ESCOLA'?", opcoes: ["2 consoantes", "3 consoantes", "4 consoantes"], correta: 1 },
-                    // Página 2 - Questões 4-6
-                    { pergunta: "4. Qual palavra tem hiato?", opcoes: ["Céu", "Saída", "Mãe"], correta: 1 },
-                    { pergunta: "5. Quantas sílabas tem 'BORBOLETA'?", opcoes: ["3 sílabas", "4 sílabas", "5 sílabas"], correta: 1 },
-                    { pergunta: "6. Qual é a vogal na palavra 'MEL'?", opcoes: ["M", "E", "L"], correta: 1 },
-                    // Página 3 - Questões 7-9
-                    { pergunta: "7. Em 'GUERRA', o 'U' é pronunciado?", opcoes: ["Sim", "Não", "Às vezes"], correta: 1 },
-                    { pergunta: "8. Quantas letras tem 'PNEU'?", opcoes: ["3 letras", "4 letras", "5 letras"], correta: 1 },
-                    { pergunta: "9. Qual palavra tem 2 sílabas?", opcoes: ["CASA", "BORBOLETA", "ELEFANTE"], correta: 0 },
-                    // Página 4 - Questões 10-12
-                    { pergunta: "10. Em 'PISCINA', o 'P' é pronunciado?", opcoes: ["Sim", "Não", "Depende"], correta: 1 },
-                    { pergunta: "11. Qual palavra termina com vogal?", opcoes: ["Amor", "Sol", "Felicidade"], correta: 2 },
-                    { pergunta: "12. Quantas consoantes tem 'PATO'?", opcoes: ["1 consoante", "2 consoantes", "3 consoantes"], correta: 1 },
-                    // Página 5 - Questões 13-15
-                    { pergunta: "13. Qual palavra tem encontro consonantal?", opcoes: ["Casa", "Prato", "Mesa"], correta: 1 },
-                    { pergunta: "14. Quantas vogais tem 'ÁGUA'?", opcoes: ["2 vogais", "3 vogais", "4 vogais"], correta: 1 },
-                    { pergunta: "15. Em 'HOMEM', a última letra é?", opcoes: ["Vogal", "Consoante", "Semivogal"], correta: 1 },
-                    // Página 6 - Questões 16-18
-                    { pergunta: "16. Qual palavra tem tritongo?", opcoes: ["Paraguai", "Pai", "Mãe"], correta: 0 },
-                    { pergunta: "17. Quantas letras tem 'QUEIJO'?", opcoes: ["5 letras", "6 letras", "7 letras"], correta: 1 },
-                    { pergunta: "18. Qual é a primeira consoante de 'BRASIL'?", opcoes: ["B", "R", "S"], correta: 0 },
-                    // Página 7 - Questões 19-21
-                    { pergunta: "19. Em 'FOLHA', o 'H' é pronunciado?", opcoes: ["Sim", "Não", "Depende"], correta: 1 },
-                    { pergunta: "20. Quantas sílabas tem 'PÁSSARO'?", opcoes: ["2 sílabas", "3 sílabas", "4 sílabas"], correta: 1 },
-                    { pergunta: "21. Qual palavra termina com consoante?", opcoes: ["CASA", "MAR", "SOL"], correta: 1 },
-                    // Página 8 - Questões 22-24
-                    { pergunta: "22. Em 'EXCETO', o 'X' tem som de?", opcoes: ["CH", "KS", "S"], correta: 0 },
-                    { pergunta: "23. Quantas vogais tem 'URUGUAI'?", opcoes: ["3 vogais", "4 vogais", "5 vogais"], correta: 1 },
-                    { pergunta: "24. Qual palavra tem dígrafo?", opcoes: ["CASA", "CARRO", "MESA"], correta: 1 },
-                    // Página 9 - Questões 25-27
-                    { pergunta: "25. Em 'ASSUNTO', quantos dígrafos?", opcoes: ["1 dígrafo", "2 dígrafos", "3 dígrafos"], correta: 1 },
-                    { pergunta: "26. Qual é a última letra de 'AMOR'?", opcoes: ["A", "M", "R"], correta: 2 },
-                    { pergunta: "27. Quantas consoantes tem 'ESTUDO'?", opcoes: ["2 consoantes", "3 consoantes", "4 consoantes"], correta: 2 },
-                    // Página 10 - Questões 28-30
-                    { pergunta: "28. Qual palavra tem 4 sílabas?", opcoes: ["CASA", "BORBOLETA", "ELEFANTE"], correta: 1 },
-                    { pergunta: "29. Em 'MACHADO', o 'CH' tem som de?", opcoes: ["C e H", "X", "S"], correta: 1 },
-                    { pergunta: "30. Quantas letras tem 'PISCINA'?", opcoes: ["6 letras", "7 letras", "8 letras"], correta: 1 }
-                ];
-            } else if (aulaId === 'morfologia1') {
-                exercicios = [
-                    // Página 1 - Questões 1-3
-                    { pergunta: "1. Qual é o substantivo em 'O menino bonito correu'?", opcoes: ["bonito", "menino", "correu"], correta: 1 },
-                    { pergunta: "2. Qual palavra é um adjetivo?", opcoes: ["corrida", "inteligente", "comer"], correta: 1 },
-                    { pergunta: "3. 'Amor' é um substantivo:", opcoes: ["Concreto", "Abstrato", "Próprio"], correta: 1 },
-                    // Página 2 - Questões 4-6
-                    { pergunta: "4. Qual é o verbo em 'João estuda muito'?", opcoes: ["João", "estuda", "muito"], correta: 1 },
-                    { pergunta: "5. 'Brasil' é um substantivo:", opcoes: ["Comum", "Próprio", "Abstrato"], correta: 1 },
-                    { pergunta: "6. Quantos adjetivos há em 'A linda flor amarela'?", opcoes: ["1 adjetivo", "2 adjetivos", "3 adjetivos"], correta: 1 },
-                    // Página 3 - Questões 7-9
-                    { pergunta: "7. Qual palavra é um artigo?", opcoes: ["O", "Casa", "Bonito"], correta: 0 },
-                    { pergunta: "8. 'Felicidade' é substantivo:", opcoes: ["Concreto", "Abstrato", "Próprio"], correta: 1 },
-                    { pergunta: "9. Qual é o plural de 'cão'?", opcoes: ["cãos", "cães", "cões"], correta: 1 },
-                    // Página 4 - Questões 10-12
-                    { pergunta: "10. 'Rápido' é um:", opcoes: ["Substantivo", "Adjetivo", "Verbo"], correta: 1 },
-                    { pergunta: "11. Em 'Ela canta bem', 'canta' é:", opcoes: ["Substantivo", "Adjetivo", "Verbo"], correta: 2 },
-                    { pergunta: "12. 'Mesa' é substantivo:", opcoes: ["Comum", "Próprio", "Abstrato"], correta: 0 },
-                    // Página 5 - Questões 13-15
-                    { pergunta: "13. Qual é o feminino de 'professor'?", opcoes: ["professora", "professoro", "professore"], correta: 0 },
-                    { pergunta: "14. 'Bonito' no feminino é:", opcoes: ["bonita", "bonite", "bonito"], correta: 0 },
-                    { pergunta: "15. Quantos substantivos em 'Casa, amor e carro'?", opcoes: ["1 substantivo", "2 substantivos", "3 substantivos"], correta: 2 },
-                    // Página 6 - Questões 16-18
-                    { pergunta: "16. 'Eles' é um:", opcoes: ["Artigo", "Pronome", "Substantivo"], correta: 1 },
-                    { pergunta: "17. Qual é o plural de 'azul'?", opcoes: ["azuls", "azuis", "azules"], correta: 1 },
-                    { pergunta: "18. 'Grande' é um:", opcoes: ["Substantivo", "Adjetivo", "Verbo"], correta: 1 },
-                    // Página 7 - Questões 19-21
-                    { pergunta: "19. Em 'Comi uma maçã', 'uma' é:", opcoes: ["Artigo", "Numeral", "Pronome"], correta: 0 },
-                    { pergunta: "20. 'Primeiro' é:", opcoes: ["Artigo", "Numeral", "Adjetivo"], correta: 1 },
-                    { pergunta: "21. 'Chover' é:", opcoes: ["Substantivo", "Adjetivo", "Verbo"], correta: 2 },
-                    // Página 8 - Questões 22-24
-                    { pergunta: "22. 'Nosso' é um:", opcoes: ["Artigo", "Pronome", "Numeral"], correta: 1 },
-                    { pergunta: "23. Qual é o aumentativo de 'casa'?", opcoes: ["casinha", "casão", "casota"], correta: 1 },
-                    { pergunta: "24. 'Gatinho' é o diminutivo de:", opcoes: ["gato", "gata", "gatão"], correta: 0 },
-                    // Página 9 - Questões 25-27
-                    { pergunta: "25. Em 'Dois livros', 'dois' é:", opcoes: ["Artigo", "Numeral", "Pronome"], correta: 1 },
-                    { pergunta: "26. 'Alegre' é:", opcoes: ["Substantivo", "Adjetivo", "Verbo"], correta: 1 },
-                    { pergunta: "27. Quantos verbos em 'Correr, pular e andar'?", opcoes: ["1 verbo", "2 verbos", "3 verbos"], correta: 2 },
-                    // Página 10 - Questões 28-30
-                    { pergunta: "28. 'Ele' é um pronome:", opcoes: ["Pessoal", "Possessivo", "Demonstrativo"], correta: 0 },
-                    { pergunta: "29. 'Linda' é:", opcoes: ["Substantivo", "Adjetivo", "Verbo"], correta: 1 },
-                    { pergunta: "30. 'Comer' é:", opcoes: ["Substantivo", "Adjetivo", "Verbo"], correta: 2 }
-                ];
-            } else if (aulaId === 'semantica1') {
-                exercicios = [
-                    // Página 1 - Questões 1-3
-                    { pergunta: "1. Sinônimo de 'alegre' é:", opcoes: ["triste", "feliz", "cansado"], correta: 1 },
-                    { pergunta: "2. Antônimo de 'quente' é:", opcoes: ["morno", "gelado", "frio"], correta: 2 },
-                    { pergunta: "3. Sinônimo de 'casa' é:", opcoes: ["lar", "rua", "carro"], correta: 0 },
-                    // Página 2 - Questões 4-6
-                    { pergunta: "4. Antônimo de 'dia' é:", opcoes: ["tarde", "noite", "manhã"], correta: 1 },
-                    { pergunta: "5. Sinônimo de 'bonito' é:", opcoes: ["feio", "lindo", "grande"], correta: 1 },
-                    { pergunta: "6. Antônimo de 'alto' é:", opcoes: ["grande", "baixo", "médio"], correta: 1 },
-                    // Página 3 - Questões 7-9
-                    { pergunta: "7. Sinônimo de 'rápido' é:", opcoes: ["lento", "veloz", "devagar"], correta: 1 },
-                    { pergunta: "8. Antônimo de 'amor' é:", opcoes: ["ódio", "carinho", "afeição"], correta: 0 },
-                    { pergunta: "9. Sinônimo de 'inteligente' é:", opcoes: ["burro", "esperto", "lento"], correta: 1 },
-                    // Página 4 - Questões 10-12
-                    { pergunta: "10. Antônimo de 'cheio' é:", opcoes: ["vazio", "lotado", "completo"], correta: 0 },
-                    { pergunta: "11. Sinônimo de 'caminho' é:", opcoes: ["estrada", "muro", "casa"], correta: 0 },
-                    { pergunta: "12. Antônimo de 'forte' é:", opcoes: ["robusto", "fraco", "resistente"], correta: 1 },
-                    // Página 5 - Questões 13-15
-                    { pergunta: "13. Sinônimo de 'começar' é:", opcoes: ["terminar", "iniciar", "finalizar"], correta: 1 },
-                    { pergunta: "14. Antônimo de 'entrar' é:", opcoes: ["ingressar", "sair", "penetrar"], correta: 1 },
-                    { pergunta: "15. Sinônimo de 'alimento' é:", opcoes: ["comida", "bebida", "remédio"], correta: 0 },
-                    // Página 6 - Questões 16-18
-                    { pergunta: "16. Antônimo de 'claro' é:", opcoes: ["luminoso", "escuro", "brilhante"], correta: 1 },
-                    { pergunta: "17. Sinônimo de 'triste' é:", opcoes: ["alegre", "melancólico", "contente"], correta: 1 },
-                    { pergunta: "18. Antônimo de 'seco' é:", opcoes: ["molhado", "árido", "ressecado"], correta: 0 },
-                    // Página 7 - Questões 19-21
-                    { pergunta: "19. Sinônimo de 'falar' é:", opcoes: ["calar", "conversar", "silenciar"], correta: 1 },
-                    { pergunta: "20. Antônimo de 'lembrar' é:", opcoes: ["recordar", "esquecer", "memorizar"], correta: 1 },
-                    { pergunta: "21. Sinônimo de 'calmo' é:", opcoes: ["tranquilo", "agitado", "nervoso"], correta: 0 },
-                    // Página 8 - Questões 22-24
-                    { pergunta: "22. Antônimo de 'novo' é:", opcoes: ["moderno", "velho", "atual"], correta: 1 },
-                    { pergunta: "23. Sinônimo de 'felicidade' é:", opcoes: ["tristeza", "alegria", "melancolia"], correta: 1 },
-                    { pergunta: "24. Antônimo de 'subir' é:", opcoes: ["elevar", "descer", "ascender"], correta: 1 },
-                    // Página 9 - Questões 25-27
-                    { pergunta: "25. Sinônimo de 'medo' é:", opcoes: ["coragem", "pavor", "bravura"], correta: 1 },
-                    { pergunta: "26. Antônimo de 'abrir' é:", opcoes: ["fechar", "destapar", "iniciar"], correta: 0 },
-                    { pergunta: "27. Sinônimo de 'amizade' é:", opcoes: ["inimizade", "companheirismo", "rivalidade"], correta: 1 },
-                    // Página 10 - Questões 28-30
-                    { pergunta: "28. Antônimo de 'presente' é:", opcoes: ["agora", "ausente", "hoje"], correta: 1 },
-                    { pergunta: "29. Sinônimo de 'responder' é:", opcoes: ["perguntar", "questionar", "replicar"], correta: 2 },
-                    { pergunta: "30. Antônimo de 'ganhar' é:", opcoes: ["obter", "perder", "adquirir"], correta: 1 }
-                ];
+            for (let i = 0; i < totalExercicios; i++) {
+                exercicios.push({
+                    pergunta: `${i+1}. Practice question for ${aulaId}`,
+                    opcoes: ["Option A", "Option B", "Option C"],
+                    correta: 0
+                });
             }
             
-            if (exercicios.length > 0) {
-                window.exerciciosData = window.exerciciosData || {};
-                window.exerciciosData[aulaId] = exercicios;
-                window.respostasUsuario = window.respostasUsuario || {};
-                window.respostasUsuario[aulaId] = Array(exercicios.length).fill(null);
-                
-                atualizarQuestoes(aulaId);
-                atualizarProgresso(aulaId);
-            }
+            window.exerciciosData = window.exerciciosData || {};
+            window.exerciciosData[aulaId] = exercicios;
+            window.respostasUsuario = window.respostasUsuario || {};
+            window.respostasUsuario[aulaId] = Array(totalExercicios).fill(null);
+            
+            atualizarQuestoes(aulaId);
+            atualizarProgresso(aulaId);
         }
 
         function atualizarQuestoes(aulaId) {
@@ -1399,11 +1612,8 @@
             
             document.getElementById(`questoes-container-${aulaId}`).innerHTML = questoesHTML;
             
-            // Atualizar indicador de página
             const totalPages = Math.ceil(exercicios.length / questionsPerPage);
             document.getElementById(`pagina-${aulaId}`).textContent = `Página ${currentPage}/${totalPages}`;
-            
-            // Atualizar botões de navegação
             document.getElementById(`prev-${aulaId}`).disabled = currentPage === 1;
             document.getElementById(`next-${aulaId}`).disabled = currentPage === totalPages;
         }
@@ -1428,7 +1638,7 @@
 
         function atualizarProgresso(aulaId) {
             const respostas = window.respostasUsuario[aulaId] || [];
-            const respondidas = respostas.filter(r => r !== null && r !== undefined).length;
+            const respondidas = respostas.filter(r => r !== null).length;
             const total = window.exerciciosData[aulaId] ? window.exerciciosData[aulaId].length : 30;
             const percentual = (respondidas / total) * 100;
             
@@ -1445,78 +1655,70 @@
             const startIdx = (currentPage - 1) * questionsPerPage;
             const endIdx = Math.min(startIdx + questionsPerPage, exercicios.length);
             
-            let acertosPagina = 0;
-            let totalPagina = 0;
+            let acertos = 0;
+            let total = 0;
             
             for (let i = startIdx; i < endIdx; i++) {
                 const resposta = window.respostasUsuario[aulaId] ? window.respostasUsuario[aulaId][i] : null;
                 const feedbackDiv = document.getElementById(`feedback-${aulaId}-${i}`);
                 
-                if (resposta !== null && resposta !== undefined) {
-                    totalPagina++;
+                if (resposta !== null) {
+                    total++;
                     const correta = exercicios[i].correta;
                     
                     if (resposta === correta) {
-                        feedbackDiv.textContent = '✅ Correto!';
+                        feedbackDiv.textContent = '✅ Correct!';
                         feedbackDiv.className = 'feedback correto';
-                        acertosPagina++;
+                        acertos++;
                     } else {
-                        feedbackDiv.textContent = `❌ Incorreto. A resposta correta é ${String.fromCharCode(97 + correta)}) ${exercicios[i].opcoes[correta]}`;
+                        feedbackDiv.textContent = `❌ Incorrect. Answer: ${String.fromCharCode(97 + correta)}`;
                         feedbackDiv.className = 'feedback incorreto';
                     }
                 } else {
-                    feedbackDiv.textContent = '⚠️ Responda esta questão!';
+                    feedbackDiv.textContent = '⚠️ Answer this question!';
                     feedbackDiv.className = 'feedback incorreto';
                 }
             }
             
-            if (totalPagina > 0) {
+            if (total > 0) {
                 const resultadoDiv = document.getElementById(`resultado-${aulaId}`);
                 resultadoDiv.style.display = 'block';
-                resultadoDiv.textContent = `Você acertou ${acertosPagina} de ${totalPagina} questões nesta página! ${acertosPagina === totalPagina ? '🎉 Parabéns!' : '👨‍🎓 Continue praticando!'}`;
+                resultadoDiv.textContent = `You got ${acertos} out of ${total} correct on this page!`;
             }
         }
 
-        function corrigirTodosExercicios(aulaId) {
+        function corrigirTodos(aulaId) {
             const exercicios = window.exerciciosData[aulaId];
             if (!exercicios) return;
             
-            let totalAcertos = 0;
+            let acertos = 0;
             
             for (let i = 0; i < exercicios.length; i++) {
                 const resposta = window.respostasUsuario[aulaId] ? window.respostasUsuario[aulaId][i] : null;
                 const correta = exercicios[i].correta;
                 
                 if (resposta === correta) {
-                    totalAcertos++;
+                    acertos++;
                 }
             }
             
             const resultadoDiv = document.getElementById(`resultado-${aulaId}`);
             resultadoDiv.style.display = 'block';
             
-            if (totalAcertos === exercicios.length) {
-                resultadoDiv.textContent = `🎉 PERFEITO! Você acertou todas as ${exercicios.length} questões! Parabéns! 🌟`;
+            if (acertos === exercicios.length) {
+                resultadoDiv.textContent = `🎉 PERFECT! You got all ${exercicios.length} questions correct!`;
             } else {
-                resultadoDiv.textContent = `📊 Você acertou ${totalAcertos} de ${exercicios.length} questões. Continue praticando!`;
-            }
-            
-            // Salvar progresso
-            const user = JSON.parse(localStorage.getItem('evolva_current_user'));
-            if (user) {
-                let progresso = JSON.parse(localStorage.getItem(`progresso_${user.id}`)) || {};
-                progresso[aulaId] = totalAcertos;
-                localStorage.setItem(`progresso_${user.id}`, JSON.stringify(progresso));
+                resultadoDiv.textContent = `📊 You got ${acertos} out of ${exercicios.length} correct. Keep practicing!`;
             }
         }
 
         function resetarExercicios(aulaId) {
+            const total = window.exerciciosData[aulaId].length;
             if (window.respostasUsuario[aulaId]) {
-                window.respostasUsuario[aulaId] = Array(window.exerciciosData[aulaId].length).fill(null);
+                window.respostasUsuario[aulaId] = Array(total).fill(null);
             }
             
-            // Limpar feedbacks
-            for (let i = 0; i < window.exerciciosData[aulaId].length; i++) {
+            for (let i = 0; i < total; i++) {
                 const feedbackDiv = document.getElementById(`feedback-${aulaId}-${i}`);
                 if (feedbackDiv) {
                     feedbackDiv.textContent = '';
@@ -1524,17 +1726,12 @@
                 }
             }
             
-            // Esconder resultado
-            const resultadoDiv = document.getElementById(`resultado-${aulaId}`);
-            resultadoDiv.style.display = 'none';
-            
-            // Recarregar questões
+            document.getElementById(`resultado-${aulaId}`).style.display = 'none';
             currentPage = 1;
             atualizarQuestoes(aulaId);
             atualizarProgresso(aulaId);
         }
 
-        // Verificar se já existe usuário logado
         window.onload = function() {
             const currentUser = JSON.parse(localStorage.getItem('evolva_current_user'));
             if (currentUser) {
@@ -1544,7 +1741,7 @@
                 document.getElementById('userEmail').textContent = currentUser.email;
                 document.getElementById('welcomeUser').textContent = `Bem-vindo(a), ${currentUser.name}! 👋`;
                 document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
-                mostrarNivel(1);
+                mostrarDisciplina('portugues');
             }
         };
     </script>

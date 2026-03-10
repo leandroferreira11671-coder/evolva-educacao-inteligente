@@ -192,7 +192,7 @@
             width: auto;
             padding: 8px 20px;
             font-size: 14px;
-            margin-top: 10px;
+            margin: 5px;
         }
 
         .forgot-password {
@@ -527,13 +527,79 @@
             border: 2px solid #e0e0e0;
         }
 
-        .exercicios-section h3 {
+        .exercicios-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .exercicios-header h3 {
             color: #667eea;
             font-size: 24px;
-            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+        }
+
+        .navegacao-exercicios {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-nav:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .btn-nav:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .pagina-indicador {
+            font-size: 18px;
+            font-weight: 600;
+            color: #667eea;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .questoes-container {
+            min-height: 400px;
         }
 
         .questao {
@@ -542,6 +608,11 @@
             padding: 25px;
             margin-bottom: 25px;
             box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            display: none;
+        }
+
+        .questao.ativa {
+            display: block;
         }
 
         .questao p {
@@ -620,12 +691,12 @@
 
         .resultado-exercicio {
             text-align: center;
-            padding: 20px;
+            padding: 30px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border-radius: 12px;
-            margin-top: 20px;
-            font-size: 20px;
+            margin-top: 30px;
+            font-size: 24px;
             font-weight: 600;
         }
 
@@ -638,8 +709,7 @@
             cursor: pointer;
             font-size: 16px;
             font-weight: 600;
-            margin-right: 10px;
-            margin-top: 10px;
+            margin: 5px;
             transition: all 0.3s;
         }
 
@@ -679,6 +749,11 @@
             }
             
             .materias-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .exercicios-header {
                 flex-direction: column;
                 text-align: center;
             }
@@ -976,32 +1051,32 @@
                             <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('fonetica1')">
                                 <h4>🔊 Fonética e Fonologia</h4>
                                 <p>Sons das letras, vogais, consoantes, encontros vocálicos</p>
-                                <span class="materia-tag">Básico</span>
+                                <span class="materia-tag">30 exercícios</span>
                             </div>
                             <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('morfologia1')">
                                 <h4>📝 Morfologia</h4>
                                 <p>Substantivo, adjetivo, verbo, artigo, numeral</p>
-                                <span class="materia-tag">Básico</span>
+                                <span class="materia-tag">30 exercícios</span>
                             </div>
                             <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('sintaxe1')">
                                 <h4>🔤 Sintaxe</h4>
                                 <p>Frases, orações, sujeito e predicado simples</p>
-                                <span class="materia-tag">Básico</span>
+                                <span class="materia-tag">30 exercícios</span>
                             </div>
                             <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('ortografia1')">
                                 <h4>✍️ Ortografia</h4>
                                 <p>Uso do S e Z, M e N, C e QU, G e J</p>
-                                <span class="materia-tag">Básico</span>
+                                <span class="materia-tag">30 exercícios</span>
                             </div>
                             <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('semantica1')">
                                 <h4>💭 Semântica</h4>
                                 <p>Sinônimos, antônimos, sentido das palavras</p>
-                                <span class="materia-tag">Básico</span>
+                                <span class="materia-tag">30 exercícios</span>
                             </div>
                             <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('pontuacao1')">
                                 <h4>❗ Pontuação Básica</h4>
                                 <p>Ponto final, vírgula, interrogação e exclamação</p>
-                                <span class="materia-tag">Básico</span>
+                                <span class="materia-tag">30 exercícios</span>
                             </div>
                         </div>
                     </div>
@@ -1021,7 +1096,16 @@
             document.getElementById('conteudoArea').innerHTML = html;
         }
 
+        // Variáveis globais para controle dos exercícios
+        let currentPage = 1;
+        const questionsPerPage = 3;
+        let totalQuestions = 30;
+        let currentAulaId = '';
+
         function mostrarAula(aulaId) {
+            currentAulaId = aulaId;
+            currentPage = 1;
+            
             let html = `
                 <div class="aula-container">
                     <button class="back-btn" onclick="mostrarNivel(1)">← Voltar para matérias</button>
@@ -1083,40 +1167,6 @@
                         <strong>Exemplos:</strong> <strong>correr</strong>, <strong>ser</strong>, <strong>chover</strong>
                     </div>
                 `;
-            } else if (aulaId === 'ortografia1') {
-                html += `
-                    <h2>✍️ Ortografia</h2>
-                    <p>A ortografia ensina a escrever corretamente as palavras.</p>
-                    
-                    <h3>Uso do S e Z</h3>
-                    <ul class="lista">
-                        <li>Usamos S em palavras com sufixo -oso (cheiroso, gostoso)</li>
-                        <li>Usamos Z em palavras com sufixo -ez (sensatez, palidez)</li>
-                    </ul>
-                    
-                    <h3>Uso do G e J</h3>
-                    <ul class="lista">
-                        <li>Usamos G em palavras terminadas em -agem, -igem, -ugem (viagem, origem, ferrugem)</li>
-                        <li>Usamos J em palavras de origem africana ou indígena (jiboia, canjica)</li>
-                    </ul>
-                `;
-            } else if (aulaId === 'semantica1') {
-                html += `
-                    <h2>💭 Semântica</h2>
-                    <p>A semântica estuda o significado das palavras.</p>
-                    
-                    <h3>Sinônimos</h3>
-                    <p>Palavras com significado parecido.</p>
-                    <div class="exemplo-box">
-                        <strong>Exemplos:</strong> casa/lar, alegre/feliz, bonito/lindo
-                    </div>
-                    
-                    <h3>Antônimos</h3>
-                    <p>Palavras com significado oposto.</p>
-                    <div class="exemplo-box">
-                        <strong>Exemplos:</strong> alto/baixo, quente/frio, dia/noite
-                    </div>
-                `;
             } else {
                 html += `
                     <h2>📚 ${aulaId}</h2>
@@ -1130,10 +1180,27 @@
             // ADICIONAR EXERCÍCIOS
             html += `
                 <div class="exercicios-section" id="exercicios-${aulaId}">
-                    <h3>📝 Exercícios - Teste seus conhecimentos</h3>
-                    <div id="exercicios-container-${aulaId}"></div>
-                    <button class="btn-exercicio" onclick="corrigirExercicios('${aulaId}')">Corrigir respostas</button>
-                    <button class="btn-exercicio secondary" onclick="resetarExercicios('${aulaId}')">Tentar novamente</button>
+                    <div class="exercicios-header">
+                        <h3>📝 30 Exercícios - Teste seus conhecimentos</h3>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-${aulaId}" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="questoes-container" id="questoes-container-${aulaId}"></div>
+                    
+                    <div class="navegacao-exercicios">
+                        <button class="btn-nav" id="prev-${aulaId}" onclick="mudarPagina('${aulaId}', -1)">← Anterior</button>
+                        <span class="pagina-indicador" id="pagina-${aulaId}">Página 1/10</span>
+                        <button class="btn-nav" id="next-${aulaId}" onclick="mudarPagina('${aulaId}', 1)">Próxima →</button>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button class="btn-exercicio" onclick="corrigirPaginaAtual('${aulaId}')">Corrigir respostas desta página</button>
+                        <button class="btn-exercicio secondary" onclick="corrigirTodosExercicios('${aulaId}')">Corrigir todos os 30</button>
+                        <button class="btn-exercicio secondary" onclick="resetarExercicios('${aulaId}')">Tentar novamente</button>
+                    </div>
+                    
                     <div id="resultado-${aulaId}" class="resultado-exercicio" style="display: none;"></div>
                 </div>
             `;
@@ -1145,359 +1212,326 @@
             
             document.getElementById('conteudoArea').innerHTML = html;
             
-            // Carregar exercícios específicos para cada aula
+            // Carregar exercícios
             carregarExercicios(aulaId);
         }
 
         function carregarExercicios(aulaId) {
-            let exerciciosHTML = '';
+            let exercicios = [];
             
             if (aulaId === 'fonetica1') {
-                exerciciosHTML = `
-                    <div class="questao" id="q1-${aulaId}">
-                        <p>1. Quantas vogais existem na palavra "CASA"?</p>
-                        <div class="opcoes">
-                            <div class="opcao">
-                                <input type="radio" name="q1-${aulaId}" value="a" id="q1a-${aulaId}">
-                                <label for="q1a-${aulaId}">a) 1 vogal</label>
-                            </div>
-                            <div class="opcao">
-                                <input type="radio" name="q1-${aulaId}" value="b" id="q1b-${aulaId}">
-                                <label for="q1b-${aulaId}">b) 2 vogais</label>
-                            </div>
-                            <div class="opcao">
-                                <input type="radio" name="q1-${aulaId}" value="c" id="q1c-${aulaId}">
-                                <label for="q1c-${aulaId}">c) 3 vogais</label>
-                            </div>
-                        </div>
-                        <div class="feedback" id="feedback-q1-${aulaId}"></div>
-                    </div>
-                    
-                    <div class="questao" id="q2-${aulaId}">
-                        <p>2. Qual palavra tem um ditongo?</p>
-                        <div class="opcoes">
-                            <div class="opcao">
-                                <input type="radio" name="q2-${aulaId}" value="a" id="q2a-${aulaId}">
-                                <label for="q2a-${aulaId}">a) Sa-ú-de</label>
-                            </div>
-                            <div class="opcao">
-                                <input type="radio" name="q2-${aulaId}" value="b" id="q2b-${aulaId}">
-                                <label for="q2b-${aulaId}">b) Pai</label>
-                            </div>
-                            <div class="opcao">
-                                <input type="radio" name="q2-${aulaId}" value="c" id="q2c-${aulaId}">
-                                <label for="q2c-${aulaId}">c) Ca-der-no</label>
-                            </div>
-                        </div>
-                        <div class="feedback" id="feedback-q2-${aulaId}"></div>
-                    </div>
-                    
-                    <div class="questao" id="q3-${aulaId}">
-                        <p>3. Quantas consoantes tem a palavra "ESCOLA"?</p>
-                        <div class="opcoes">
-                            <div class="opcao">
-                                <input type="radio" name="q3-${aulaId}" value="a" id="q3a-${aulaId}">
-                                <label for="q3a-${aulaId}">a) 2 consoantes</label>
-                            </div>
-                            <div class="opcao">
-                                <input type="radio" name="q3-${aulaId}" value="b" id="q3b-${aulaId}">
-                                <label for="q3b-${aulaId}">b) 3 consoantes</label>
-                            </div>
-                            <div class="opcao">
-                                <input type="radio" name="q3-${aulaId}" value="c" id="q3c-${aulaId}">
-                                <label for="q3c-${aulaId}">c) 4 consoantes</label>
-                            </div>
-                        </div>
-                        <div class="feedback" id="feedback-q3-${aulaId}"></div>
-                    </div>
-                `;
+                exercicios = [
+                    // Página 1 - Questões 1-3
+                    { pergunta: "1. Quantas vogais tem a palavra 'CASA'?", opcoes: ["1 vogal", "2 vogais", "3 vogais"], correta: 1 },
+                    { pergunta: "2. Qual palavra tem ditongo?", opcoes: ["Sa-ú-de", "Pai", "Ca-der-no"], correta: 1 },
+                    { pergunta: "3. Quantas consoantes tem 'ESCOLA'?", opcoes: ["2 consoantes", "3 consoantes", "4 consoantes"], correta: 1 },
+                    // Página 2 - Questões 4-6
+                    { pergunta: "4. Qual palavra tem hiato?", opcoes: ["Céu", "Saída", "Mãe"], correta: 1 },
+                    { pergunta: "5. Quantas sílabas tem 'BORBOLETA'?", opcoes: ["3 sílabas", "4 sílabas", "5 sílabas"], correta: 1 },
+                    { pergunta: "6. Qual é a vogal na palavra 'MEL'?", opcoes: ["M", "E", "L"], correta: 1 },
+                    // Página 3 - Questões 7-9
+                    { pergunta: "7. Em 'GUERRA', o 'U' é pronunciado?", opcoes: ["Sim", "Não", "Às vezes"], correta: 1 },
+                    { pergunta: "8. Quantas letras tem 'PNEU'?", opcoes: ["3 letras", "4 letras", "5 letras"], correta: 1 },
+                    { pergunta: "9. Qual palavra tem 2 sílabas?", opcoes: ["CASA", "BORBOLETA", "ELEFANTE"], correta: 0 },
+                    // Página 4 - Questões 10-12
+                    { pergunta: "10. Em 'PISCINA', o 'P' é pronunciado?", opcoes: ["Sim", "Não", "Depende"], correta: 1 },
+                    { pergunta: "11. Qual palavra termina com vogal?", opcoes: ["Amor", "Sol", "Felicidade"], correta: 2 },
+                    { pergunta: "12. Quantas consoantes tem 'PATO'?", opcoes: ["1 consoante", "2 consoantes", "3 consoantes"], correta: 1 },
+                    // Página 5 - Questões 13-15
+                    { pergunta: "13. Qual palavra tem encontro consonantal?", opcoes: ["Casa", "Prato", "Mesa"], correta: 1 },
+                    { pergunta: "14. Quantas vogais tem 'ÁGUA'?", opcoes: ["2 vogais", "3 vogais", "4 vogais"], correta: 1 },
+                    { pergunta: "15. Em 'HOMEM', a última letra é?", opcoes: ["Vogal", "Consoante", "Semivogal"], correta: 1 },
+                    // Página 6 - Questões 16-18
+                    { pergunta: "16. Qual palavra tem tritongo?", opcoes: ["Paraguai", "Pai", "Mãe"], correta: 0 },
+                    { pergunta: "17. Quantas letras tem 'QUEIJO'?", opcoes: ["5 letras", "6 letras", "7 letras"], correta: 1 },
+                    { pergunta: "18. Qual é a primeira consoante de 'BRASIL'?", opcoes: ["B", "R", "S"], correta: 0 },
+                    // Página 7 - Questões 19-21
+                    { pergunta: "19. Em 'FOLHA', o 'H' é pronunciado?", opcoes: ["Sim", "Não", "Depende"], correta: 1 },
+                    { pergunta: "20. Quantas sílabas tem 'PÁSSARO'?", opcoes: ["2 sílabas", "3 sílabas", "4 sílabas"], correta: 1 },
+                    { pergunta: "21. Qual palavra termina com consoante?", opcoes: ["CASA", "MAR", "SOL"], correta: 1 },
+                    // Página 8 - Questões 22-24
+                    { pergunta: "22. Em 'EXCETO', o 'X' tem som de?", opcoes: ["CH", "KS", "S"], correta: 0 },
+                    { pergunta: "23. Quantas vogais tem 'URUGUAI'?", opcoes: ["3 vogais", "4 vogais", "5 vogais"], correta: 1 },
+                    { pergunta: "24. Qual palavra tem dígrafo?", opcoes: ["CASA", "CARRO", "MESA"], correta: 1 },
+                    // Página 9 - Questões 25-27
+                    { pergunta: "25. Em 'ASSUNTO', quantos dígrafos?", opcoes: ["1 dígrafo", "2 dígrafos", "3 dígrafos"], correta: 1 },
+                    { pergunta: "26. Qual é a última letra de 'AMOR'?", opcoes: ["A", "M", "R"], correta: 2 },
+                    { pergunta: "27. Quantas consoantes tem 'ESTUDO'?", opcoes: ["2 consoantes", "3 consoantes", "4 consoantes"], correta: 2 },
+                    // Página 10 - Questões 28-30
+                    { pergunta: "28. Qual palavra tem 4 sílabas?", opcoes: ["CASA", "BORBOLETA", "ELEFANTE"], correta: 1 },
+                    { pergunta: "29. Em 'MACHADO', o 'CH' tem som de?", opcoes: ["C e H", "X", "S"], correta: 1 },
+                    { pergunta: "30. Quantas letras tem 'PISCINA'?", opcoes: ["6 letras", "7 letras", "8 letras"], correta: 1 }
+                ];
             } else if (aulaId === 'morfologia1') {
-                exerciciosHTML = `
-                    <div class="questao" id="q1-${aulaId}">
-                        <p>1. Qual é o substantivo na frase: "O menino bonito correu"?</p>
-                        <div class="opcoes">
-                            <div class="opcao">
-                                <input type="radio" name="q1-${aulaId}" value="a" id="q1a-${aulaId}">
-                                <label for="q1a-${aulaId}">a) bonito</label>
-                            </div>
-                            <div class="opcao">
-                                <input type="radio" name="q1-${aulaId}" value="b" id="q1b-${aulaId}">
-                                <label for="q1b-${aulaId}">b) menino</label>
-                            </div>
-                            <div class="opcao">
-                                <input type="radio" name="q1-${aulaId}" value="c" id="q1c-${aulaId}">
-                                <label for="q1c-${aulaId}">c) correu</label>
-                            </div>
-                        </div>
-                        <div class="feedback" id="feedback-q1-${aulaId}"></div>
-                    </div>
-                    
-                    <div class="questao" id="q2-${aulaId}">
-                        <p>2. Qual palavra é um adjetivo?</p>
-                        <div class="opcoes">
-                            <div class="opcao">
-                                <input type="radio" name="q2-${aulaId}" value="a" id="q2a-${aulaId}">
-                                <label for="q2a-${aulaId}">a) corrida</label>
-                            </div>
-                            <div class="opcao">
-                                <input type="radio" name="q2-${aulaId}" value="b" id="q2b-${aulaId}">
-                                <label for="q2b-${aulaId}">b) inteligente</label>
-                            </div>
-                            <div class="opcao">
-                                <input type="radio" name="q2-${aulaId}" value="c" id="q2c-${aulaId}">
-                                <label for="q2c-${aulaId}">c) comer</label>
-                            </div>
-                        </div>
-                        <div class="feedback" id="feedback-q2-${aulaId}"></div>
-                    </div>
-                    
-                    <div class="questao" id="q3-${aulaId}">
-                        <p>3. "Amor" é um substantivo:</p>
-                        <div class="opcoes">
-                            <div class="opcao">
-                                <input type="radio" name="q3-${aulaId}" value="a" id="q3a-${aulaId}">
-                                <label for="q3a-${aulaId}">a) Concreto</label>
-                            </div>
-                            <div class="opcao">
-                                <input type="radio" name="q3-${aulaId}" value="b" id="q3b-${aulaId}">
-                                <label for="q3b-${aulaId}">b) Abstrato</label>
-                            </div>
-                            <div class="opcao">
-                                <input type="radio" name="q3-${aulaId}" value="c" id="q3c-${aulaId}">
-                                <label for="q3c-${aulaId}">c) Próprio</label>
-                            </div>
-                        </div>
-                        <div class="feedback" id="feedback-q3-${aulaId}"></div>
-                    </div>
-                `;
+                exercicios = [
+                    // Página 1 - Questões 1-3
+                    { pergunta: "1. Qual é o substantivo em 'O menino bonito correu'?", opcoes: ["bonito", "menino", "correu"], correta: 1 },
+                    { pergunta: "2. Qual palavra é um adjetivo?", opcoes: ["corrida", "inteligente", "comer"], correta: 1 },
+                    { pergunta: "3. 'Amor' é um substantivo:", opcoes: ["Concreto", "Abstrato", "Próprio"], correta: 1 },
+                    // Página 2 - Questões 4-6
+                    { pergunta: "4. Qual é o verbo em 'João estuda muito'?", opcoes: ["João", "estuda", "muito"], correta: 1 },
+                    { pergunta: "5. 'Brasil' é um substantivo:", opcoes: ["Comum", "Próprio", "Abstrato"], correta: 1 },
+                    { pergunta: "6. Quantos adjetivos há em 'A linda flor amarela'?", opcoes: ["1 adjetivo", "2 adjetivos", "3 adjetivos"], correta: 1 },
+                    // Página 3 - Questões 7-9
+                    { pergunta: "7. Qual palavra é um artigo?", opcoes: ["O", "Casa", "Bonito"], correta: 0 },
+                    { pergunta: "8. 'Felicidade' é substantivo:", opcoes: ["Concreto", "Abstrato", "Próprio"], correta: 1 },
+                    { pergunta: "9. Qual é o plural de 'cão'?", opcoes: ["cãos", "cães", "cões"], correta: 1 },
+                    // Página 4 - Questões 10-12
+                    { pergunta: "10. 'Rápido' é um:", opcoes: ["Substantivo", "Adjetivo", "Verbo"], correta: 1 },
+                    { pergunta: "11. Em 'Ela canta bem', 'canta' é:", opcoes: ["Substantivo", "Adjetivo", "Verbo"], correta: 2 },
+                    { pergunta: "12. 'Mesa' é substantivo:", opcoes: ["Comum", "Próprio", "Abstrato"], correta: 0 },
+                    // Página 5 - Questões 13-15
+                    { pergunta: "13. Qual é o feminino de 'professor'?", opcoes: ["professora", "professoro", "professore"], correta: 0 },
+                    { pergunta: "14. 'Bonito' no feminino é:", opcoes: ["bonita", "bonite", "bonito"], correta: 0 },
+                    { pergunta: "15. Quantos substantivos em 'Casa, amor e carro'?", opcoes: ["1 substantivo", "2 substantivos", "3 substantivos"], correta: 2 },
+                    // Página 6 - Questões 16-18
+                    { pergunta: "16. 'Eles' é um:", opcoes: ["Artigo", "Pronome", "Substantivo"], correta: 1 },
+                    { pergunta: "17. Qual é o plural de 'azul'?", opcoes: ["azuls", "azuis", "azules"], correta: 1 },
+                    { pergunta: "18. 'Grande' é um:", opcoes: ["Substantivo", "Adjetivo", "Verbo"], correta: 1 },
+                    // Página 7 - Questões 19-21
+                    { pergunta: "19. Em 'Comi uma maçã', 'uma' é:", opcoes: ["Artigo", "Numeral", "Pronome"], correta: 0 },
+                    { pergunta: "20. 'Primeiro' é:", opcoes: ["Artigo", "Numeral", "Adjetivo"], correta: 1 },
+                    { pergunta: "21. 'Chover' é:", opcoes: ["Substantivo", "Adjetivo", "Verbo"], correta: 2 },
+                    // Página 8 - Questões 22-24
+                    { pergunta: "22. 'Nosso' é um:", opcoes: ["Artigo", "Pronome", "Numeral"], correta: 1 },
+                    { pergunta: "23. Qual é o aumentativo de 'casa'?", opcoes: ["casinha", "casão", "casota"], correta: 1 },
+                    { pergunta: "24. 'Gatinho' é o diminutivo de:", opcoes: ["gato", "gata", "gatão"], correta: 0 },
+                    // Página 9 - Questões 25-27
+                    { pergunta: "25. Em 'Dois livros', 'dois' é:", opcoes: ["Artigo", "Numeral", "Pronome"], correta: 1 },
+                    { pergunta: "26. 'Alegre' é:", opcoes: ["Substantivo", "Adjetivo", "Verbo"], correta: 1 },
+                    { pergunta: "27. Quantos verbos em 'Correr, pular e andar'?", opcoes: ["1 verbo", "2 verbos", "3 verbos"], correta: 2 },
+                    // Página 10 - Questões 28-30
+                    { pergunta: "28. 'Ele' é um pronome:", opcoes: ["Pessoal", "Possessivo", "Demonstrativo"], correta: 0 },
+                    { pergunta: "29. 'Linda' é:", opcoes: ["Substantivo", "Adjetivo", "Verbo"], correta: 1 },
+                    { pergunta: "30. 'Comer' é:", opcoes: ["Substantivo", "Adjetivo", "Verbo"], correta: 2 }
+                ];
             } else if (aulaId === 'semantica1') {
-                exerciciosHTML = `
-                    <div class="questao" id="q1-${aulaId}">
-                        <p>1. Qual é o sinônimo de "alegre"?</p>
-                        <div class="opcoes">
-                            <div class="opcao">
-                                <input type="radio" name="q1-${aulaId}" value="a" id="q1a-${aulaId}">
-                                <label for="q1a-${aulaId}">a) triste</label>
-                            </div>
-                            <div class="opcao">
-                                <input type="radio" name="q1-${aulaId}" value="b" id="q1b-${aulaId}">
-                                <label for="q1b-${aulaId}">b) feliz</label>
-                            </div>
-                            <div class="opcao">
-                                <input type="radio" name="q1-${aulaId}" value="c" id="q1c-${aulaId}">
-                                <label for="q1c-${aulaId}">c) cansado</label>
-                            </div>
-                        </div>
-                        <div class="feedback" id="feedback-q1-${aulaId}"></div>
-                    </div>
-                    
-                    <div class="questao" id="q2-${aulaId}">
-                        <p>2. Qual é o antônimo de "quente"?</p>
-                        <div class="opcoes">
-                            <div class="opcao">
-                                <input type="radio" name="q2-${aulaId}" value="a" id="q2a-${aulaId}">
-                                <label for="q2a-${aulaId}">a) morno</label>
-                            </div>
-                            <div class="opcao">
-                                <input type="radio" name="q2-${aulaId}" value="b" id="q2b-${aulaId}">
-                                <label for="q2b-${aulaId}">b) gelado</label>
-                            </div>
-                            <div class="opcao">
-                                <input type="radio" name="q2-${aulaId}" value="c" id="q2c-${aulaId}">
-                                <label for="q2c-${aulaId}">c) frio</label>
-                            </div>
-                        </div>
-                        <div class="feedback" id="feedback-q2-${aulaId}"></div>
-                    </div>
-                `;
-            } else {
-                exerciciosHTML = `
-                    <div class="questao">
-                        <p>Exercícios em desenvolvimento para esta matéria!</p>
-                    </div>
-                `;
+                exercicios = [
+                    // Página 1 - Questões 1-3
+                    { pergunta: "1. Sinônimo de 'alegre' é:", opcoes: ["triste", "feliz", "cansado"], correta: 1 },
+                    { pergunta: "2. Antônimo de 'quente' é:", opcoes: ["morno", "gelado", "frio"], correta: 2 },
+                    { pergunta: "3. Sinônimo de 'casa' é:", opcoes: ["lar", "rua", "carro"], correta: 0 },
+                    // Página 2 - Questões 4-6
+                    { pergunta: "4. Antônimo de 'dia' é:", opcoes: ["tarde", "noite", "manhã"], correta: 1 },
+                    { pergunta: "5. Sinônimo de 'bonito' é:", opcoes: ["feio", "lindo", "grande"], correta: 1 },
+                    { pergunta: "6. Antônimo de 'alto' é:", opcoes: ["grande", "baixo", "médio"], correta: 1 },
+                    // Página 3 - Questões 7-9
+                    { pergunta: "7. Sinônimo de 'rápido' é:", opcoes: ["lento", "veloz", "devagar"], correta: 1 },
+                    { pergunta: "8. Antônimo de 'amor' é:", opcoes: ["ódio", "carinho", "afeição"], correta: 0 },
+                    { pergunta: "9. Sinônimo de 'inteligente' é:", opcoes: ["burro", "esperto", "lento"], correta: 1 },
+                    // Página 4 - Questões 10-12
+                    { pergunta: "10. Antônimo de 'cheio' é:", opcoes: ["vazio", "lotado", "completo"], correta: 0 },
+                    { pergunta: "11. Sinônimo de 'caminho' é:", opcoes: ["estrada", "muro", "casa"], correta: 0 },
+                    { pergunta: "12. Antônimo de 'forte' é:", opcoes: ["robusto", "fraco", "resistente"], correta: 1 },
+                    // Página 5 - Questões 13-15
+                    { pergunta: "13. Sinônimo de 'começar' é:", opcoes: ["terminar", "iniciar", "finalizar"], correta: 1 },
+                    { pergunta: "14. Antônimo de 'entrar' é:", opcoes: ["ingressar", "sair", "penetrar"], correta: 1 },
+                    { pergunta: "15. Sinônimo de 'alimento' é:", opcoes: ["comida", "bebida", "remédio"], correta: 0 },
+                    // Página 6 - Questões 16-18
+                    { pergunta: "16. Antônimo de 'claro' é:", opcoes: ["luminoso", "escuro", "brilhante"], correta: 1 },
+                    { pergunta: "17. Sinônimo de 'triste' é:", opcoes: ["alegre", "melancólico", "contente"], correta: 1 },
+                    { pergunta: "18. Antônimo de 'seco' é:", opcoes: ["molhado", "árido", "ressecado"], correta: 0 },
+                    // Página 7 - Questões 19-21
+                    { pergunta: "19. Sinônimo de 'falar' é:", opcoes: ["calar", "conversar", "silenciar"], correta: 1 },
+                    { pergunta: "20. Antônimo de 'lembrar' é:", opcoes: ["recordar", "esquecer", "memorizar"], correta: 1 },
+                    { pergunta: "21. Sinônimo de 'calmo' é:", opcoes: ["tranquilo", "agitado", "nervoso"], correta: 0 },
+                    // Página 8 - Questões 22-24
+                    { pergunta: "22. Antônimo de 'novo' é:", opcoes: ["moderno", "velho", "atual"], correta: 1 },
+                    { pergunta: "23. Sinônimo de 'felicidade' é:", opcoes: ["tristeza", "alegria", "melancolia"], correta: 1 },
+                    { pergunta: "24. Antônimo de 'subir' é:", opcoes: ["elevar", "descer", "ascender"], correta: 1 },
+                    // Página 9 - Questões 25-27
+                    { pergunta: "25. Sinônimo de 'medo' é:", opcoes: ["coragem", "pavor", "bravura"], correta: 1 },
+                    { pergunta: "26. Antônimo de 'abrir' é:", opcoes: ["fechar", "destapar", "iniciar"], correta: 0 },
+                    { pergunta: "27. Sinônimo de 'amizade' é:", opcoes: ["inimizade", "companheirismo", "rivalidade"], correta: 1 },
+                    // Página 10 - Questões 28-30
+                    { pergunta: "28. Antônimo de 'presente' é:", opcoes: ["agora", "ausente", "hoje"], correta: 1 },
+                    { pergunta: "29. Sinônimo de 'responder' é:", opcoes: ["perguntar", "questionar", "replicar"], correta: 2 },
+                    { pergunta: "30. Antônimo de 'ganhar' é:", opcoes: ["obter", "perder", "adquirir"], correta: 1 }
+                ];
             }
             
-            document.getElementById(`exercicios-container-${aulaId}`).innerHTML = exerciciosHTML;
+            if (exercicios.length > 0) {
+                window.exerciciosData = window.exerciciosData || {};
+                window.exerciciosData[aulaId] = exercicios;
+                window.respostasUsuario = window.respostasUsuario || {};
+                window.respostasUsuario[aulaId] = Array(exercicios.length).fill(null);
+                
+                atualizarQuestoes(aulaId);
+                atualizarProgresso(aulaId);
+            }
         }
 
-        function corrigirExercicios(aulaId) {
-            let acertos = 0;
-            let total = 0;
+        function atualizarQuestoes(aulaId) {
+            const exercicios = window.exerciciosData[aulaId];
+            if (!exercicios) return;
             
-            if (aulaId === 'fonetica1') {
-                // Correção questão 1
-                const q1 = document.querySelector(`input[name="q1-${aulaId}"]:checked`);
-                const feedback1 = document.getElementById(`feedback-q1-${aulaId}`);
-                if (q1) {
-                    if (q1.value === 'b') {
-                        feedback1.textContent = '✅ Correto! CASA tem 2 vogais (A e A)';
-                        feedback1.className = 'feedback correto';
-                        acertos++;
-                    } else {
-                        feedback1.textContent = '❌ Incorreto. CASA tem 2 vogais.';
-                        feedback1.className = 'feedback incorreto';
-                    }
-                } else {
-                    feedback1.textContent = '⚠️ Responda esta questão!';
-                    feedback1.className = 'feedback incorreto';
+            const startIdx = (currentPage - 1) * questionsPerPage;
+            const endIdx = Math.min(startIdx + questionsPerPage, exercicios.length);
+            
+            let questoesHTML = '';
+            
+            for (let i = startIdx; i < endIdx; i++) {
+                const q = exercicios[i];
+                const questaoId = `q${i}`;
+                const respostaSalva = window.respostasUsuario[aulaId] ? window.respostasUsuario[aulaId][i] : null;
+                
+                let opcoesHTML = '';
+                for (let j = 0; j < q.opcoes.length; j++) {
+                    const checked = respostaSalva === j ? 'checked' : '';
+                    opcoesHTML += `
+                        <div class="opcao">
+                            <input type="radio" name="${questaoId}" value="${j}" id="${questaoId}${j}" ${checked} onchange="salvarResposta('${aulaId}', ${i}, ${j})">
+                            <label for="${questaoId}${j}">${String.fromCharCode(97 + j)}) ${q.opcoes[j]}</label>
+                        </div>
+                    `;
                 }
                 
-                // Questão 2
-                const q2 = document.querySelector(`input[name="q2-${aulaId}"]:checked`);
-                const feedback2 = document.getElementById(`feedback-q2-${aulaId}`);
-                if (q2) {
-                    if (q2.value === 'b') {
-                        feedback2.textContent = '✅ Correto! "Pai" tem ditongo (ai)';
-                        feedback2.className = 'feedback correto';
-                        acertos++;
-                    } else {
-                        feedback2.textContent = '❌ Incorreto. A palavra com ditongo é "pai".';
-                        feedback2.className = 'feedback incorreto';
-                    }
-                } else {
-                    feedback2.textContent = '⚠️ Responda esta questão!';
-                    feedback2.className = 'feedback incorreto';
-                }
-                
-                // Questão 3
-                const q3 = document.querySelector(`input[name="q3-${aulaId}"]:checked`);
-                const feedback3 = document.getElementById(`feedback-q3-${aulaId}`);
-                if (q3) {
-                    if (q3.value === 'b') {
-                        feedback3.textContent = '✅ Correto! ESCOLA tem 3 consoantes (S, C, L)';
-                        feedback3.className = 'feedback correto';
-                        acertos++;
-                    } else {
-                        feedback3.textContent = '❌ Incorreto. ESCOLA tem 3 consoantes.';
-                        feedback3.className = 'feedback incorreto';
-                    }
-                } else {
-                    feedback3.textContent = '⚠️ Responda esta questão!';
-                    feedback3.className = 'feedback incorreto';
-                }
-                
-                total = 3;
-            } else if (aulaId === 'morfologia1') {
-                // Questão 1
-                const q1 = document.querySelector(`input[name="q1-${aulaId}"]:checked`);
-                const feedback1 = document.getElementById(`feedback-q1-${aulaId}`);
-                if (q1) {
-                    if (q1.value === 'b') {
-                        feedback1.textContent = '✅ Correto! "menino" é o substantivo.';
-                        feedback1.className = 'feedback correto';
-                        acertos++;
-                    } else {
-                        feedback1.textContent = '❌ Incorreto. O substantivo é "menino".';
-                        feedback1.className = 'feedback incorreto';
-                    }
-                } else {
-                    feedback1.textContent = '⚠️ Responda esta questão!';
-                    feedback1.className = 'feedback incorreto';
-                }
-                
-                // Questão 2
-                const q2 = document.querySelector(`input[name="q2-${aulaId}"]:checked`);
-                const feedback2 = document.getElementById(`feedback-q2-${aulaId}`);
-                if (q2) {
-                    if (q2.value === 'b') {
-                        feedback2.textContent = '✅ Correto! "inteligente" é adjetivo.';
-                        feedback2.className = 'feedback correto';
-                        acertos++;
-                    } else {
-                        feedback2.textContent = '❌ Incorreto. A palavra "inteligente" é adjetivo.';
-                        feedback2.className = 'feedback incorreto';
-                    }
-                } else {
-                    feedback2.textContent = '⚠️ Responda esta questão!';
-                    feedback2.className = 'feedback incorreto';
-                }
-                
-                // Questão 3
-                const q3 = document.querySelector(`input[name="q3-${aulaId}"]:checked`);
-                const feedback3 = document.getElementById(`feedback-q3-${aulaId}`);
-                if (q3) {
-                    if (q3.value === 'b') {
-                        feedback3.textContent = '✅ Correto! "Amor" é substantivo abstrato.';
-                        feedback3.className = 'feedback correto';
-                        acertos++;
-                    } else {
-                        feedback3.textContent = '❌ Incorreto. "Amor" é abstrato.';
-                        feedback3.className = 'feedback incorreto';
-                    }
-                } else {
-                    feedback3.textContent = '⚠️ Responda esta questão!';
-                    feedback3.className = 'feedback incorreto';
-                }
-                
-                total = 3;
-            } else if (aulaId === 'semantica1') {
-                // Questão 1
-                const q1 = document.querySelector(`input[name="q1-${aulaId}"]:checked`);
-                const feedback1 = document.getElementById(`feedback-q1-${aulaId}`);
-                if (q1) {
-                    if (q1.value === 'b') {
-                        feedback1.textContent = '✅ Correto! "feliz" é sinônimo de "alegre".';
-                        feedback1.className = 'feedback correto';
-                        acertos++;
-                    } else {
-                        feedback1.textContent = '❌ Incorreto. O sinônimo é "feliz".';
-                        feedback1.className = 'feedback incorreto';
-                    }
-                } else {
-                    feedback1.textContent = '⚠️ Responda esta questão!';
-                    feedback1.className = 'feedback incorreto';
-                }
-                
-                // Questão 2
-                const q2 = document.querySelector(`input[name="q2-${aulaId}"]:checked`);
-                const feedback2 = document.getElementById(`feedback-q2-${aulaId}`);
-                if (q2) {
-                    if (q2.value === 'c') {
-                        feedback2.textContent = '✅ Correto! "frio" é antônimo de "quente".';
-                        feedback2.className = 'feedback correto';
-                        acertos++;
-                    } else {
-                        feedback2.textContent = '❌ Incorreto. O antônimo é "frio".';
-                        feedback2.className = 'feedback incorreto';
-                    }
-                } else {
-                    feedback2.textContent = '⚠️ Responda esta questão!';
-                    feedback2.className = 'feedback incorreto';
-                }
-                
-                total = 2;
+                questoesHTML += `
+                    <div class="questao ativa" id="questao-${aulaId}-${i}">
+                        <p>${i + 1}. ${q.pergunta}</p>
+                        <div class="opcoes">
+                            ${opcoesHTML}
+                        </div>
+                        <div class="feedback" id="feedback-${aulaId}-${i}"></div>
+                    </div>
+                `;
             }
             
-            // Mostrar resultado final
+            document.getElementById(`questoes-container-${aulaId}`).innerHTML = questoesHTML;
+            
+            // Atualizar indicador de página
+            const totalPages = Math.ceil(exercicios.length / questionsPerPage);
+            document.getElementById(`pagina-${aulaId}`).textContent = `Página ${currentPage}/${totalPages}`;
+            
+            // Atualizar botões de navegação
+            document.getElementById(`prev-${aulaId}`).disabled = currentPage === 1;
+            document.getElementById(`next-${aulaId}`).disabled = currentPage === totalPages;
+        }
+
+        function mudarPagina(aulaId, direcao) {
+            const totalPages = Math.ceil(window.exerciciosData[aulaId].length / questionsPerPage);
+            const novaPagina = currentPage + direcao;
+            
+            if (novaPagina >= 1 && novaPagina <= totalPages) {
+                currentPage = novaPagina;
+                atualizarQuestoes(aulaId);
+            }
+        }
+
+        function salvarResposta(aulaId, questaoIndex, valor) {
+            if (!window.respostasUsuario[aulaId]) {
+                window.respostasUsuario[aulaId] = [];
+            }
+            window.respostasUsuario[aulaId][questaoIndex] = parseInt(valor);
+            atualizarProgresso(aulaId);
+        }
+
+        function atualizarProgresso(aulaId) {
+            const respostas = window.respostasUsuario[aulaId] || [];
+            const respondidas = respostas.filter(r => r !== null && r !== undefined).length;
+            const total = window.exerciciosData[aulaId] ? window.exerciciosData[aulaId].length : 30;
+            const percentual = (respondidas / total) * 100;
+            
+            const progressBar = document.getElementById(`progress-${aulaId}`);
+            if (progressBar) {
+                progressBar.style.width = `${percentual}%`;
+            }
+        }
+
+        function corrigirPaginaAtual(aulaId) {
+            const exercicios = window.exerciciosData[aulaId];
+            if (!exercicios) return;
+            
+            const startIdx = (currentPage - 1) * questionsPerPage;
+            const endIdx = Math.min(startIdx + questionsPerPage, exercicios.length);
+            
+            let acertosPagina = 0;
+            let totalPagina = 0;
+            
+            for (let i = startIdx; i < endIdx; i++) {
+                const resposta = window.respostasUsuario[aulaId] ? window.respostasUsuario[aulaId][i] : null;
+                const feedbackDiv = document.getElementById(`feedback-${aulaId}-${i}`);
+                
+                if (resposta !== null && resposta !== undefined) {
+                    totalPagina++;
+                    const correta = exercicios[i].correta;
+                    
+                    if (resposta === correta) {
+                        feedbackDiv.textContent = '✅ Correto!';
+                        feedbackDiv.className = 'feedback correto';
+                        acertosPagina++;
+                    } else {
+                        feedbackDiv.textContent = `❌ Incorreto. A resposta correta é ${String.fromCharCode(97 + correta)}) ${exercicios[i].opcoes[correta]}`;
+                        feedbackDiv.className = 'feedback incorreto';
+                    }
+                } else {
+                    feedbackDiv.textContent = '⚠️ Responda esta questão!';
+                    feedbackDiv.className = 'feedback incorreto';
+                }
+            }
+            
+            if (totalPagina > 0) {
+                const resultadoDiv = document.getElementById(`resultado-${aulaId}`);
+                resultadoDiv.style.display = 'block';
+                resultadoDiv.textContent = `Você acertou ${acertosPagina} de ${totalPagina} questões nesta página! ${acertosPagina === totalPagina ? '🎉 Parabéns!' : '👨‍🎓 Continue praticando!'}`;
+            }
+        }
+
+        function corrigirTodosExercicios(aulaId) {
+            const exercicios = window.exerciciosData[aulaId];
+            if (!exercicios) return;
+            
+            let totalAcertos = 0;
+            
+            for (let i = 0; i < exercicios.length; i++) {
+                const resposta = window.respostasUsuario[aulaId] ? window.respostasUsuario[aulaId][i] : null;
+                const correta = exercicios[i].correta;
+                
+                if (resposta === correta) {
+                    totalAcertos++;
+                }
+            }
+            
             const resultadoDiv = document.getElementById(`resultado-${aulaId}`);
             resultadoDiv.style.display = 'block';
-            resultadoDiv.textContent = `Você acertou ${acertos} de ${total} questões! ${acertos === total ? '🎉 Parabéns!' : '👨‍🎓 Continue praticando!'}`;
+            
+            if (totalAcertos === exercicios.length) {
+                resultadoDiv.textContent = `🎉 PERFEITO! Você acertou todas as ${exercicios.length} questões! Parabéns! 🌟`;
+            } else {
+                resultadoDiv.textContent = `📊 Você acertou ${totalAcertos} de ${exercicios.length} questões. Continue praticando!`;
+            }
             
             // Salvar progresso
             const user = JSON.parse(localStorage.getItem('evolva_current_user'));
             if (user) {
                 let progresso = JSON.parse(localStorage.getItem(`progresso_${user.id}`)) || {};
-                progresso[aulaId] = acertos;
+                progresso[aulaId] = totalAcertos;
                 localStorage.setItem(`progresso_${user.id}`, JSON.stringify(progresso));
             }
         }
 
         function resetarExercicios(aulaId) {
-            // Limpar seleções
-            const radios = document.querySelectorAll(`input[name^="q"][name$="-${aulaId}"]`);
-            radios.forEach(radio => radio.checked = false);
+            if (window.respostasUsuario[aulaId]) {
+                window.respostasUsuario[aulaId] = Array(window.exerciciosData[aulaId].length).fill(null);
+            }
             
             // Limpar feedbacks
-            const feedbacks = document.querySelectorAll(`[id^="feedback-q"][id$="-${aulaId}"]`);
-            feedbacks.forEach(feedback => {
-                feedback.textContent = '';
-                feedback.className = 'feedback';
-            });
+            for (let i = 0; i < window.exerciciosData[aulaId].length; i++) {
+                const feedbackDiv = document.getElementById(`feedback-${aulaId}-${i}`);
+                if (feedbackDiv) {
+                    feedbackDiv.textContent = '';
+                    feedbackDiv.className = 'feedback';
+                }
+            }
             
             // Esconder resultado
             const resultadoDiv = document.getElementById(`resultado-${aulaId}`);
             resultadoDiv.style.display = 'none';
+            
+            // Recarregar questões
+            currentPage = 1;
+            atualizarQuestoes(aulaId);
+            atualizarProgresso(aulaId);
         }
 
         // Verificar se já existe usuário logado

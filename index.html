@@ -80,288 +80,6 @@
             z-index: -1;
         }
 
-        /* CONTEÚDO PRINCIPAL */
-        .dashboard {
-            width: 100%;
-            max-width: 1400px;
-            padding: 20px;
-            position: relative;
-            z-index: 2;
-            display: none;
-        }
-
-        .dashboard.active {
-            display: block;
-        }
-
-        /* HEADER */
-        .dashboard-header {
-            background: white;
-            border-radius: 20px;
-            padding: 20px 30px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .user-avatar {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 28px;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .user-details h2 {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-
-        .user-details p {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .logout-btn {
-            background: #f44336;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 16px;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
-        }
-
-        .logout-btn:hover {
-            background: #d32f2f;
-            transform: translateY(-2px);
-        }
-
-        /* BEM-VINDO */
-        .welcome-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 40px;
-            color: white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .welcome-section h1 {
-            font-size: 36px;
-            margin-bottom: 10px;
-        }
-
-        .welcome-section p {
-            font-size: 18px;
-            opacity: 0.9;
-        }
-
-        /* NÍVEIS DE ENSINO */
-        .niveis-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-
-        .nivel-card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nivel-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 30px rgba(0,0,0,0.2);
-        }
-
-        .nivel-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-        }
-
-        .nivel-card.nivel1::before { background: #4CAF50; }
-        .nivel-card.nivel2::before { background: #FF9800; }
-        .nivel-card.nivel3::before { background: #f44336; }
-        .nivel-card.nivel4::before { background: #9C27B0; }
-
-        .nivel-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-
-        .nivel-card h3 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        .nivel-card.nivel1 h3 { color: #4CAF50; }
-        .nivel-card.nivel2 h3 { color: #FF9800; }
-        .nivel-card.nivel3 h3 { color: #f44336; }
-        .nivel-card.nivel4 h3 { color: #9C27B0; }
-
-        .nivel-card p {
-            color: #666;
-            font-size: 14px;
-        }
-
-        /* MATÉRIAS */
-        .materias-section {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        .materias-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .materias-header h2 {
-            color: #333;
-            font-size: 28px;
-        }
-
-        .nivel-tag {
-            background: #667eea;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-        }
-
-        .materias-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .materia-item {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
-            transition: all 0.3s;
-            border-left: 4px solid;
-            cursor: pointer;
-        }
-
-        .materia-item:hover {
-            transform: translateX(10px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .materia-item h4 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .materia-item p {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
-
-        .materia-tag {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        /* CONTEÚDO DA AULA */
-        .aula-content {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            margin-top: 30px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        .aula-content h3 {
-            color: #333;
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-
-        .aula-content h4 {
-            color: #667eea;
-            font-size: 22px;
-            margin: 25px 0 15px;
-        }
-
-        .aula-content p {
-            color: #444;
-            font-size: 16px;
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
-
-        .exemplo-box {
-            background: #f0f4ff;
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-
-        .exemplo-box strong {
-            color: #667eea;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .back-btn {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            margin-bottom: 20px;
-            transition: all 0.3s;
-        }
-
-        .back-btn:hover {
-            background: #5a67d8;
-            transform: translateX(-5px);
-        }
-
         /* TELA DE LOGIN */
         .container {
             width: 100%;
@@ -500,7 +218,299 @@
             border: 1px solid #cfc;
         }
 
-        /* RESPONSIVIDADE */
+        /* DASHBOARD */
+        .dashboard {
+            width: 100%;
+            max-width: 1400px;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+            display: none;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .dashboard-header {
+            background: white;
+            border-radius: 20px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .user-details h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .user-details p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .logout-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .welcome-section h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-section p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        /* NÍVEIS */
+        .niveis-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .nivel-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nivel-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+        }
+
+        .nivel-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+        }
+
+        .nivel-card.nivel1::before { background: #4CAF50; }
+        .nivel-card.nivel2::before { background: #FF9800; }
+        .nivel-card.nivel3::before { background: #f44336; }
+        .nivel-card.nivel4::before { background: #9C27B0; }
+
+        .nivel-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .nivel-card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .nivel-card.nivel1 h3 { color: #4CAF50; }
+        .nivel-card.nivel2 h3 { color: #FF9800; }
+        .nivel-card.nivel3 h3 { color: #f44336; }
+        .nivel-card.nivel4 h3 { color: #9C27B0; }
+
+        .nivel-card p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* MATÉRIAS */
+        .materias-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .materias-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .materias-header h2 {
+            color: #333;
+            font-size: 28px;
+        }
+
+        .nivel-tag {
+            background: #667eea;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+
+        .materias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .materia-item {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s;
+            border-left: 4px solid;
+            cursor: pointer;
+        }
+
+        .materia-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .materia-item h4 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .materia-item p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .materia-tag {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        /* CONTEÚDO DA AULA */
+        .aula-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .back-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #5a67d8;
+            transform: translateX(-5px);
+        }
+
+        .aula-content {
+            margin-top: 20px;
+        }
+
+        .aula-content h2 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .aula-content h3 {
+            color: #667eea;
+            font-size: 24px;
+            margin: 25px 0 15px;
+        }
+
+        .aula-content p {
+            color: #444;
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .exemplo-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .exemplo-box strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .lista {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .lista li {
+            margin-bottom: 10px;
+            color: #444;
+        }
+
         @media (max-width: 1024px) {
             .niveis-container {
                 grid-template-columns: repeat(2, 1fr);
@@ -543,6 +553,7 @@
 
             <div class="message" id="message"></div>
 
+            <!-- FORMULÁRIO DE LOGIN -->
             <div class="form active" id="loginForm">
                 <div class="form-group">
                     <label>E-mail</label>
@@ -558,6 +569,7 @@
                 <button class="btn" onclick="login()">Entrar</button>
             </div>
 
+            <!-- FORMULÁRIO DE CADASTRO -->
             <div class="form" id="registerForm">
                 <div class="form-group">
                     <label>Nome completo</label>
@@ -569,7 +581,7 @@
                 </div>
                 <div class="form-group">
                     <label>Senha</label>
-                    <input type="password" id="regPassword" placeholder="Crie uma senha">
+                    <input type="password" id="regPassword" placeholder="Crie uma senha (mínimo 6 caracteres)">
                 </div>
                 <div class="form-group">
                     <label>Confirmar senha</label>
@@ -578,6 +590,7 @@
                 <button class="btn" onclick="register()">Cadastrar</button>
             </div>
 
+            <!-- FORMULÁRIO DE RECUPERAR SENHA -->
             <div class="form" id="forgotForm">
                 <div class="form-group">
                     <label>E-mail cadastrado</label>
@@ -591,7 +604,7 @@
         </div>
     </div>
 
-    <!-- DASHBOARD PRINCIPAL -->
+    <!-- DASHBOARD -->
     <div class="dashboard" id="dashboard">
         <div class="dashboard-header">
             <div class="user-info">
@@ -609,7 +622,7 @@
             <p>Escolha seu nível e comece a aprender Português de forma completa</p>
         </div>
 
-        <!-- NÍVEIS -->
+        <!-- CARDS DOS NÍVEIS -->
         <div class="niveis-container">
             <div class="nivel-card nivel1" onclick="mostrarNivel(1)">
                 <div class="nivel-icon">🔰</div>
@@ -620,13 +633,13 @@
             <div class="nivel-card nivel2" onclick="mostrarNivel(2)">
                 <div class="nivel-icon">📚</div>
                 <h3>Nível 2</h3>
-                <p>Ensino Fundamental - Intermediário</p>
+                <p>Fundamental - Intermediário</p>
                 <small>6º ao 7º ano</small>
             </div>
             <div class="nivel-card nivel3" onclick="mostrarNivel(3)">
                 <div class="nivel-icon">🎯</div>
                 <h3>Nível 3</h3>
-                <p>Ensino Fundamental - Avançado</p>
+                <p>Fundamental - Avançado</p>
                 <small>8º ao 9º ano</small>
             </div>
             <div class="nivel-card nivel4" onclick="mostrarNivel(4)">
@@ -637,94 +650,315 @@
             </div>
         </div>
 
-        <!-- MATÉRIAS DO NÍVEL 1 -->
-        <div id="nivel1-content" style="display: none;">
-            <div class="materias-section">
-                <div class="materias-header">
-                    <h2>📖 Nível 1 - Português Básico</h2>
-                    <span class="nivel-tag">Fundamental Inicial</span>
-                </div>
-                <div class="materias-grid">
-                    <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('fonetica1')">
-                        <h4>🔊 Fonética e Fonologia</h4>
-                        <p>Sons das letras, vogais e consoantes, encontros vocálicos</p>
-                        <span class="materia-tag">Básico</span>
-                    </div>
-                    <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('morfologia1')">
-                        <h4>📝 Morfologia</h4>
-                        <p>Substantivo, adjetivo, verbo, artigo, numeral</p>
-                        <span class="materia-tag">Básico</span>
-                    </div>
-                    <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('sintaxe1')">
-                        <h4>🔤 Sintaxe</h4>
-                        <p>Frases, orações, sujeito e predicado simples</p>
-                        <span class="materia-tag">Básico</span>
-                    </div>
-                    <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('ortografia1')">
-                        <h4>✍️ Ortografia</h4>
-                        <p>Uso do S e Z, M e N, C e QU, G e J</p>
-                        <span class="materia-tag">Básico</span>
-                    </div>
-                    <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('semantica1')">
-                        <h4>💭 Semântica</h4>
-                        <p>Sinônimos, antônimos, sentido das palavras</p>
-                        <span class="materia-tag">Básico</span>
-                    </div>
-                    <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('pontuacao1')">
-                        <h4>❗ Pontuação Básica</h4>
-                        <p>Ponto final, vírgula, ponto de interrogação e exclamação</p>
-                        <span class="materia-tag">Básico</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- ÁREA DE MATÉRIAS E AULAS -->
+        <div id="conteudoArea"></div>
+    </div>
 
-        <!-- MATÉRIAS DO NÍVEL 2 -->
-        <div id="nivel2-content" style="display: none;">
-            <div class="materias-section">
-                <div class="materias-header">
-                    <h2>📖 Nível 2 - Português Intermediário</h2>
-                    <span class="nivel-tag">6º/7º Ano</span>
-                </div>
-                <div class="materias-grid">
-                    <div class="materia-item" style="border-left-color: #FF9800;" onclick="mostrarAula('morfologia2')">
-                        <h4>📚 Morfologia Avançada</h4>
-                        <p>Estrutura das palavras: radical, afixos, desinências</p>
-                        <span class="materia-tag">Intermediário</span>
-                    </div>
-                    <div class="materia-item" style="border-left-color: #FF9800;" onclick="mostrarAula('classes')">
-                        <h4>🔤 Classes Gramaticais</h4>
-                        <p>Substantivo, adjetivo, verbo, advérbio, preposição, conjunção</p>
-                        <span class="materia-tag">Intermediário</span>
-                    </div>
-                    <div class="materia-item" style="border-left-color: #FF9800;" onclick="mostrarAula('formacao')">
-                        <h4>📝 Formação de Palavras</h4>
-                        <p>Derivação, composição, onomatopeia, abreviação</p>
-                        <span class="materia-tag">Intermediário</span>
-                    </div>
-                    <div class="materia-item" style="border-left-color: #FF9800;" onclick="mostrarAula('verbos')">
-                        <h4>🎯 Verbos</h4>
-                        <p>Conjugação, tempos verbais, modos indicativo e subjuntivo</p>
-                        <span class="materia-tag">Intermediário</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <script>
+        // Banco de dados local
+        let users = JSON.parse(localStorage.getItem('evolva_users')) || [];
 
-        <!-- MATÉRIAS DO NÍVEL 3 -->
-        <div id="nivel3-content" style="display: none;">
-            <div class="materias-section">
-                <div class="materias-header">
-                    <h2>📖 Nível 3 - Português Avançado</h2>
-                    <span class="nivel-tag">8º/9º Ano</span>
-                </div>
-                <div class="materias-grid">
-                    <div class="materia-item" style="border-left-color: #f44336;" onclick="mostrarAula('sintaxe2')">
-                        <h4>🔗 Sintaxe</h4>
-                        <p>Termos essenciais, integrantes e acessórios da oração</p>
-                        <span class="materia-tag">Avançado</span>
+        // FUNÇÕES DE AUTENTICAÇÃO
+        function showMessage(text, type) {
+            const message = document.getElementById('message');
+            message.textContent = text;
+            message.className = `message ${type}`;
+            message.style.display = 'block';
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 3000);
+        }
+
+        function switchTab(tab) {
+            document.getElementById('loginForm').classList.remove('active');
+            document.getElementById('registerForm').classList.remove('active');
+            document.getElementById('forgotForm').classList.remove('active');
+            
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            
+            if (tab === 'login') {
+                document.getElementById('loginForm').classList.add('active');
+                document.querySelectorAll('.tab')[0].classList.add('active');
+            } else if (tab === 'register') {
+                document.getElementById('registerForm').classList.add('active');
+                document.querySelectorAll('.tab')[1].classList.add('active');
+            }
+        }
+
+        function showForgotPassword() {
+            document.getElementById('loginForm').classList.remove('active');
+            document.getElementById('registerForm').classList.remove('active');
+            document.getElementById('forgotForm').classList.add('active');
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        }
+
+        function register() {
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const confirmPass = document.getElementById('regConfirmPassword').value;
+
+            if (!name || !email || !password || !confirmPass) {
+                showMessage('Preencha todos os campos!', 'error');
+                return;
+            }
+
+            if (password !== confirmPass) {
+                showMessage('As senhas não coincidem!', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showMessage('A senha deve ter pelo menos 6 caracteres!', 'error');
+                return;
+            }
+
+            if (users.find(u => u.email === email)) {
+                showMessage('Este e-mail já está cadastrado!', 'error');
+                return;
+            }
+
+            const newUser = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                password: password
+            };
+
+            users.push(newUser);
+            localStorage.setItem('evolva_users', JSON.stringify(users));
+            
+            showMessage('Cadastro realizado com sucesso! Faça login.', 'success');
+            switchTab('login');
+            
+            document.getElementById('regName').value = '';
+            document.getElementById('regEmail').value = '';
+            document.getElementById('regPassword').value = '';
+            document.getElementById('regConfirmPassword').value = '';
+        }
+
+        function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (!email || !password) {
+                showMessage('Preencha todos os campos!', 'error');
+                return;
+            }
+
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                localStorage.setItem('evolva_current_user', JSON.stringify(user));
+                
+                document.getElementById('authContainer').style.display = 'none';
+                document.getElementById('dashboard').classList.add('active');
+                
+                document.getElementById('userName').textContent = user.name;
+                document.getElementById('userEmail').textContent = user.email;
+                document.getElementById('welcomeUser').textContent = `Bem-vindo(a), ${user.name}! 👋`;
+                document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
+                
+                document.getElementById('loginEmail').value = '';
+                document.getElementById('loginPassword').value = '';
+                
+                // Mostrar tela inicial
+                mostrarNivel(1);
+            } else {
+                showMessage('E-mail ou senha incorretos!', 'error');
+            }
+        }
+
+        function resetPassword() {
+            const email = document.getElementById('forgotEmail').value;
+            
+            if (!email) {
+                showMessage('Digite seu e-mail!', 'error');
+                return;
+            }
+
+            const user = users.find(u => u.email === email);
+            
+            if (user) {
+                showMessage(`Instruções enviadas para ${email}`, 'success');
+            } else {
+                showMessage('E-mail não encontrado!', 'error');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('evolva_current_user');
+            document.getElementById('authContainer').style.display = 'block';
+            document.getElementById('dashboard').classList.remove('active');
+            document.getElementById('conteudoArea').innerHTML = '';
+            switchTab('login');
+        }
+
+        // FUNÇÕES DE CONTEÚDO
+        function mostrarNivel(nivel) {
+            let html = '';
+            
+            if (nivel === 1) {
+                html = `
+                    <div class="materias-section">
+                        <div class="materias-header">
+                            <h2>📖 Nível 1 - Português Básico</h2>
+                            <span class="nivel-tag">Fundamental Inicial</span>
+                        </div>
+                        <div class="materias-grid">
+                            <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('fonetica1')">
+                                <h4>🔊 Fonética e Fonologia</h4>
+                                <p>Sons das letras, vogais, consoantes, encontros vocálicos</p>
+                                <span class="materia-tag">Básico</span>
+                            </div>
+                            <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('morfologia1')">
+                                <h4>📝 Morfologia</h4>
+                                <p>Substantivo, adjetivo, verbo, artigo, numeral</p>
+                                <span class="materia-tag">Básico</span>
+                            </div>
+                            <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('sintaxe1')">
+                                <h4>🔤 Sintaxe</h4>
+                                <p>Frases, orações, sujeito e predicado simples</p>
+                                <span class="materia-tag">Básico</span>
+                            </div>
+                            <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('ortografia1')">
+                                <h4>✍️ Ortografia</h4>
+                                <p>Uso do S e Z, M e N, C e QU, G e J</p>
+                                <span class="materia-tag">Básico</span>
+                            </div>
+                            <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('semantica1')">
+                                <h4>💭 Semântica</h4>
+                                <p>Sinônimos, antônimos, sentido das palavras</p>
+                                <span class="materia-tag">Básico</span>
+                            </div>
+                            <div class="materia-item" style="border-left-color: #4CAF50;" onclick="mostrarAula('pontuacao1')">
+                                <h4>❗ Pontuação Básica</h4>
+                                <p>Ponto final, vírgula, interrogação e exclamação</p>
+                                <span class="materia-tag">Básico</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="materia-item" style="border-left-color: #f44336;" onclick="mostrarAula('periodo')">
-                        <h4>📐 Período Composto</h4>
-                        <p>Coordenação e subordinação, orações desenvolvidas</p>
-                        <
+                `;
+            } else if (nivel === 2) {
+                html = `
+                    <div class="materias-section">
+                        <div class="materias-header">
+                            <h2>📖 Nível 2 - Português Intermediário</h2>
+                            <span class="nivel-tag">6º/7º Ano</span>
+                        </div>
+                        <div class="materias-grid">
+                            <div class="materia-item" style="border-left-color: #FF9800;" onclick="mostrarAula('morfologia2')">
+                                <h4>📚 Estrutura das Palavras</h4>
+                                <p>Radical, afixos, desinências, vogal temática</p>
+                                <span class="materia-tag">Intermediário</span>
+                            </div>
+                            <div class="materia-item" style="border-left-color: #FF9800;" onclick="mostrarAula('classes2')">
+                                <h4>🔤 Classes Gramaticais</h4>
+                                <p>Substantivo, adjetivo, verbo, advérbio, preposição</p>
+                                <span class="materia-tag">Intermediário</span>
+                            </div>
+                            <div class="materia-item" style="border-left-color: #FF9800;" onclick="mostrarAula('verbos2')">
+                                <h4>🎯 Verbos</h4>
+                                <p>Conjugação, tempos verbais, modos indicativo/subjuntivo</p>
+                                <span class="materia-tag">Intermediário</span>
+                            </div>
+                            <div class="materia-item" style="border-left-color: #FF9800;" onclick="mostrarAula('formacao2')">
+                                <h4>📝 Formação de Palavras</h4>
+                                <p>Derivação, composição, onomatopeia</p>
+                                <span class="materia-tag">Intermediário</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (nivel === 3) {
+                html = `
+                    <div class="materias-section">
+                        <div class="materias-header">
+                            <h2>📖 Nível 3 - Português Avançado</h2>
+                            <span class="nivel-tag">8º/9º Ano</span>
+                        </div>
+                        <div class="materias-grid">
+                            <div class="materia-item" style="border-left-color: #f44336;" onclick="mostrarAula('sintaxe3')">
+                                <h4>🔗 Sintaxe</h4>
+                                <p>Termos essenciais, integrantes e acessórios da oração</p>
+                                <span class="materia-tag">Avançado</span>
+                            </div>
+                            <div class="materia-item" style="border-left-color: #f44336;" onclick="mostrarAula('periodo3')">
+                                <h4>📐 Período Composto</h4>
+                                <p>Coordenação e subordinação, orações desenvolvidas</p>
+                                <span class="materia-tag">Avançado</span>
+                            </div>
+                            <div class="materia-item" style="border-left-color: #f44336;" onclick="mostrarAula('verbos3')">
+                                <h4>⚡ Verbos</h4>
+                                <p>Vozes verbais, tempos compostos, formas nominais</p>
+                                <span class="materia-tag">Avançado</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (nivel === 4) {
+                html = `
+                    <div class="materias-section">
+                        <div class="materias-header">
+                            <h2>📖 Nível 4 - Português Ensino Médio</h2>
+                            <span class="nivel-tag">1º ao 3º Ano</span>
+                        </div>
+                        <div class="materias-grid">
+                            <div class="materia-item" style="border-left-color: #9C27B0;" onclick="mostrarAula('concordancia4')">
+                                <h4>🤝 Concordância</h4>
+                                <p>Concordância nominal e verbal</p>
+                                <span class="materia-tag">Ensino Médio</span>
+                            </div>
+                            <div class="materia-item" style="border-left-color: #9C27B0;" onclick="mostrarAula('regencia4')">
+                                <h4>🎯 Regência</h4>
+                                <p>Regência nominal e verbal</p>
+                                <span class="materia-tag">Ensino Médio</span>
+                            </div>
+                            <div class="materia-item" style="border-left-color: #9C27B0;" onclick="mostrarAula('crase4')">
+                                <h4>📌 Crase</h4>
+                                <p>Uso da crase, casos obrigatórios e facultativos</p>
+                                <span class="materia-tag">Ensino Médio</span>
+                            </div>
+                            <div class="materia-item" style="border-left-color: #9C27B0;" onclick="mostrarAula('colocacao4')">
+                                <h4>📍 Colocação Pronominal</h4>
+                                <p>Próclise, mesóclise, ênclise</p>
+                                <span class="materia-tag">Ensino Médio</span>
+                            </div>
+                            <div class="materia-item" style="border-left-color: #9C27B0;" onclick="mostrarAula('semantica4')">
+                                <h4>💭 Semântica</h4>
+                                <p>Polissemia, homonímia, paronímia, conotação/denotação</p>
+                                <span class="materia-tag">Ensino Médio</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('conteudoArea').innerHTML = html;
+        }
+
+        function mostrarAula(aulaId) {
+            let html = `
+                <div class="aula-container">
+                    <button class="back-btn" onclick="voltarParaNiveis()">← Voltar para matérias</button>
+                    <div class="aula-content">
+            `;
+            
+            if (aulaId === 'fonetica1') {
+                html += `
+                    <h2>🔊 Fonética e Fonologia</h2>
+                    <p>A fonética e a fonologia estudam os sons da língua. A fonética se preocupa com a produção e percepção dos sons, enquanto a fonologia estuda como esses sons funcionam em uma língua.</p>
+                    
+                    <h3>Vogais</h3>
+                    <p>São sons produzidos sem obstáculos à passagem do ar. Em português, temos: a, e, i, o, u.</p>
+                    <div class="exemplo-box">
+                        <strong>Exemplos:</strong>
+                        <ul class="lista">
+                            <li>c<strong>a</strong>s<strong>a</strong></li>
+                            <li>p<strong>e</strong>rr<strong>o</strong></li>
+                            <li><strong>i</strong>lh<strong>a</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <h3>Consoantes</h3>
+                    <p>São sons produzidos

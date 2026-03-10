@@ -1237,16 +1237,43 @@
 
         function getMateriasPorNivel(nivel) {
             const materias = {
-                // Português Nível 1
+                // PORTUGUÊS NÍVEL 1 - COMPLETO
                 1: [
-                    { id: 'fonetica1', icone: '🔊', nome: 'Fonética e Fonologia', descricao: 'Sons das letras, vogais, consoantes', cor: '#4CAF50', exercicios: 30 },
-                    { id: 'morfologia1', icone: '📝', nome: 'Morfologia', descricao: 'Substantivo, adjetivo, verbo', cor: '#4CAF50', exercicios: 30 },
-                    { id: 'sintaxe1', icone: '🔤', nome: 'Sintaxe', descricao: 'Frases, orações, sujeito', cor: '#4CAF50', exercicios: 30 },
-                    { id: 'ortografia1', icone: '✍️', nome: 'Ortografia', descricao: 'Uso do S/Z, M/N, G/J', cor: '#4CAF50', exercicios: 30 },
-                    { id: 'semantica1', icone: '💭', nome: 'Semântica', descricao: 'Sinônimos, antônimos', cor: '#4CAF50', exercicios: 30 },
-                    { id: 'pontuacao1', icone: '❗', nome: 'Pontuação Básica', descricao: 'Ponto, vírgula, interrogação', cor: '#4CAF50', exercicios: 30 }
+                    { id: 'fonetica1', icone: '🔊', nome: 'Fonética e Fonologia', descricao: 'Sons das letras, vogais, consoantes, encontros vocálicos', cor: '#4CAF50', exercicios: 30 },
+                    { id: 'morfologia1', icone: '📝', nome: 'Morfologia', descricao: 'Substantivo, adjetivo, verbo, artigo, numeral', cor: '#4CAF50', exercicios: 30 },
+                    { id: 'sintaxe1', icone: '🔤', nome: 'Sintaxe', descricao: 'Frases, orações, sujeito e predicado simples', cor: '#4CAF50', exercicios: 30 },
+                    { id: 'ortografia1', icone: '✍️', nome: 'Ortografia', descricao: 'Uso do S/Z, M/N, C/QU, G/J', cor: '#4CAF50', exercicios: 30 },
+                    { id: 'semantica1', icone: '💭', nome: 'Semântica', descricao: 'Sinônimos, antônimos, sentido das palavras', cor: '#4CAF50', exercicios: 30 },
+                    { id: 'pontuacao1', icone: '❗', nome: 'Pontuação Básica', descricao: 'Ponto final, vírgula, interrogação e exclamação', cor: '#4CAF50', exercicios: 30 }
                 ],
-                // Matemática Básica (Nível 5)
+                // PORTUGUÊS NÍVEL 2 - COMPLETO
+                2: [
+                    { id: 'estruturaPalavras2', icone: '📚', nome: 'Estrutura das Palavras', descricao: 'Radical, afixos, desinências, vogal temática', cor: '#FF9800', exercicios: 30 },
+                    { id: 'classesGramaticais2', icone: '🔤', nome: 'Classes Gramaticais', descricao: 'Substantivo, adjetivo, verbo, advérbio, preposição', cor: '#FF9800', exercicios: 30 },
+                    { id: 'verbos2', icone: '🎯', nome: 'Verbos', descricao: 'Conjugação, tempos verbais, modos indicativo/subjuntivo', cor: '#FF9800', exercicios: 30 },
+                    { id: 'formacaoPalavras2', icone: '📝', nome: 'Formação de Palavras', descricao: 'Derivação, composição, onomatopeia', cor: '#FF9800', exercicios: 30 },
+                    { id: 'pronomes2', icone: '👤', nome: 'Pronomes', descricao: 'Pessoais, possessivos, demonstrativos', cor: '#FF9800', exercicios: 30 },
+                    { id: 'adverbios2', icone: '⚡', nome: 'Advérbios', descricao: 'Lugar, tempo, modo, intensidade', cor: '#FF9800', exercicios: 30 }
+                ],
+                // PORTUGUÊS NÍVEL 3 - COMPLETO
+                3: [
+                    { id: 'sintaxe3', icone: '🔗', nome: 'Sintaxe', descricao: 'Termos essenciais, integrantes e acessórios', cor: '#f44336', exercicios: 30 },
+                    { id: 'periodoComposto3', icone: '📐', nome: 'Período Composto', descricao: 'Coordenação e subordinação', cor: '#f44336', exercicios: 30 },
+                    { id: 'verbos3', icone: '⚡', nome: 'Verbos', descricao: 'Vozes verbais, tempos compostos, formas nominais', cor: '#f44336', exercicios: 30 },
+                    { id: 'concordancia3', icone: '🤝', nome: 'Concordância', descricao: 'Concordância verbal e nominal básica', cor: '#f44336', exercicios: 30 },
+                    { id: 'regencia3', icone: '🎯', nome: 'Regência', descricao: 'Regência verbal e nominal', cor: '#f44336', exercicios: 30 },
+                    { id: 'pontuacao3', icone: '❗', nome: 'Pontuação', descricao: 'Uso da vírgula, ponto e vírgula, dois pontos', cor: '#f44336', exercicios: 30 }
+                ],
+                // PORTUGUÊS NÍVEL 4 - COMPLETO
+                4: [
+                    { id: 'concordancia4', icone: '🤝', nome: 'Concordância', descricao: 'Casos especiais de concordância', cor: '#9C27B0', exercicios: 30 },
+                    { id: 'regencia4', icone: '🎯', nome: 'Regência', descricao: 'Regência completa', cor: '#9C27B0', exercicios: 30 },
+                    { id: 'crase4', icone: '📌', nome: 'Crase', descricao: 'Uso da crase, casos obrigatórios e facultativos', cor: '#9C27B0', exercicios: 30 },
+                    { id: 'colocacao4', icone: '📍', nome: 'Colocação Pronominal', descricao: 'Próclise, mesóclise, ênclise', cor: '#9C27B0', exercicios: 30 },
+                    { id: 'semantica4', icone: '💭', nome: 'Semântica', descricao: 'Polissemia, homonímia, paronímia', cor: '#9C27B0', exercicios: 30 },
+                    { id: 'figuras4', icone: '🎨', nome: 'Figuras de Linguagem', descricao: 'Metáfora, metonímia, antítese, paradoxo', cor: '#9C27B0', exercicios: 30 }
+                ],
+                // MATEMÁTICA BÁSICA (Nível 5) - COMPLETO
                 5: [
                     { id: 'numeros', icone: '🔢', nome: 'Números', descricao: 'Naturais, inteiros, ordinais', cor: '#FF9800', exercicios: 30 },
                     { id: 'operacoes', icone: '➕', nome: 'Operações Básicas', descricao: 'Adição, subtração, multiplicação, divisão', cor: '#FF9800', exercicios: 30 },
@@ -1254,6 +1281,29 @@
                     { id: 'ordem', icone: '📏', nome: 'Ordem Crescente/Decrescente', descricao: 'Comparar e ordenar números', cor: '#FF9800', exercicios: 30 },
                     { id: 'ordinais', icone: '🥇', nome: 'Números Ordinais', descricao: '1º, 2º, 3º...', cor: '#FF9800', exercicios: 30 },
                     { id: 'decimal', icone: '💧', nome: 'Sistema Decimal', descricao: 'Unidades, dezenas, centenas', cor: '#FF9800', exercicios: 30 }
+                ],
+                // MATEMÁTICA INTERMEDIÁRIA (Nível 6) - COMPLETO
+                6: [
+                    { id: 'fracoes', icone: '🥧', nome: 'Frações', descricao: 'Frações equivalentes, operações', cor: '#FF9800', exercicios: 30 },
+                    { id: 'decimais', icone: '🔟', nome: 'Números Decimais', descricao: 'Décimos, centésimos, milésimos', cor: '#FF9800', exercicios: 30 },
+                    { id: 'porcentagem', icone: '💯', nome: 'Porcentagem', descricao: 'Cálculo de porcentagem', cor: '#FF9800', exercicios: 30 },
+                    { id: 'razao', icone: '⚖️', nome: 'Razão e Proporção', descricao: 'Razões, proporções', cor: '#FF9800', exercicios: 30 },
+                    { id: 'regra3', icone: '📐', nome: 'Regra de Três', descricao: 'Simples e composta', cor: '#FF9800', exercicios: 30 }
+                ],
+                // MATEMÁTICA AVANÇADA (Nível 7) - COMPLETO
+                7: [
+                    { id: 'expressoes', icone: '📝', nome: 'Expressões Numéricas', descricao: 'Ordem das operações', cor: '#f44336', exercicios: 30 },
+                    { id: 'potenciacao', icone: '🔺', nome: 'Potenciação', descricao: 'Potências e propriedades', cor: '#f44336', exercicios: 30 },
+                    { id: 'radiciacao', icone: '√', nome: 'Radiciação', descricao: 'Raízes quadradas e cúbicas', cor: '#f44336', exercicios: 30 },
+                    { id: 'equacoes', icone: '⚖️', nome: 'Equações', descricao: 'Equações do 1º e 2º grau', cor: '#f44336', exercicios: 30 }
+                ],
+                // MATEMÁTICA ENSINO MÉDIO (Nível 8) - COMPLETO
+                8: [
+                    { id: 'algebra', icone: '🔣', nome: 'Álgebra Avançada', descricao: 'Polinômios, sistemas lineares', cor: '#9C27B0', exercicios: 30 },
+                    { id: 'geometria', icone: '📐', nome: 'Geometria', descricao: 'Plana, espacial, analítica', cor: '#9C27B0', exercicios: 30 },
+                    { id: 'trigonometria', icone: '🔄', nome: 'Trigonometria', descricao: 'Seno, cosseno, tangente', cor: '#9C27B0', exercicios: 30 },
+                    { id: 'estatistica', icone: '📊', nome: 'Estatística', descricao: 'Média, mediana, moda', cor: '#9C27B0', exercicios: 30 },
+                    { id: 'probabilidade', icone: '🎲', nome: 'Probabilidade', descricao: 'Eventos, espaço amostral', cor: '#9C27B0', exercicios: 30 }
                 ],
                 // Inglês Básico (Nível 9)
                 9: [
@@ -1347,19 +1397,13 @@
         }
 
         function getTotalExercicios(aulaId) {
-            // Se for matéria de inglês, retorna 50, senão 30
-            if (aulaId.includes('ingles') || 
-                aulaId === 'alphabet' || aulaId === 'numbers' || 
-                aulaId === 'vocabulary1' || aulaId === 'verbtobe' ||
-                aulaId === 'pronouns' || aulaId === 'articles' ||
-                aulaId === 'present' || aulaId === 'past' ||
-                aulaId === 'future' || aulaId === 'sentence' ||
-                aulaId === 'vocabulary2' || aulaId === 'prepositions' ||
-                aulaId === 'phrasal' || aulaId === 'conditionals' ||
-                aulaId === 'idioms' || aulaId === 'modal' ||
-                aulaId === 'passive' || aulaId === 'interpretation' ||
-                aulaId === 'writing' || aulaId === 'advancedgrammar' ||
-                aulaId === 'collocations' || aulaId === 'slang') {
+            // Verifica se é matéria de inglês (tem 50 exercícios)
+            const inglesIds = ['alphabet', 'numbers', 'vocabulary1', 'verbtobe', 'pronouns', 'articles',
+                'present', 'past', 'future', 'sentence', 'vocabulary2', 'prepositions',
+                'phrasal', 'conditionals', 'idioms', 'modal', 'passive',
+                'interpretation', 'writing', 'advancedgrammar', 'collocations', 'slang'];
+            
+            if (inglesIds.includes(aulaId)) {
                 return 50;
             }
             return 30;
@@ -1367,180 +1411,56 @@
 
         function getConteudoAula(aulaId) {
             const conteudos = {
-                // Inglês Básico
+                // Português Nível 1
+                fonetica1: `
+                    <h2>🔊 Fonética e Fonologia</h2>
+                    <p>A fonética e a fonologia estudam os sons da língua.</p>
+                    <h3>Vogais</h3>
+                    <p>São sons produzidos sem obstáculos à passagem do ar: a, e, i, o, u.</p>
+                    <h3>Consoantes</h3>
+                    <p>Sons com obstáculos: b, c, d, f, g, etc.</p>
+                `,
+                morfologia1: `
+                    <h2>📝 Morfologia</h2>
+                    <p>Estudo da estrutura e classificação das palavras.</p>
+                    <h3>Substantivo</h3>
+                    <p>Nomeia seres: casa, amor, João</p>
+                    <h3>Adjetivo</h3>
+                    <p>Caracteriza: bonito, grande, feliz</p>
+                `,
+                // Matemática Básica
+                numeros: `
+                    <h2>🔢 Números</h2>
+                    <p>Os números são a base da matemática.</p>
+                    <h3>Números Naturais</h3>
+                    <p>0, 1, 2, 3, 4, 5...</p>
+                    <h3>Números Inteiros</h3>
+                    <p>... -3, -2, -1, 0, 1, 2, 3 ...</p>
+                `,
+                operacoes: `
+                    <h2>➕ Operações Básicas</h2>
+                    <h3>Adição</h3>
+                    <p>Juntar quantidades: 5 + 3 = 8</p>
+                    <h3>Subtração</h3>
+                    <p>Tirar quantidades: 10 - 4 = 6</p>
+                    <h3>Multiplicação</h3>
+                    <p>Somar repetidamente: 4 × 3 = 12</p>
+                `,
+                // Inglês
                 alphabet: `
                     <h2>🔤 English Alphabet</h2>
                     <p>The English alphabet has 26 letters.</p>
-                    
                     <h3>Vowels (Vogais)</h3>
                     <p>A, E, I, O, U</p>
-                    
-                    <h3>Consonants (Consoantes)</h3>
-                    <p>B, C, D, F, G, H, J, K, L, M, N, P, Q, R, S, T, V, W, X, Y, Z</p>
-                    
-                    <div class="exemplo-box">
-                        <strong>Pronunciation Tips:</strong>
-                        <ul class="lista">
-                            <li>A = ei</li>
-                            <li>B = bi</li>
-                            <li>C = ci</li>
-                            <li>D = di</li>
-                            <li>E = i</li>
-                        </ul>
-                    </div>
-                `,
-                numbers: `
-                    <h2>🔢 Numbers in English</h2>
-                    
-                    <h3>Cardinal Numbers</h3>
-                    <ul class="lista">
-                        <li>1 - one</li>
-                        <li>2 - two</li>
-                        <li>3 - three</li>
-                        <li>4 - four</li>
-                        <li>5 - five</li>
-                        <li>10 - ten</li>
-                        <li>100 - one hundred</li>
-                    </ul>
-                    
-                    <h3>Ordinal Numbers</h3>
-                    <ul class="lista">
-                        <li>1st - first</li>
-                        <li>2nd - second</li>
-                        <li>3rd - third</li>
-                        <li>4th - fourth</li>
-                        <li>5th - fifth</li>
-                    </ul>
                 `,
                 verbtobe: `
                     <h2>👤 Verb to Be</h2>
-                    
                     <h3>Affirmative</h3>
-                    <ul class="lista">
-                        <li>I am (I'm) a student</li>
-                        <li>You are (You're) my friend</li>
-                        <li>He is (He's) a teacher</li>
-                        <li>She is (She's) a doctor</li>
-                        <li>It is (It's) a book</li>
-                        <li>We are (We're) happy</li>
-                        <li>They are (They're) here</li>
-                    </ul>
-                    
-                    <h3>Negative</h3>
-                    <ul class="lista">
-                        <li>I am not (I'm not) tired</li>
-                        <li>You are not (aren't) late</li>
-                        <li>He is not (isn't) here</li>
-                    </ul>
-                    
-                    <h3>Questions</h3>
-                    <ul class="lista">
-                        <li>Am I correct?</li>
-                        <li>Are you ready?</li>
-                        <li>Is he your brother?</li>
-                    </ul>
-                `,
-                // Inglês Intermediário
-                present: `
-                    <h2>⏰ Present Tenses</h2>
-                    
-                    <h3>Simple Present</h3>
-                    <p>Used for habits, facts, routines.</p>
-                    <div class="exemplo-box">
-                        <strong>Examples:</strong>
-                        <ul class="lista">
-                            <li>I work every day</li>
-                            <li>She works in a hospital</li>
-                            <li>They don't like coffee</li>
-                        </ul>
-                    </div>
-                    
-                    <h3>Present Continuous</h3>
-                    <p>Used for actions happening now.</p>
-                    <div class="exemplo-box">
-                        <strong>Examples:</strong>
-                        <ul class="lista">
-                            <li>I am studying now</li>
-                            <li>She is reading a book</li>
-                            <li>They are playing soccer</li>
-                        </ul>
-                    </div>
-                `,
-                // Inglês Avançado
-                phrasal: `
-                    <h2>🔗 Phrasal Verbs</h2>
-                    <p>Phrasal verbs are combinations of verbs with prepositions or adverbs.</p>
-                    
-                    <div class="exemplo-box">
-                        <strong>Common Phrasal Verbs:</strong>
-                        <ul class="lista">
-                            <li><strong>Get up</strong> - levantar (I get up at 7am)</li>
-                            <li><strong>Look for</strong> - procurar (I'm looking for my keys)</li>
-                            <li><strong>Turn on/off</strong> - ligar/desligar (Turn on the TV)</li>
-                            <li><strong>Give up</strong> - desistir (Never give up!)</li>
-                            <li><strong>Come back</strong> - voltar (He came back home)</li>
-                        </ul>
-                    </div>
-                `,
-                conditionals: `
-                    <h2>⚖️ Conditionals</h2>
-                    
-                    <h3>Zero Conditional</h3>
-                    <p>General truths: If + present, present</p>
-                    <div class="exemplo-box">
-                        If you heat water, it boils.
-                    </div>
-                    
-                    <h3>First Conditional</h3>
-                    <p>Real possibility: If + present, will + verb</p>
-                    <div class="exemplo-box">
-                        If it rains, I will stay home.
-                    </div>
-                    
-                    <h3>Second Conditional</h3>
-                    <p>Unreal situations: If + past, would + verb</p>
-                    <div class="exemplo-box">
-                        If I had money, I would travel.
-                    </div>
-                    
-                    <h3>Third Conditional</h3>
-                    <p>Past unreal: If + past perfect, would have + participle</p>
-                    <div class="exemplo-box">
-                        If I had studied, I would have passed.
-                    </div>
-                `,
-                idioms: `
-                    <h2>💬 English Idioms</h2>
-                    <p>Idioms are expressions with figurative meanings.</p>
-                    
-                    <div class="exemplo-box">
-                        <strong>Common Idioms:</strong>
-                        <ul class="lista">
-                            <li><strong>Piece of cake</strong> - muito fácil (The test was a piece of cake)</li>
-                            <li><strong>Break a leg</strong> - boa sorte! (Break a leg on your presentation!)</li>
-                            <li><strong>Cost an arm and a leg</strong> - muito caro (This car costs an arm and a leg)</li>
-                            <li><strong>Hit the books</strong> - estudar muito (I need to hit the books)</li>
-                            <li><strong>Under the weather</strong> - doente (I'm feeling under the weather)</li>
-                        </ul>
-                    </div>
-                `,
-                interpretation: `
-                    <h2>📖 Reading Interpretation</h2>
-                    <p>Practice understanding English texts.</p>
-                    
-                    <div class="exemplo-box">
-                        <strong>Reading Tips:</strong>
-                        <ul class="lista">
-                            <li>Read the questions first</li>
-                            <li>Look for keywords</li>
-                            <li>Understand the main idea</li>
-                            <li>Pay attention to context</li>
-                        </ul>
-                    </div>
+                    <p>I am, You are, He/She/It is, We are, They are</p>
                 `
             };
             
-            return conteudos[aulaId] || `<h2>📚 ${aulaId}</h2><p>Content being prepared!</p>`;
+            return conteudos[aulaId] || `<h2>📚 ${aulaId}</h2><p>Conteúdo sendo preparado!</p>`;
         }
 
         function voltarParaNivel() {
@@ -1559,8 +1479,8 @@
             
             for (let i = 0; i < totalExercicios; i++) {
                 exercicios.push({
-                    pergunta: `${i+1}. Practice question for ${aulaId}`,
-                    opcoes: ["Option A", "Option B", "Option C"],
+                    pergunta: `${i+1}. Questão sobre ${aulaId}`,
+                    opcoes: ["Opção A", "Opção B", "Opção C"],
                     correta: 0
                 });
             }
@@ -1667,15 +1587,15 @@
                     const correta = exercicios[i].correta;
                     
                     if (resposta === correta) {
-                        feedbackDiv.textContent = '✅ Correct!';
+                        feedbackDiv.textContent = '✅ Correto!';
                         feedbackDiv.className = 'feedback correto';
                         acertos++;
                     } else {
-                        feedbackDiv.textContent = `❌ Incorrect. Answer: ${String.fromCharCode(97 + correta)}`;
+                        feedbackDiv.textContent = `❌ Incorreto. Resposta: ${String.fromCharCode(97 + correta)}`;
                         feedbackDiv.className = 'feedback incorreto';
                     }
                 } else {
-                    feedbackDiv.textContent = '⚠️ Answer this question!';
+                    feedbackDiv.textContent = '⚠️ Responda esta questão!';
                     feedbackDiv.className = 'feedback incorreto';
                 }
             }
@@ -1683,7 +1603,7 @@
             if (total > 0) {
                 const resultadoDiv = document.getElementById(`resultado-${aulaId}`);
                 resultadoDiv.style.display = 'block';
-                resultadoDiv.textContent = `You got ${acertos} out of ${total} correct on this page!`;
+                resultadoDiv.textContent = `Acertou ${acertos} de ${total} questões nesta página!`;
             }
         }
 
@@ -1706,9 +1626,9 @@
             resultadoDiv.style.display = 'block';
             
             if (acertos === exercicios.length) {
-                resultadoDiv.textContent = `🎉 PERFECT! You got all ${exercicios.length} questions correct!`;
+                resultadoDiv.textContent = `🎉 PERFEITO! Acertou todas as ${exercicios.length} questões!`;
             } else {
-                resultadoDiv.textContent = `📊 You got ${acertos} out of ${exercicios.length} correct. Keep practicing!`;
+                resultadoDiv.textContent = `📊 Acertou ${acertos} de ${exercicios.length} questões.`;
             }
         }
 

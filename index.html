@@ -14,53 +14,68 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="0,0 100,0 50,100" fill="%23667eea20"/><polygon points="0,100 100,100 50,0" fill="%23764ba220"/></svg>');
+            /* A IMAGEM DA LOGO COMO WALLPAPER */
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 800 600"><rect width="800" height="600" fill="%23667eea"/><text x="400" y="250" font-family="Arial" font-size="72" font-weight="bold" fill="white" text-anchor="middle" opacity="0.1">EVOLVA</text><text x="400" y="350" font-family="Arial" font-size="24" fill="white" text-anchor="middle" opacity="0.1">— Educação Inteligente —</text><circle cx="200" cy="100" r="80" fill="white" opacity="0.03"/><circle cx="650" cy="450" r="150" fill="white" opacity="0.03"/><circle cx="100" cy="500" r="60" fill="white" opacity="0.03"/></svg>');
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             background-attachment: fixed;
+            
+            /* Overlay escuro para destacar o formulário */
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* Container principal */
+        /* Overlay escuro por cima da imagem */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
         .container {
             width: 100%;
             max-width: 400px;
             padding: 20px;
+            position: relative;
+            z-index: 2; /* Fica acima do overlay */
         }
 
-        /* Logo */
-        .logo {
+        /* Logo pequena no topo do formulário (opcional) */
+        .small-logo {
             text-align: center;
             margin-bottom: 30px;
-            color: white;
         }
 
-        .logo h1 {
-            font-size: 48px;
+        .small-logo h1 {
+            color: white;
+            font-size: 36px;
             font-weight: 800;
             letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
-        .logo p {
-            font-size: 16px;
-            opacity: 0.9;
+        .small-logo p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
             letter-spacing: 1px;
         }
 
-        /* Cards de formulário */
         .form-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 40px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
         }
 
-        /* Abas de navegação */
         .tabs {
             display: flex;
             margin-bottom: 30px;
@@ -82,7 +97,6 @@
             border-bottom: 2px solid #667eea;
         }
 
-        /* Formulários */
         .form {
             display: none;
         }
@@ -116,7 +130,6 @@
             border-color: #667eea;
         }
 
-        /* Botões */
         .btn {
             width: 100%;
             padding: 14px;
@@ -135,7 +148,6 @@
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
-        /* Links */
         .forgot-password {
             text-align: right;
             margin-top: 10px;
@@ -151,7 +163,6 @@
             text-decoration: underline;
         }
 
-        /* Mensagens de erro/sucesso */
         .message {
             padding: 10px;
             border-radius: 5px;
@@ -171,19 +182,19 @@
             border: 1px solid #cfc;
         }
 
-        /* Conteúdo após login (inicialmente oculto) */
         .dashboard {
             display: none;
             width: 100%;
             max-width: 1200px;
             padding: 20px;
+            position: relative;
+            z-index: 2;
         }
 
         .dashboard.active {
             display: block;
         }
 
-        /* Header do dashboard */
         .dashboard-header {
             background: white;
             border-radius: 15px;
@@ -229,7 +240,6 @@
             background: #d32f2f;
         }
 
-        /* Cards de matérias no dashboard */
         .welcome-message {
             background: white;
             border-radius: 15px;
@@ -308,8 +318,9 @@
 <body>
     <!-- Container de Login/Cadastro -->
     <div class="container" id="authContainer">
-        <div class="logo">
-            <h1>🚀 EVOLVA</h1>
+        <!-- Logo pequena no topo (opcional, pode remover se quiser) -->
+        <div class="small-logo">
+            <h1>EVOLVA</h1>
             <p>— Educação Inteligente —</p>
         </div>
 
@@ -327,11 +338,11 @@
             <div class="form active" id="loginForm">
                 <div class="form-group">
                     <label>E-mail</label>
-                    <input type="email" id="loginEmail" placeholder="seu@email.com">
+                    <input type="email" id="loginEmail" placeholder="Digite seu e-mail">
                 </div>
                 <div class="form-group">
                     <label>Senha</label>
-                    <input type="password" id="loginPassword" placeholder="••••••••">
+                    <input type="password" id="loginPassword" placeholder="Digite sua senha">
                 </div>
                 <div class="forgot-password">
                     <a href="#" onclick="showForgotPassword()">Esqueceu a senha?</a>
@@ -360,11 +371,11 @@
                 <button class="btn" onclick="register()">Cadastrar</button>
             </div>
 
-            <!-- Formulário de Recuperar Senha (inicialmente oculto) -->
+            <!-- Formulário de Recuperar Senha -->
             <div class="form" id="forgotForm">
                 <div class="form-group">
                     <label>E-mail cadastrado</label>
-                    <input type="email" id="forgotEmail" placeholder="seu@email.com">
+                    <input type="email" id="forgotEmail" placeholder="Digite seu e-mail">
                 </div>
                 <button class="btn" onclick="resetPassword()">Enviar instruções</button>
                 <div style="text-align: center; margin-top: 15px;">
@@ -428,12 +439,10 @@
         }
 
         function switchTab(tab) {
-            // Esconder todos os formulários
             document.getElementById('loginForm').classList.remove('active');
             document.getElementById('registerForm').classList.remove('active');
             document.getElementById('forgotForm').classList.remove('active');
             
-            // Remover active de todas as abas
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             
             if (tab === 'login') {
@@ -473,18 +482,16 @@
                 return;
             }
 
-            // Verificar se email já existe
             if (users.find(u => u.email === email)) {
                 showMessage('Este e-mail já está cadastrado!', 'error');
                 return;
             }
 
-            // Criar novo usuário
             const newUser = {
                 id: Date.now(),
                 name: name,
                 email: email,
-                password: password // Em um site real, isso seria criptografado
+                password: password
             };
 
             users.push(newUser);
@@ -493,7 +500,6 @@
             showMessage('Cadastro realizado com sucesso! Faça login.', 'success');
             switchTab('login');
             
-            // Limpar campos
             document.getElementById('regName').value = '';
             document.getElementById('regEmail').value = '';
             document.getElementById('regPassword').value = '';
@@ -509,24 +515,19 @@
                 return;
             }
 
-            // Buscar usuário
             const user = users.find(u => u.email === email && u.password === password);
 
             if (user) {
-                // Salvar sessão
                 localStorage.setItem('evolva_current_user', JSON.stringify(user));
                 
-                // Mostrar dashboard
                 document.getElementById('authContainer').style.display = 'none';
                 document.getElementById('dashboard').classList.add('active');
                 
-                // Atualizar informações do usuário
                 document.getElementById('userName').textContent = user.name;
                 document.getElementById('userEmail').textContent = user.email;
                 document.getElementById('welcomeUser').textContent = `Bem-vindo(a), ${user.name}! 👋`;
                 document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
                 
-                // Limpar campos
                 document.getElementById('loginEmail').value = '';
                 document.getElementById('loginPassword').value = '';
             } else {
@@ -546,7 +547,6 @@
             
             if (user) {
                 showMessage(`Instruções enviadas para ${email}`, 'success');
-                // Em um site real, enviaria um e-mail
                 console.log('Recuperar senha para:', email);
             } else {
                 showMessage('E-mail não encontrado!', 'error');
@@ -565,7 +565,6 @@
             alert(`${user.name}, você escolheu ${materia}! Prepare-se para evoluir! 🚀`);
         }
 
-        // Verificar se já existe usuário logado
         window.onload = function() {
             const currentUser = JSON.parse(localStorage.getItem('evolva_current_user'));
             if (currentUser) {
